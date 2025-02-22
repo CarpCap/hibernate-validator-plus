@@ -3,14 +3,14 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>io.github.caiquan-github</groupId>
+    <groupId>com.carpcap</groupId>
     <artifactId>hibernate-validator-plus</artifactId>
     <version>1.0.1</version>
     <packaging>jar</packaging>
 
     <name>hibernate-validator-plus</name>
     <description>hibernate validator plus</description>
-    <url>https://github.com/caiquan-github/hibernate-validator-plus</url>
+    <url>https://github.com/carpcap/hibernate-validator-plus</url>
 
 
     <licenses>
@@ -33,20 +33,19 @@
     </developers>
     <!--项目在github或其它托管平台的地址-->
     <scm>
-        <connection>scm:git:git://github.com/caiquan-github/hibernate-validator-plus.git</connection>
-        <developerConnection>scm:git:ssh://git@github.com:caiquan-github/hibernate-validator-plus.git
-        </developerConnection>
-        <url>https://github.com/caiquan-github/hibernate-validator-plus</url>
+        <connection>scm:git:git://github.com/carpcap/hibernate-validator-plus.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com:carpcap/hibernate-validator-plus.git</developerConnection>
+        <url>https://github.com/carpcap/hibernate-validator-plus</url>
     </scm>
 
 
     <distributionManagement>
         <snapshotRepository>
-            <id>ossrh</id>
+            <id>sonatype</id>
             <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
         </snapshotRepository>
         <repository>
-            <id>ossrh</id>
+            <id>sonatype</id>
             <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
         </repository>
     </distributionManagement>
@@ -88,38 +87,15 @@
 
     <build>
         <plugins>
-<!--            <plugin>-->
-<!--                <groupId>org.sonatype.central</groupId>-->
-<!--                <artifactId>central-publishing-maven-plugin</artifactId>-->
-<!--                <version>0.4.0</version>-->
-<!--                <extensions>true</extensions>-->
-<!--                <configuration>-->
-<!--                    <publishingServerId>central</publishingServerId>-->
-<!--                    <tokenAuth>true</tokenAuth>-->
-<!--                </configuration>-->
-<!--            </plugin>-->
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-release-plugin</artifactId>
-                <version>2.5.3</version>
+                <groupId>org.sonatype.central</groupId>
+                <artifactId>central-publishing-maven-plugin</artifactId>
+                <version>0.7.0</version>
+                <extensions>true</extensions>
                 <configuration>
-                    <autoVersionSubmodules>true</autoVersionSubmodules>
-                    <useReleaseProfile>false</useReleaseProfile>
-                    <releaseProfiles>release</releaseProfiles>
-                    <goals>deploy</goals>
+                    <publishingServerId>sonatype</publishingServerId>
                 </configuration>
             </plugin>
-<!--            <plugin>-->
-<!--                <groupId>org.sonatype.plugins</groupId>-->
-<!--                <artifactId>nexus-staging-maven-plugin</artifactId>-->
-<!--                <version>1.6.7</version>-->
-<!--                <extensions>true</extensions>-->
-<!--                <configuration>-->
-<!--                    <serverId>ossrh</serverId>-->
-<!--                    <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>-->
-<!--                    <autoReleaseAfterClose>true</autoReleaseAfterClose>-->
-<!--                </configuration>-->
-<!--            </plugin>-->
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -160,13 +136,9 @@
                         </goals>
                     </execution>
                 </executions>
-                <configuration>
-                    <gpgArguments>
-                        <arg>--pinentry-mode</arg>
-                        <arg>loopback</arg>
-                    </gpgArguments>
-                </configuration>
             </plugin>
+
+
         </plugins>
     </build>
 
