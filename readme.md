@@ -14,10 +14,10 @@
 如何依赖
 
 ```maven
-       <dependency>
-            <groupId>io.github.caiquan-github</groupId>
+        <dependency>
+            <groupId>com.carpcap</groupId>
             <artifactId>hibernate-validator-plus</artifactId>
-            <version>1.0.0</version>
+            <version>1.0.1</version>
         </dependency>
 ```
 
