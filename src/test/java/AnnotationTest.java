@@ -1,11 +1,11 @@
-import com.kwon.validatorplus.groups.PostGroup;
-import com.kwon.validatorplus.utils.ValidatorUtil;
+import com.carpcap.validatorplus.groups.PostGroup;
+import com.carpcap.validatorplus.utils.ValidatorUtil;
 
 import javax.validation.groups.Default;
 import java.io.File;
 
 /**
- * @author Kwon
+ * @author CarpCap
  */
 public class AnnotationTest {
     public static void main(String[] args) {
