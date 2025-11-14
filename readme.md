@@ -2,14 +2,26 @@
 
 基于 Hibernate Validator 的扩展工具包，提供更多常用注解、分组校验、校验工具类等，帮助开发者更便捷地完成 Java 对象或请求参数的验证。
 
+依赖模块精简，整体架构更加轻量、高效。
+![img.png](docs/img.png)
 ---
+
+
 
 ## 🛠 使用示例
 
 https://github.com/carpcap/hibernate-validator-plus-demo
 
-## 📦 快速引入
+### 根据不同分组来分别校验场景（内置5类分组）
 
+声明分组类别
+![img0.png](docs/img0.png)
+通过Spring Mvc自动校验
+![img1.png](docs/img1.png)
+调用提供的工具类进行手动校验 校验失败会抛出ValidationException
+![img2.png](docs/img2.png)
+
+## 📦 快速引入
 在 Maven 项目中加入以下依赖：
 
 ```xml

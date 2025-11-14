@@ -23,9 +23,9 @@ public class AnnotationTest {
 
         File file = new File("src/test/resource/3.png");
         user.setFile(file);
-//        user.setD1(new Date(1212L));
-//        ValidatorUtil.validate(user, PostDefaultGroup.class);
-        ValidatorUtil.validate(user, PostGroup.class, Default.class);
+
+        //post请求
+        ValidatorUtil.validate(user, PostGroup.class);
 
         System.out.println("通过");
 
