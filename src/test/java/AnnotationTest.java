@@ -1,6 +1,6 @@
-import com.carpcap.validatorplus.groups.http.CPost;
-import com.carpcap.validatorplus.groups.http.CPostDef;
-import com.carpcap.validatorplus.utils.CValid;
+import com.carpcap.hvp.groups.CPost;
+import com.carpcap.hvp.groups.CPostDef;
+import com.carpcap.hvp.utils.CValid;
 
 import java.io.File;
 

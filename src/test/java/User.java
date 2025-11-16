@@ -1,5 +1,5 @@
-import com.carpcap.validatorplus.annotation.*;
-import com.carpcap.validatorplus.groups.http.CPost;
+import com.carpcap.hvp.annotation.*;
+import com.carpcap.hvp.groups.CPost;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.groups.Default;
@@ -14,9 +14,9 @@ public class User {
     private String name;
     private Integer age;
     private Integer sex;
-    @CDate(groups = CPost.class,message = "时间错误d1",min = "202204",max = "202206")
+    @CDateRange(groups = CPost.class,message = "时间错误d1",min = "202204",max = "202206")
     private Date d1;
-    @CDate(groups = {CPost.class, Default.class}, message = "日期需要大于等于202204 小于等于202206",min = "202204",max = "202206")
+    @CDateRange(groups = {CPost.class, Default.class}, message = "日期需要大于等于202204 小于等于202206",min = "202204",max = "202206")
     private String d2;
     @CPhone(groups = CPost.class)
     private String phone;
