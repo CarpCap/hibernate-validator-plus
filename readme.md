@@ -2,10 +2,10 @@
 
 选择语言:
 
-- [中文](README.md)
-- [English](README_en.md)
+- [中文](readme.md)
+- [English](readme.md)
 
-
+---
 
 基于 Hibernate Validator 的扩展工具包，提供更多常用注解、分组校验、校验工具类等，帮助开发者更便捷地完成 Java 对象或请求参数的验证。
 

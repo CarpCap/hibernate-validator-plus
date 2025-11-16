@@ -2,13 +2,15 @@
 
 Select Language:
 
-- [English](README_en.md)
-- [中文](README.md)
+- [English](readme_en.md)
+- [中文](readme.md)
 
+---
 
 An extension toolkit based on **Hibernate Validator**, providing additional commonly used annotations, group validation, utility classes, and more. It helps developers validate Java objects or request parameters more efficiently.
 
 The dependency modules are lightweight, and the overall architecture is clean and efficient.
+<img src="docs/img.png" width="500" style="border: 2px solid #ddd; border-radius: 8px;">
 
 ---
 
