@@ -1,35 +1,62 @@
-# Hibernate Validator Plus 增强版 🔧
+# Hibernate Validator Plus 
 
-选择语言/Select Language:
+🌍 选择语言/Select Language:
 
 - [中文](readme.md)
 - [English](readme_en.md)
 
 ---
 
-基于 Hibernate Validator 的扩展工具包，提供更多常用注解、分组校验、校验工具类等，帮助开发者更便捷地完成 Java 对象或请求参数的验证。
+Hibernate Validator Plus 是基于 **Hibernate Validator** 的增强工具包，提供了更丰富、实用的校验注解、分组校验机制以及统一的校验工具类，让 Java 对象与请求参数验证更加简洁、高效。
+
+📦 **特性：**
+- 内置常用校验注解（账号、密码、邮箱、身份证、IPv4 等）
+- 内置多种数据分组校验方案
+- 精简依赖，架构轻量
+- 支持 Spring MVC 自动校验与工具类手动调用
 
 
-依赖模块精简，整体架构更加轻量、高效。
-
-<img src="docs/img.png" width="500" style="border: 2px solid #ddd; border-radius: 8px;">
-
-
-	* 提供了9种注解 验证日期、身份证、手机号、密码、车牌校验、文件类型、Ipv4等
-	* 提供了默认多种Gourp 用于不同场景下的分组校验
-	* 提供了 工具包 进行手动校验
-	* 提供了AnnotationTest 测试类 快速了解该项目做了什么工作
-
-![anns.png](docs/anns.png)
 ---
 
+## 📘 注解说明
 
+目录位置：[`annotation`](src/main/java/com/carpcap/hvp/annotation)
+
+| 注解名称            | 功能说明         | 详细描述                              |
+|-------------------|------------------|-----------------------------------|
+| `@CAccount`       | 账号格式验证       | 默认：字母开头，5–16 字符，允许字母数字下划线         |
+| `@CPassword`      | 密码强度验证       | 默认：字母开头，6–18 位，仅限字母/数字/下划线        |
+| `@CIdCard`        | 身份证号验证       | 默认：适配中国大陆身份证格式                    |
+| `@CPhone`         | 手机号验证         | 默认：中国手机号                          |
+| `@CEmail`         | 邮箱格式验证       | RFC 标准校验                          |
+| `@CFile`          | 文件校验          | 默认：最大 1 MB；可指定后缀 `fileNameSuffix` |
+| `@CPlateNumber`   | 车牌号验证         | 默认：中国车牌                      |
+| `@CIPv4`          | IPv4 验证        | 合法 IPv4 地址格式                      |
+| `@CDateRange`     | 日期范围验证       | `min` 最小日期、`max` 最大日期             |
+
+---
+
+## 📂 分组（Groups）
+
+目录位置：[`groups`](src/main/java/com/carpcap/hvp/groups)
+
+| 分组名称          | 场景说明      |
+|---------------|-----------|
+| `@CCreate`    | 创建数据校验    |
+| `@CCreateDef` | 创建 + 默认校验 |
+| `@CQuery`     | 查询数据校验    |
+| `@CQueryDef`  | 查询 + 默认校验 |
+| 更多请看源码......  | ......    |
+
+
+---
 
 ## 🛠 使用示例
 
-https://github.com/carpcap/hibernate-validator-plus-demo
+示例项目地址：  
+🔗 https://github.com/carpcap/hibernate-validator-plus-demo
 
-在 Maven 项目中加入以下依赖：
+### 1. Maven 依赖
 
 ```xml
 <dependency>
@@ -38,8 +65,6 @@ https://github.com/carpcap/hibernate-validator-plus-demo
     <version>1.1.0</version>
 </dependency>
 ```
-
-
 
 ### 根据不同分组来分别校验场景（内置5类分组）
 

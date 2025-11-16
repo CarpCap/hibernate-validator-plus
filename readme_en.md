@@ -1,32 +1,66 @@
-# Hibernate Validator Plus Enhanced Version 🔧
 
-选择语言/Select Language:
+
+# Hibernate Validator Plus 
+
+🌍 选择语言/Select Language:
 
 - [中文](readme.md)
 - [English](readme_en.md)
 
 ---
 
-An extension toolkit based on **Hibernate Validator**, providing additional commonly used annotations, group validation, utility classes, and more. It helps developers validate Java objects or request parameters more efficiently.
-
-The dependency modules are lightweight, and the overall architecture is clean and efficient.
-
-<img src="docs/img.png" width="500" style="border: 2px solid #ddd; border-radius: 8px;">
+Hibernate Validator Plus is an enhanced validation toolkit based on **Hibernate Validator**, providing rich validation annotations, flexible group validations, and unified validation utilities.
 
 
-    * Added 9 custom annotations for validating date, ID card, phone number, password, plater number，file type.
-    * Added 10 default groups for different validation scenarios
-    * Added a utility package for manual validation
-    * Added `AnnotationTest` for quickly understanding project features
+
+📦 **Features:**
+- Built-in commonly used validation annotations (account, password, email, ID card, IPv4, etc.)
+- Multiple built-in validation group schemes
+- Lightweight architecture with minimal dependencies
+- Supports both Spring MVC automatic validation and manual validation via utility classes
 
 
 ---
 
-## 🛠 Usage Examples
+## 📘 Annotation Overview
 
-[https://github.com/carpcap/hibernate-validator-plus-demo](https://github.com/carpcap/hibernate-validator-plus-demo)
+Location: [`annotation`](src/main/java/com/carpcap/hvp/annotation)
 
-Add the following dependency in your Maven project:
+| Annotation        | Purpose             | Description                                                    |
+|------------------|----------------------|----------------------------------------------------------------|
+| `@CAccount`      | Account validation   | Starts with a letter, 5–16 chars, alphanumeric + `_`          |
+| `@CPassword`     | Password validation  | Starts with a letter, 6–18 chars, letters/digits/underscore   |
+| `@CIdCard`       | ID card validation   | Supports common CN ID formats                                  |
+| `@CPhone`        | Phone validation     | Mainland China mobile numbers                                  |
+| `@CEmail`        | Email validation     | RFC-compliant email rule                                       |
+| `@CFile`         | File validation      | Default max size 1 MB, file suffix supported                   |
+| `@CPlateNumber`  | Plate number check   | Supports both new & old CN vehicle plates                      |
+| `@CIPv4`         | IPv4 validation      | Standard IPv4 address format                                   |
+| `@CDateRange`    | Date range check     | `min` start date, `max` end date                               |
+
+---
+
+## 📂 Validation Groups
+
+Location: [`groups`](src/main/java/com/carpcap/hvp/groups)
+
+| Group Name      | Purpose                   |
+|-----------------|---------------------------|
+| `@CCreate`      | Create operation          |
+| `@CCreateDef`   | Create + default checks   |
+| `@CQuery`       | Query operation           |
+| `@CQueryDef`    | Query + default checks    |
+| ...             | More extensions supported |
+
+
+---
+
+## 🛠 Usage Example
+
+Demo project:  
+🔗 https://github.com/carpcap/hibernate-validator-plus-demo
+
+### 1. Maven Dependency
 
 ```xml
 <dependency>
@@ -35,6 +69,7 @@ Add the following dependency in your Maven project:
     <version>1.1.0</version>
 </dependency>
 ```
+
 
 ### Validate according to different groups (5 built-in groups)
 
