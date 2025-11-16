@@ -25,7 +25,7 @@ import javax.validation.Payload;
 @Retention(RUNTIME)
 @Repeatable(CDateRange.List.class)
 public @interface CDateRange {
-    String message() default "日期不合法";
+    String message() default "日期范围异常";
 
     /**
     * min date
@@ -40,6 +40,7 @@ public @interface CDateRange {
     /**
      * date format
      * if ==null or ""  use hutool project DateUtil.class autopos parse
+     * yyyyMM need Manual setting
      * */
     String format() default "";
 

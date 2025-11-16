@@ -22,8 +22,10 @@ public abstract class AbstractCDateRangeValidator<T> implements ConstraintValida
             Date result = null;
             if (str != null && !str.trim().isEmpty()) {
                 if (format != null && !format.trim().isEmpty()) {
+                    //规则不为空 则使用规则来进行解析
                     result = DateUtil.parse(str, format);
                 } else {
+                    //如果为空 则使用自动解析
                     result = DateUtil.parse(str);
                 }
             }
@@ -43,10 +45,10 @@ public abstract class AbstractCDateRangeValidator<T> implements ConstraintValida
         Date maxDate = stringToDate(max, format);
         Date minDate = stringToDate(min, format);
 
-        if (maxDate != null && value != null && value.compareTo(maxDate) == 1) {
+        if (maxDate != null  && value.compareTo(maxDate) > 0) {
             return false;
         }
-        if (minDate != null && value != null && value.compareTo(minDate) == -1) {
+        if (minDate != null  && value.compareTo(minDate) < 0) {
             return false;
         }
         return true;

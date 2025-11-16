@@ -3,6 +3,7 @@ import com.carpcap.hvp.groups.CPostDef;
 import com.carpcap.hvp.utils.CValid;
 
 import java.io.File;
+import java.time.LocalDate;
 
 /**
  * @author CarpCap
@@ -16,6 +17,10 @@ public class AnnotationTest {
         user.setIdCard("687612346543176543");
         user.setUser("ubsdhdsj11111");
         user.setPasswd("jjre231123");
+
+        LocalDate localDate = LocalDate.of(2022, 6, 1);
+        user.setD1(localDate);
+
         user.setD2("202204");
         user.setLpn("粤B39006");
         user.setFileName(".jpg");

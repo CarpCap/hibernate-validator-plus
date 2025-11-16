@@ -4,6 +4,7 @@ import com.carpcap.hvp.groups.CPost;
 import javax.validation.constraints.NotBlank;
 import javax.validation.groups.Default;
 import java.io.File;
+import java.time.LocalDate;
 import java.util.Date;
 
 /**
@@ -14,8 +15,8 @@ public class User {
     private String name;
     private Integer age;
     private Integer sex;
-    @CDateRange(groups = CPost.class,message = "时间错误d1",min = "202204",max = "202206")
-    private Date d1;
+    @CDateRange(groups = CPost.class,message = "时间错误d1",min = "20220601",max = "20220630")
+    private LocalDate d1;
     @CDateRange(groups = {CPost.class, Default.class}, message = "日期需要大于等于202204 小于等于202206",min = "202204",max = "202206")
     private String d2;
     @CPhone(groups = CPost.class)
@@ -118,11 +119,11 @@ public class User {
         this.sex = sex;
     }
 
-    public Date getD1() {
+    public LocalDate getD1() {
         return d1;
     }
 
-    public void setD1(Date d1) {
+    public void setD1(LocalDate d1) {
         this.d1 = d1;
     }
 

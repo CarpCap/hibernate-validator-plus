@@ -25,6 +25,6 @@ public class CDateRangeValidator extends AbstractCDateRangeValidator<Date> {
         String max=attributes.get("max").toString();
         String min=attributes.get("min").toString();
         String format=attributes.get("format").toString();
-        return isValid(date,max,min,format);
+        return super.isValid(date,max,min,format);
     }
 }
