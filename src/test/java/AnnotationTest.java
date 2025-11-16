@@ -1,7 +1,7 @@
-import com.carpcap.validatorplus.groups.PostGroup;
-import com.carpcap.validatorplus.utils.ValidatorUtil;
+import com.carpcap.validatorplus.groups.http.CPost;
+import com.carpcap.validatorplus.groups.http.CPostDef;
+import com.carpcap.validatorplus.utils.CValid;
 
-import javax.validation.groups.Default;
 import java.io.File;
 
 /**
@@ -10,8 +10,7 @@ import java.io.File;
 public class AnnotationTest {
     public static void main(String[] args) {
         User user = new User();
-        user.setName("小明");
-        user.setPhone("13375483421");
+        user.setName("张三");
         user.setIp("127.0.2.3");
         user.setDomain("baidu.com");
         user.setIdCard("687612346543176543");
@@ -20,12 +19,21 @@ public class AnnotationTest {
         user.setD2("202204");
         user.setLpn("粤B39006");
         user.setFileName(".jpg");
-
         File file = new File("src/test/resource/3.png");
         user.setFile(file);
+        //上面都是正确数据
 
-        //post请求
-        ValidatorUtil.validate(user, PostGroup.class);
+        // 错误数据，手机号 声明了CPost.class
+        user.setPhone("13375483434345534533421");
+
+        //验证失败 手机不合法
+        CValid.validate(user, CPost.class);
+
+        //验证成功 通过，只走Def默认验证
+        CValid.validate(user);
+
+        //验证失败 手机不合法。CPostDef 继承了 CPost 和 Def默认验证
+        CValid.validate(user, CPostDef.class);
 
         System.out.println("通过");
 

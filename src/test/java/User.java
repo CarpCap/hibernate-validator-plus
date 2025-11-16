@@ -1,5 +1,5 @@
 import com.carpcap.validatorplus.annotation.*;
-import com.carpcap.validatorplus.groups.PostGroup;
+import com.carpcap.validatorplus.groups.http.CPost;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.groups.Default;
@@ -10,40 +10,40 @@ import java.util.Date;
  * @author CarpCap
  */
 public class User {
-    @NotBlank(groups = PostGroup.class,message = "不能为空")
+    @NotBlank(groups = CPost.class,message = "不能为空")
     private String name;
     private Integer age;
     private Integer sex;
-    @IDate(groups = PostGroup.class,message = "时间错误d1",min = "202204",max = "202206")
+    @CDate(groups = CPost.class,message = "时间错误d1",min = "202204",max = "202206")
     private Date d1;
-    @IDate (groups = {PostGroup.class, Default.class}, message = "日期需要大于等于202204 小于等于202206",min = "202204",max = "202206")
+    @CDate(groups = {CPost.class, Default.class}, message = "日期需要大于等于202204 小于等于202206",min = "202204",max = "202206")
     private String d2;
-    @IPhone(groups = PostGroup.class)
+    @CPhone(groups = CPost.class)
     private String phone;
     //车牌
-    @IlicensePlateNumber(groups = PostGroup.class)
+    @CPlateNumber(groups = CPost.class)
     private String lpn;
 
 
-    @IFile(groups = PostGroup.class,fileNameSuffix = {"jpg","jpeg","png"})
+    @CFile(groups = CPost.class,fileNameSuffix = {"jpg","jpeg","png"})
     private String fileName;
 
-    @IFile(groups = PostGroup.class,fileSize = 1024*200)
+    @CFile(groups = CPost.class,fileSize = 1024*200)
     private File file;
 
 
 
-    @IIpAddress(groups = PostGroup.class)
+    @CIpv4(groups = CPost.class)
     private String ip;
-    @IDomain(groups = PostGroup.class)
+    @CDomain(groups = CPost.class)
     private String domain;
 
-    @IIdCard
+    @CIdCard
     private String idCard;
 
-    @IAccount
+    @CAccount
     private String user;
-    @IPassword
+    @CPassword
     private String passwd;
 
     public  File getFile() {
