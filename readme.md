@@ -3,7 +3,7 @@
 选择语言:
 
 - [中文](readme.md)
-- [English](readme.md)
+- [English](readme_en.md)
 
 ---
 
