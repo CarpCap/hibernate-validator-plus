@@ -1,9 +1,9 @@
 # Hibernate Validator Plus Enhanced Version 🔧
 
-Select Language:
+选择语言/Select Language:
 
-- [English](readme_en.md)
 - [中文](readme.md)
+- [English](readme_en.md)
 
 ---
 
