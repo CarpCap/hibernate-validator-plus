@@ -22,7 +22,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Repeatable(CIpv4.List.class)
 public @interface CIpv4 {
 
-    String message() default "ip地址不合法";
+    String message() default "{com.carpcap.hvp.annotation.CIpv4.message}";
 
     String regexp() default "^((2(5[0-5]|[0-4]\\d))|[0-1]?\\d{1,2})(\\.((2(5[0-5]|[0-4]\\d))|[0-1]?\\d{1,2})){3}$";
 

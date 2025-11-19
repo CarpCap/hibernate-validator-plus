@@ -19,7 +19,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 public @interface CPlateNumber {
 
 
-    String message() default "车牌号不合法";
+    String message() default "{com.carpcap.hvp.annotation.CPlateNumber.message}";
 
     String regexp() default "^[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领A-Z]{1}[A-Z]{1}[A-Z0-9]{4}[A-Z0-9挂学警港澳]{1}$";
 

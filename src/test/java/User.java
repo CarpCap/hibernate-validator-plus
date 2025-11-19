@@ -2,6 +2,7 @@ import com.carpcap.hvp.annotation.*;
 import com.carpcap.hvp.groups.CPost;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.groups.Default;
 import java.io.File;
 import java.time.LocalDate;
@@ -20,6 +21,7 @@ public class User {
     @CDateRange(groups = {CPost.class, Default.class}, message = "日期需要大于等于202204 小于等于202206",min = "202204",max = "202206")
     private String d2;
     @CPhone(groups = CPost.class)
+    @NotNull
     private String phone;
     //车牌
     @CPlateNumber(groups = CPost.class)

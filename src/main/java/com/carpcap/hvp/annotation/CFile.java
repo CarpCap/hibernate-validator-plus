@@ -22,7 +22,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 public @interface CFile {
 
 
-    String message() default "文件不满足条件";
+    String message() default "{com.carpcap.hvp.annotation.CFile.message}";
 
     //文件需要的后缀名限制  默认为常用的图片后缀 如果为空则不限制
     String[] fileNameSuffix() default  { };

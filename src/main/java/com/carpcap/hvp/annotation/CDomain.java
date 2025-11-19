@@ -20,7 +20,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Repeatable(CDomain.List.class)
 public @interface CDomain {
 
-    String message() default "域名不合法";
+    String message() default "{com.carpcap.hvp.annotation.CDomain.message}";
 
     String regexp() default "[a-zA-Z0-9][-a-zA-Z0-9]{0,62}(\\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+\\.?";
 

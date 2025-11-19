@@ -25,7 +25,8 @@ import javax.validation.Payload;
 @Retention(RUNTIME)
 @Repeatable(CDateRange.List.class)
 public @interface CDateRange {
-    String message() default "日期范围异常";
+
+    String message() default "{com.carpcap.hvp.annotation.CDateRange.message}";
 
     /**
     * min date

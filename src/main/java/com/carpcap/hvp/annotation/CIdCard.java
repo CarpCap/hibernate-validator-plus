@@ -20,7 +20,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Repeatable(CIdCard.List.class)
 public @interface CIdCard {
 
-    String message() default "身份证不合法";
+    String message() default "{com.carpcap.hvp.annotation.CIdCard.message}";
 
     String regexp() default "^\\d{15}|\\d{18}$";
 

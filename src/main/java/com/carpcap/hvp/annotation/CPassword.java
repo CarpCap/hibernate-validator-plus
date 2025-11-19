@@ -20,7 +20,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Repeatable(CPassword.List.class)
 public @interface CPassword {
 
-    String message() default "密码不合法 以字母开头，长度在6~18之间，只能包含字母、数字和下划线";
+    String message() default "{com.carpcap.hvp.annotation.CPassword.message}";
 
     String regexp() default "^[a-zA-Z]\\w{5,17}$";
 

@@ -4,12 +4,16 @@ import com.carpcap.hvp.utils.CValid;
 
 import java.io.File;
 import java.time.LocalDate;
+import java.util.Locale;
 
 /**
  * @author CarpCap
  */
 public class AnnotationTest {
     public static void main(String[] args) {
+
+
+
         User user = new User();
         user.setName("张三");
         user.setIp("127.0.2.3");
@@ -28,8 +32,11 @@ public class AnnotationTest {
         user.setFile(file);
         //上面都是正确数据
 
+        Locale.setDefault(Locale.JAPANESE);
+
         // 错误数据，手机号 声明了CPost.class
-        user.setPhone("13375483434345534533421");
+//        user.setPhone("13375483434");
+        user.setPhone("13375483434213123123");
 
         //验证失败 手机不合法
         CValid.validate(user, CPost.class);

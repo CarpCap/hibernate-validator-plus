@@ -21,7 +21,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Repeatable(CPhone.List.class)
 public @interface CPhone {
 
-    String message() default "手机不合法";
+    String message() default "{com.carpcap.hvp.annotation.CPhone.message}";
 
     String regexp() default "^((13[0-9])|(15[^4,\\D])|(14[57])|(17[0])|(17[7])|(18[0,0-9]))\\d{8}$";
 

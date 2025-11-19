@@ -20,7 +20,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Repeatable(CAccount.List.class)
 public @interface CAccount {
 
-    String message() default "账号不合法 字母开头，允许5-16字节，允许字母数字下划线";
+    String message() default "{com.carpcap.hvp.annotation.CAccount.message}";
 
     String regexp() default "^[a-zA-Z][a-zA-Z0-9_]{4,15}$";
 
