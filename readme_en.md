@@ -18,6 +18,7 @@ Hibernate Validator Plus is an enhanced validation toolkit based on **Hibernate 
 - Multiple built-in validation group schemes
 - Lightweight architecture with minimal dependencies
 - Supports both Spring MVC automatic validation and manual validation via utility classes
+- Support i18n
 
 
 ---

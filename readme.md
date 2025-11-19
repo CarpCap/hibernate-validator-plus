@@ -14,6 +14,7 @@ Hibernate Validator Plus 是基于 **Hibernate Validator** 的增强工具包，
 - 内置多种数据分组校验方案
 - 精简依赖，架构轻量
 - 支持 Spring MVC 自动校验与工具类手动调用
+- 支持国际化i18n
 
 
 ---
