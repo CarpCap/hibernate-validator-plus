@@ -32,7 +32,7 @@ public class AnnotationTest {
         user.setFile(file);
         //上面都是正确数据
 
-        Locale.setDefault(Locale.JAPANESE);
+        Locale.setDefault(Locale.TAIWAN);
 
         // 错误数据，手机号 声明了CPost.class
 //        user.setPhone("13375483434");
