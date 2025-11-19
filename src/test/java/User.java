@@ -12,7 +12,7 @@ import java.util.Date;
  * @author CarpCap
  */
 public class User {
-    @NotBlank(groups = CPost.class,message = "不能为空")
+    @NotBlank(groups = CPost.class)
     private String name;
     private Integer age;
     private Integer sex;
