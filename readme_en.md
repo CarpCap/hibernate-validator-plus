@@ -72,7 +72,7 @@ Demo project:
 ```
 
 
-### Validate according to different groups (5 built-in groups)
+### Validate according to different groups
 
 Declare validation groups:
 
