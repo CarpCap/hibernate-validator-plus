@@ -59,7 +59,7 @@ Location: [`groups`](src/main/java/com/carpcap/hvp/groups)
 | ...             | More extensions supported |
 
 ---
-# 🔧 CValid Utility Class
+## 🔧 CValid Utility Class
 
 `CValid` provides multiple validation capabilities, including standard validation, fast-fail validation, property-level validation, and group-based validation.
 

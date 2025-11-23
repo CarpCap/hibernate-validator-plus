@@ -1,20 +1,75 @@
-# 📌 Version Notes (Changelog)
 
-## 1.1.x Versions
+# 📌 Changelog (English Version)
 
-| Version | Details                                                                                                       |
-|--------|---------------------------------------------------------------------------------------------------------------|
-| 1.1.4 | Added `CValid` utility class with quick validation methods, providing convenient and safe validation results. |
-| 1.1.3 | Added i18n (internationalization) support.                                                                    |
-| 1.1.2 | Dependency upgrades: <br/>hibernate-validator 6.2.0.Final → 6.2.5.Final; <br/>hutool-core 5.8.40 → 5.8.41.              |
-| 1.1.1 | Fixed a bug related to group inheritance.                                                                     |
-| 1.1.0 ❗Not Recommended | Modified project package paths; changed annotation names . ⚠️ There is a grouping bug.                        |
+## 🎯 Version 1.1.x Series
 
 ---
 
-## 1.0.x Versions
+### 🚀 1.1.4
 
-| Version | Details |
-|-------|---------|
-| 1.0.1 | Added license plate validation; added file validation. |
-| 1.0.0 | Introduced the first set of 7 custom validation annotations; included 5 default validation groups; provided manual validation utilities; added `AnnotationTest` example. |
+> **New Features**
+
+* ✨ Added fast validation method in `CValid`
+* 🔒 Provides more convenient and safer validation results
+
+---
+
+### 🌍 1.1.3
+
+> **Internationalization**
+
+* 🌐 Added i18n multi-language support
+
+---
+
+### 📦 1.1.2
+
+> **Dependency Upgrades**
+
+* ⬆️ `hibernate-validator`: 6.2.0.Final → **6.2.5.Final**
+* ⬆️ `hutool-core`: 5.8.40 → **5.8.41**
+
+---
+
+### 🛠 1.1.1
+
+> **Bug Fixes**
+
+* 🐞 Fixed group inheritance issue
+
+---
+
+### ⚠️ 1.1.0 (Not Recommended)
+
+> ❌ **Contains group inheritance bug — not recommended**
+
+* 🗂 Updated project structure
+* 🏷 Renamed some annotations
+
+---
+
+## 📘 Version 1.0.x Series
+
+---
+
+### 🧩 1.0.1
+
+> **Enhancements**
+
+* 🚗 Added license plate validation
+* 📄 Added file validation
+
+---
+
+### 🏁 1.0.0
+
+> **Initial Release**
+
+* 🏷 Provided first 7 custom validation annotations
+* 🔗 Included 5 default validation groups
+* 🧰 Added manual validation utility class
+* 🧪 Included test examples
+
+---
+
+*If you need a version without emojis, a more compact variant, or a different visual style (badges, color blocks, or plain text), tell me which and I will generate it.*
