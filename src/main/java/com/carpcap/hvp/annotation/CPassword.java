@@ -22,7 +22,20 @@ public @interface CPassword {
 
     String message() default "{com.carpcap.hvp.annotation.CPassword.message}";
 
-    String regexp() default "^[a-zA-Z]\\w{5,17}$";
+    String regexp() default "^(?=.*[A-Za-z])(?=.*\\d).+$";
+
+    /**
+     * 最小长度 包含
+     * @return 最小长度值
+     */
+    int min() default 6;
+
+    /**
+     * 最大长度 包含
+     * @return 最大长度值
+     */
+    int max() default 18;
+
 
 
     Class<?>[] groups() default { };

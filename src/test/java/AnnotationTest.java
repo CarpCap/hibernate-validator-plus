@@ -22,7 +22,7 @@ public class AnnotationTest {
         user.setDomain("baidu.com");
         user.setIdCard("687612346543176543");
         user.setUser("ubsdhdsj11111");
-        user.setPasswd("jjre231123");
+        user.setPasswd("jjre2311232222");
 
         LocalDate localDate = LocalDate.of(2022, 6, 1);
         user.setD1(localDate);

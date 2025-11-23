@@ -22,8 +22,19 @@ public @interface CAccount {
 
     String message() default "{com.carpcap.hvp.annotation.CAccount.message}";
 
-    String regexp() default "^[a-zA-Z][a-zA-Z0-9_]{4,15}$";
+    String regexp() default "^[a-zA-Z][a-zA-Z0-9_]*$";
 
+    /**
+     * 最小长度 包含
+     * @return 最小长度值
+     */
+    int min() default 4;
+
+    /**
+     * 最大长度 包含
+     * @return 最大长度值
+     */
+    int max() default 15;
 
     Class<?>[] groups() default { };
 
