@@ -12,12 +12,13 @@ import javax.validation.ConstraintValidator;
 public abstract class AbstractCFileValidator<T> implements ConstraintValidator<CFile, T>{
     protected String[] fileNameSuffix;
     protected long fileSize;
-
+    protected boolean allowNull;
 
     @Override
     public void initialize(CFile iFile) {
         fileNameSuffix = iFile.fileNameSuffix();
         fileSize = iFile.fileSize();
+        allowNull=iFile.allowNull();
     }
 
 

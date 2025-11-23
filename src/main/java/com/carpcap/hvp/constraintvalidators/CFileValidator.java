@@ -1,6 +1,8 @@
 package com.carpcap.hvp.constraintvalidators;
 
 
+import com.carpcap.hvp.annotation.CFile;
+import com.carpcap.hvp.utils.CValidNullUtil;
 import com.google.auto.service.AutoService;
 
 import javax.validation.ConstraintValidator;
@@ -17,8 +19,11 @@ public class CFileValidator extends AbstractCFileValidator<File> {
 
     @Override
     public boolean isValid(File file, ConstraintValidatorContext constraintValidatorContext) {
-        if (file==null) return false;
-        if (file.length()==0) return false;
+        int vn = CValidNullUtil.allowNullValid(allowNull,file);
+        if (0 != vn) {
+            return vn == 1;
+        }
+
         boolean validFileNameSuffixResult = validFileNameSuffix(file.getName());
         boolean validFileSizeResult  = file.length()<=fileSize;
         return validFileNameSuffixResult && validFileSizeResult;

@@ -3,6 +3,7 @@ package com.carpcap.hvp.constraintvalidators;
 
 import com.carpcap.hvp.annotation.CAccount;
 import com.carpcap.hvp.annotation.CPassword;
+import com.carpcap.hvp.utils.CValidNullUtil;
 import com.google.auto.service.AutoService;
 
 import javax.validation.ConstraintValidator;
@@ -29,9 +30,11 @@ public class CPasswordValidator extends AbstractCPatternValidator<CPassword> {
     @Override
     public boolean isValid(CharSequence value, ConstraintValidatorContext context) {
         // 空值检查由@NotNull等注解处理
-        if (value == null || value.toString().trim().isEmpty()) {
-            return true;
+        int vn = CValidNullUtil.validNull(value, context);
+        if (0 != vn) {
+            return vn == 1;
         }
+
 
         String valueStr = value.toString();
 

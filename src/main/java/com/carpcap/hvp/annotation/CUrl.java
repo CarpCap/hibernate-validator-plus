@@ -25,6 +25,13 @@ public @interface CUrl {
 
     String message() default "{com.carpcap.hvp.annotation.CUrl.message}";
 
+
+    /**
+     * 是否允许null值
+     * @return true允许null，false不允许null
+     */
+    boolean allowNull() default true;
+
     /**
      * 允许的URL协议列表，默认为http和https
      */
@@ -43,6 +50,7 @@ public @interface CUrl {
     Class<?>[] groups() default { };
 
     Class<? extends Payload>[] payload() default { };
+
 
     /**
      * @see CUrl

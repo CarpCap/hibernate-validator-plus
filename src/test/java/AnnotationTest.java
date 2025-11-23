@@ -20,9 +20,11 @@ public class AnnotationTest {
         user.setName("张三");
         user.setIp("127.0.2.3");
         user.setIp6("2001:db8::192.168.0.1");
+        user.setIp66("2001:db8::192.168.0.2");
         user.setDomain("中文.cn");
         user.setIdCard("687612346543176543");
         user.setUser("ubsdhdsj11111");
+        user.setUser1("ubsdhdsj112222222222222222222222222222111");
         user.setPasswd("jjre2311232222");
 
         LocalDate localDate = LocalDate.of(2022, 6, 1);

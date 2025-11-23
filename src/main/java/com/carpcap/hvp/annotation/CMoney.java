@@ -36,6 +36,14 @@ public @interface CMoney {
      */
     double max() default Double.MAX_VALUE;
 
+
+    /**
+     * 是否允许null值
+     * @return true允许null，false不允许null
+     */
+    boolean allowNull() default true;
+
+
     /**
      * 最小整数位数（包含），默认为1 ， 1代表0-9   2代表 0-99
      */

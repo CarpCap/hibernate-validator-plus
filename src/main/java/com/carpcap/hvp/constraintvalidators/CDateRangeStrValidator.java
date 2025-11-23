@@ -1,6 +1,7 @@
 package com.carpcap.hvp.constraintvalidators;
 
 
+import com.carpcap.hvp.utils.CValidNullUtil;
 import com.google.auto.service.AutoService;
 import org.hibernate.validator.internal.engine.constraintvalidation.ConstraintValidatorContextImpl;
 
@@ -20,6 +21,11 @@ public class CDateRangeStrValidator extends AbstractCDateRangeValidator<CharSequ
 
     @Override
     public boolean isValid(CharSequence charSequence, ConstraintValidatorContext context) {
+        int vn = CValidNullUtil.validNull(charSequence, context);
+        if (0 != vn) {
+            return vn == 1;
+        }
+
         ConstraintValidatorContextImpl cvc = (ConstraintValidatorContextImpl) context;
         Map<String, Object> attributes = cvc.getConstraintDescriptor().getAttributes();
         String format = attributes.get("format").toString();

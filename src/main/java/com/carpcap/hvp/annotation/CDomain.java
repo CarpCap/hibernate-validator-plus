@@ -24,10 +24,17 @@ public @interface CDomain {
 
     String regexp() default "^(?:[a-zA-Z0-9\\u4e00-\\u9fa5]+(?:-[a-zA-Z0-9\\u4e00-\\u9fa5]+)*\\.)+[a-zA-Z\\u4e00-\\u9fa5]{2,}$";
 
+    /**
+     * 是否允许null值
+     * @return true允许null，false不允许null
+     */
+    boolean allowNull() default true;
 
     Class<?>[] groups() default { };
 
     Class<? extends Payload>[] payload() default { };
+
+
 
     /**
      *

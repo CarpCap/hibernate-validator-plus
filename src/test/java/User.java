@@ -21,8 +21,7 @@ public class User {
     private LocalDate d1;
     @CDateRange(groups = {CPost.class, Default.class}, message = "日期需要大于等于202204 小于等于202206",min = "202204",max = "202206")
     private String d2;
-    @CPhone(groups = CPost.class)
-    @NotNull
+    @CPhone(groups = CPost.class,allowNull = false)
     private String phone;
     //车牌
     @CPlateNumber(groups = CPost.class)
@@ -32,7 +31,7 @@ public class User {
     @CFile(groups = CPost.class,fileNameSuffix = {"jpg","jpeg","png"})
     private String fileName;
 
-    @CFile(groups = CPost.class,fileSize = 1024*200)
+    @CFile(groups = CPost.class,fileSize = 1024*200,allowNull = false)
     private File file;
 
 
@@ -42,6 +41,9 @@ public class User {
 
     @CIpv6(groups = CPost.class)
     private String ip6;
+
+    @CIpv6(groups = CPost.class)
+    private String ip66;
     @CDomain(groups = CPost.class)
     private String domain;
 
@@ -50,6 +52,8 @@ public class User {
 
     @CAccount
     private String user;
+    @CAccount(max = 333)
+    private String user1;
     @CPassword
     private String passwd;
 
@@ -74,9 +78,25 @@ public class User {
     private BigDecimal moneyBig;
 
 
-    @CMacAddress(groups = CGet.class)
+    @CMacAddress(groups = CGet.class,allowNull = true)
     private String mac;
 
+
+    public String getIp66() {
+        return ip66;
+    }
+
+    public void setIp66(String ip66) {
+        this.ip66 = ip66;
+    }
+
+    public String getUser1() {
+        return user1;
+    }
+
+    public void setUser1(String user1) {
+        this.user1 = user1;
+    }
 
     public String getIp6() {
         return ip6;
