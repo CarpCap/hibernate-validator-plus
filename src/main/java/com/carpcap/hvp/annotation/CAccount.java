@@ -28,13 +28,13 @@ public @interface CAccount {
      * 最小长度 包含
      * @return 最小长度值
      */
-    int min() default 4;
+    int min() default 5;
 
     /**
      * 最大长度 包含
      * @return 最大长度值
      */
-    int max() default 15;
+    int max() default 16;
 
     Class<?>[] groups() default { };
 
