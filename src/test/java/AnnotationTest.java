@@ -19,7 +19,7 @@ public class AnnotationTest {
         User user = new User();
         user.setName("张三");
         user.setIp("127.0.2.3");
-        user.setDomain("baidu.com");
+        user.setDomain("中文.cn");
         user.setIdCard("687612346543176543");
         user.setUser("ubsdhdsj11111");
         user.setPasswd("jjre2311232222");
