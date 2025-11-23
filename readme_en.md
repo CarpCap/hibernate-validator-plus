@@ -23,6 +23,11 @@ Hibernate Validator Plus is an enhanced validation framework based on **Hibernat
 
 ---
 
+# Versions
+[versions_en.md](docs/versions_en.md)
+
+---
+
 ## 📘 Annotation Overview
 
 Location: [`annotation`](src/main/java/com/carpcap/hvp/annotation)
@@ -53,6 +58,22 @@ Location: [`groups`](src/main/java/com/carpcap/hvp/groups)
 | `@CQueryDef`    | Query + default checks    |
 | ...             | More extensions supported |
 
+---
+# 🔧 CValid Utility Class
+
+`CValid` provides multiple validation capabilities, including standard validation, fast-fail validation, property-level validation, and group-based validation.
+
+Exception Class：ValidationException
+
+| Method Type                 | Validation Mode | Failure Behavior | Return Type    |
+|-----------------------------|-----------------|------------------|----------------|
+| `validate`                  | Fast-Fail ⚡     | Throws Exception ❗ | void           |
+| `tryValidate`               | Full Check      | No Exception     | List<String>   |
+| `tryFastValidate`           | Fast-Fail ⚡     | No Exception     | String         |
+| `validateProperty`          | Fast-Fail ⚡     | Throws Exception ❗ | void           |
+| `tryValidateProperty`       | Full Check      | No Exception     | List<String>   |
+| `tryFastValidateProperty`   | Fast-Fail ⚡     | No Exception     | String         |
+
 
 ---
 
@@ -67,7 +88,7 @@ Demo project:
 <dependency>
     <groupId>com.carpcap</groupId>
     <artifactId>hibernate-validator-plus</artifactId>
-    <version>1.1.3</version>
+    <version>1.1.4</version>
 </dependency>
 ```
 

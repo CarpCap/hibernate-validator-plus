@@ -19,6 +19,11 @@ Hibernate Validator Plus 是基于 **Hibernate Validator** 的增强框架，提
 
 ---
 
+# 更新日志
+[versions.md](docs/versions.md)
+
+---
+
 ## 📘 注解说明
 
 目录位置：[`annotation`](src/main/java/com/carpcap/hvp/annotation)
@@ -52,6 +57,27 @@ Hibernate Validator Plus 是基于 **Hibernate Validator** 的增强框架，提
 
 ---
 
+# 🔧 CValid 工具类
+
+`CValid` 提供普通校验、快速校验（fail-fast）、属性校验、分组校验等多种能力。
+
+异常类：ValidationException
+
+| 方法类型                       | 校验模式 | 失败行为 | 返回类型         |
+| ------------------------- | ---- | ---- | ------------ |
+| `validate`                 |快速校验 ⚡ | 抛异常❗  | void         |
+| `tryValidate`               | 全量校验 | 不抛异常 | List<String> |
+| `tryFastValidate`          | 快速校验  ⚡| 不抛异常 | String       |
+| `validateProperty`           | 快速校验  ⚡| 抛异常❗  | void         |
+| `tryValidateProperty`        | 全量校验 | 不抛异常 | List<String> |
+| `tryFastValidateProperty`   | 快速校验 ⚡ | 不抛异常 | String       |
+
+
+
+---
+
+
+
 ## 🛠 使用示例
 
 示例项目地址：  
@@ -63,7 +89,7 @@ Hibernate Validator Plus 是基于 **Hibernate Validator** 的增强框架，提
 <dependency>
     <groupId>com.carpcap</groupId>
     <artifactId>hibernate-validator-plus</artifactId>
-    <version>1.1.3</version>
+    <version>1.1.4</version>
 </dependency>
 ```
 
