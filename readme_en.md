@@ -9,7 +9,7 @@
 
 ---
 
-Hibernate Validator Plus is an enhanced validation toolkit based on **Hibernate Validator**, providing rich validation annotations, flexible group validations, and unified validation utilities.
+Hibernate Validator Plus is an enhanced validation framework based on **Hibernate Validator**, providing rich validation annotations, flexible group validations, and unified validation utilities.
 
 
 
