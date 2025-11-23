@@ -28,22 +28,22 @@ Hibernate Validator Plus 是基于 **Hibernate Validator** 的增强框架，提
 
 目录位置：[`annotation`](src/main/java/com/carpcap/hvp/annotation)
 
-| 注解名称            | 功能说明       | 详细描述                                   |
-|-----------------|------------|----------------------------------------|
-| `@CAccount`     | 账号格式验证     | 默认：字母开头，5–16 字符，允许字母数字下划线              |
-| `@CPassword`    | 密码强度验证     | 默认：密码长度要求6-18，至少1个字母，至少1个数字。           |
-| `@CIdCard`      | 身份证号验证     | 默认：适配中国大陆身份证格式                         |
-| `@CPhone`       | 手机号验证      | 默认：中国手机号                               |
-| `@CEmail`       | 邮箱格式验证     | RFC 标准校验                               |
-| `@CFile`        | 文件验证       | 默认：最大 1 MB；可指定后缀 `fileNameSuffix`      |
-| `@CPlateNumber` | 车牌号验证      | 默认：中国车牌                                |
-| `@CIpv4`        | Ipv4 验证    | 合法 IPv4 地址格式                           |
-| `@CIpv6`        | IPv6 验证    | Standard IPv6 address format           |
-| `@CDateRange`   | 日期范围验证     | `min` 最小日期、`max` 最大日期                  |
-| `@CBankCard`    | 银行卡号 验证    | 银行卡号验证，默认使用Luhn算法，可以指定拦截卡号前缀.          |
-| `@CUrl`         | URL      验证 | URL格式 验证                               |
-| `@CMoney`       | 金额     验证  | 金额验证<br/> 支持验证数字、字符串或BigDecimal类型的金额格式 |
-| `@CMacAddress`  | Mac地址验证    | MAC地址格式验证                              |
+| 注解名称            | 功能说明       | 详细描述                                      |
+|-----------------|------------|-------------------------------------------|
+| `@CAccount`     | 账号格式验证     | 默认：字母开头，5–16 字符，允许字母数字下划线                 |
+| `@CPassword`    | 密码强度验证     | 默认：密码长度要求6-18，至少1个字母，至少1个数字。              |
+| `@CIdCard`      | 身份证号验证     | 默认：适配中国大陆身份证格式                            |
+| `@CPhone`       | 手机号验证      | 默认：中国手机号                                  |
+| `@CEmail`       | 邮箱格式验证     | RFC 标准校验                                  |
+| `@CFile`        | 文件验证       | 默认：最大 1 MB；可指定后缀 `fileNameSuffix`         |
+| `@CPlateNumber` | 车牌号验证      | 默认：中国车牌                                   |
+| `@CIpv4`        | Ipv4 验证    | 合法 IPv4 地址格式                              |
+| `@CIpv6`        | IPv6 验证    | 合法 IPv6 地址格式  |
+| `@CDateRange`   | 日期范围验证     | `min` 最小日期、`max` 最大日期                     |
+| `@CBankCard`    | 银行卡号 验证    | 银行卡号验证，默认使用Luhn算法，可以指定拦截卡号前缀.             |
+| `@CUrl`         | URL      验证 | URL格式 验证                                  |
+| `@CMoney`       | 金额     验证  | 金额验证<br/> 支持验证数字、字符串或BigDecimal类型的金额格式    |
+| `@CMacAddress`  | Mac地址验证    | MAC地址格式验证                                 |
 
 ---
 
