@@ -39,6 +39,9 @@ public class User {
 
     @CIpv4(groups = CPost.class)
     private String ip;
+
+    @CIpv6(groups = CPost.class)
+    private String ip6;
     @CDomain(groups = CPost.class)
     private String domain;
 
@@ -74,6 +77,14 @@ public class User {
     @CMacAddress(groups = CGet.class)
     private String mac;
 
+
+    public String getIp6() {
+        return ip6;
+    }
+
+    public void setIp6(String ip6) {
+        this.ip6 = ip6;
+    }
 
     public String getMac() {
         return mac;

@@ -19,6 +19,7 @@ public class AnnotationTest {
         User user = new User();
         user.setName("张三");
         user.setIp("127.0.2.3");
+        user.setIp6("2001:db8::192.168.0.1");
         user.setDomain("中文.cn");
         user.setIdCard("687612346543176543");
         user.setUser("ubsdhdsj11111");
