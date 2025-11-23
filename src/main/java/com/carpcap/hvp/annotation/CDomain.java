@@ -22,7 +22,7 @@ public @interface CDomain {
 
     String message() default "{com.carpcap.hvp.annotation.CDomain.message}";
 
-    String regexp() default "[a-zA-Z0-9][-a-zA-Z0-9]{0,62}(\\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+\\.?";
+    String regexp() default "^(?:[a-zA-Z0-9\\u4e00-\\u9fa5]+(?:-[a-zA-Z0-9\\u4e00-\\u9fa5]+)*\\.)+[a-zA-Z\\u4e00-\\u9fa5]{2,}$";
 
 
     Class<?>[] groups() default { };
