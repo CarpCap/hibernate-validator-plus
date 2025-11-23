@@ -67,7 +67,7 @@ Hibernate Validator Plus 是基于 **Hibernate Validator** 的增强工具包，
 </dependency>
 ```
 
-### 根据不同分组来分别校验场景（内置5类分组）
+### 根据不同分组来分别校验场景
 
 声明分组类别
 
