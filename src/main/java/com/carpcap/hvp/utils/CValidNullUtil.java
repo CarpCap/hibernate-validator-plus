@@ -11,6 +11,18 @@ import java.io.File;
  */
 public class CValidNullUtil {
 
+
+    public static boolean getAllowNullVal(ConstraintValidatorContext context) {
+        ConstraintValidatorContextImpl cvc = (ConstraintValidatorContextImpl) context;
+        String allowNullStr = cvc.getConstraintDescriptor().getAttributes().get("allowNull").toString();
+        boolean allowNull = true;
+        if (allowNullStr.equals("false")) {
+            allowNull = false;
+        }
+
+        return allowNull;
+    }
+
     /**
      * 判空
      *
@@ -21,38 +33,21 @@ public class CValidNullUtil {
      * @since 2025/11/23 22:21
      */
     public static int validNull(Object obj, ConstraintValidatorContext context) {
-        ConstraintValidatorContextImpl cvc = (ConstraintValidatorContextImpl) context;
-        String allowNullStr = cvc.getConstraintDescriptor().getAttributes().get("allowNull").toString();
-        boolean allowNull = true;
-        if (allowNullStr.equals("false")) {
-            allowNull = false;
-        }
-
+        boolean allowNull = getAllowNullVal(context);
         return allowNullValid(allowNull, obj);
     }
 
-
+    public static int validNull(CharSequence cs, ConstraintValidatorContext context) {
+        boolean allowNull = getAllowNullVal(context);
+        return allowNullValid(allowNull, cs);
+    }
 
 
     public static int allowNullValid(boolean allowNull, Object obj) {
-        if (obj == null || obj.toString().trim().isEmpty()) {
-           if (allowNull) {
-               return 1;
-           }else {
-               return -1;
-           }
-        }
-
-        //内容并非空值 需要后续的校验
-        return 0;
-
-    }
-
-    public static int allowNullValid(boolean allowNull, File file) {
-        if (file == null || !file.exists()) {
+        if (obj == null) {
             if (allowNull) {
                 return 1;
-            }else {
+            } else {
                 return -1;
             }
         }
@@ -61,6 +56,23 @@ public class CValidNullUtil {
         return 0;
 
     }
+
+    public static int allowNullValid(boolean allowNull, CharSequence cs) {
+        if (cs == null || cs.toString().trim().isEmpty()) {
+            if (allowNull) {
+                return 1;
+            } else {
+                return -1;
+            }
+        }
+
+        //内容并非空值 需要后续的校验
+        return 0;
+
+    }
+
+
+
 
 
 }

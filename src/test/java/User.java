@@ -78,7 +78,7 @@ public class User {
     private BigDecimal moneyBig;
 
 
-    @CMacAddress(groups = CGet.class,allowNull = true)
+    @CMacAddress(groups = CGet.class,allowNull = false)
     private String mac;
 
 
