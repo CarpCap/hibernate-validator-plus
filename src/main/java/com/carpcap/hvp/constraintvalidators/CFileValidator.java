@@ -8,7 +8,7 @@ import javax.validation.ConstraintValidatorContext;
 import java.io.File;
 
 /**
- * Date Type Date Validator
+ * 文件验证器，File格式
  * @author CarpCap
  */
 @AutoService(ConstraintValidator.class)

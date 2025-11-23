@@ -6,7 +6,7 @@ import com.carpcap.hvp.annotation.CFile;
 import javax.validation.ConstraintValidator;
 
 /**
- * Date Type Date Validator
+ * 抽象类 文件验证器
  * @author CarpCap
  */
 public abstract class AbstractCFileValidator<T> implements ConstraintValidator<CFile, T>{
