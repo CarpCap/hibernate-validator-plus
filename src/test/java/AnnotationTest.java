@@ -1,8 +1,10 @@
+import com.carpcap.hvp.groups.CGet;
 import com.carpcap.hvp.groups.CPost;
 import com.carpcap.hvp.groups.CPostDef;
 import com.carpcap.hvp.utils.CValid;
 
 import java.io.File;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Locale;
 
@@ -38,7 +40,7 @@ public class AnnotationTest {
 
         // 错误数据，手机号 声明了CPost.class
 //        user.setPhone("13375483434");
-        user.setPhone("13375483434213123123");
+        user.setPhone("13375483423");
 
         //验证失败 手机不合法
         CValid.validate(user, CPost.class);
@@ -48,6 +50,17 @@ public class AnnotationTest {
 
         //验证失败 手机不合法。CPostDef 继承了 CPost 和 Def默认验证
         CValid.validate(user, CPostDef.class);
+
+
+        user.setUrl("http://127.0.0.1:2333");
+        user.setBankCard("622575 1234567890 2");
+        user.setMoneyStr("￥23,322.222");
+        user.setMoneyInt(0);
+        user.setMoneyBig(new BigDecimal("22.11"));
+
+        user.setMac("A0:1A:2B:3C:4D:5E");
+
+        CValid.validate(user, CGet.class);
 
         System.out.println("通过");
 

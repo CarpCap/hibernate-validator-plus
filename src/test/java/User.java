@@ -1,12 +1,13 @@
 import com.carpcap.hvp.annotation.*;
+import com.carpcap.hvp.groups.CGet;
 import com.carpcap.hvp.groups.CPost;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.groups.Default;
 import java.io.File;
+import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Date;
 
 /**
  * @author CarpCap
@@ -48,6 +49,81 @@ public class User {
     private String user;
     @CPassword
     private String passwd;
+
+
+    @CUrl(groups = CGet.class)
+    private String url;
+
+
+
+    @CBankCard(groups = CGet.class)
+    private String bankCard;
+
+
+    @CMoney(groups = CGet.class,decimalPlaces=3)
+    private String moneyStr;
+
+    @CMoney(groups = CGet.class)
+    private Integer moneyInt;
+
+
+    @CMoney(groups = CGet.class)
+    private BigDecimal moneyBig;
+
+
+    @CMacAddress(groups = CGet.class)
+    private String mac;
+
+
+    public String getMac() {
+        return mac;
+    }
+
+    public void setMac(String mac) {
+        this.mac = mac;
+    }
+
+    public String getMoneyStr() {
+        return moneyStr;
+    }
+
+    public void setMoneyStr(String moneyStr) {
+        this.moneyStr = moneyStr;
+    }
+
+    public Integer getMoneyInt() {
+        return moneyInt;
+    }
+
+    public void setMoneyInt(Integer moneyInt) {
+        this.moneyInt = moneyInt;
+    }
+
+    public BigDecimal getMoneyBig() {
+        return moneyBig;
+    }
+
+    public void setMoneyBig(BigDecimal moneyBig) {
+        this.moneyBig = moneyBig;
+    }
+
+
+
+    public String getBankCard() {
+        return bankCard;
+    }
+
+    public void setBankCard(String bankCard) {
+        this.bankCard = bankCard;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
 
     public  File getFile() {
         return file;
