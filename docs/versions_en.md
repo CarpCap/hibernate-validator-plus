@@ -1,6 +1,33 @@
 
 # 📌 Changelog (English Version)
 
+
+## ☕ Version 1.2.x Series
+
+---
+
+### 🍕1.2.0
+
+
+> **🆕 New Feature**
+
+| Annotations            | Description            |
+|------------------|------------------------|
+| `@CBankCard`     | BankCard Validation    |
+| `@CUrl`          | URL      Validation    |
+| `@CMoney`        | Money     Validation   |
+| `@CMacAddress`   | Mac Address Validation |
+| `@CIpv6`         | IPv6 Validation        |
+
+> **🔄 Update**
+
+| Annotations              | Description                                        |
+|--------------------------|-------------------------------------------------|
+| `@Account` / `@Password` | Added `min` and `max` parameters, which can be used to control the minimum-maximum length |
+| `@Domain`                | Domain name rules are enhanced to support Chinese domain names and `-` identifiers         |
+
+
+
 ## 🎯 Version 1.1.x Series
 
 ---

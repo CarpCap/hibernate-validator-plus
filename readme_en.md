@@ -32,17 +32,22 @@ Hibernate Validator Plus is an enhanced validation framework based on **Hibernat
 
 Location: [`annotation`](src/main/java/com/carpcap/hvp/annotation)
 
-| Annotation      | Purpose             | Description                                                    |
-|-----------------|---------------------|----------------------------------------------------------------|
-| `@CAccount`     | Account validation  | Starts with a letter, 5–16 chars, alphanumeric + `_`          |
-| `@CPassword`    | Password validation | Starts with a letter, 6–18 chars, letters/digits/underscore   |
-| `@CIdCard`      | ID card validation  | Supports common CN ID formats                                  |
-| `@CPhone`       | Phone validation    | Mainland China mobile numbers                                  |
-| `@CEmail`       | Email validation    | RFC-compliant email rule                                       |
-| `@CFile`        | File validation     | Default max size 1 MB, file suffix supported                   |
-| `@CPlateNumber` | Plate number check  | Supports both new & old CN vehicle plates                      |
-| `@CIpv4`        | Ipv4 validation     | Standard IPv4 address format                                   |
-| `@CDateRange`   | Date range check    | `min` start date, `max` end date                               |
+| Annotation      | Purpose             | Description                                                 |
+|-----------------|---------------------|-------------------------------------------------------------|
+| `@CAccount`     | Account validation  | Starts with a letter, 5–16 chars, alphanumeric + `_`        |
+| `@CPassword`    | Password validation | Starts with a letter, 6–18 chars, letters/digits/underscore |
+| `@CIdCard`      | ID card validation  | Supports common CN ID formats                               |
+| `@CPhone`       | Phone validation    | Mainland China mobile numbers                               |
+| `@CEmail`       | Email validation    | RFC-compliant email rule                                    |
+| `@CFile`        | File validation     | Default max size 1 MB, file suffix supported                |
+| `@CPlateNumber` | Plate number check  | Supports both new & old CN vehicle plates                   |
+| `@CIpv4`        | Ipv4 validation     | Standard IPv4 address format                                |
+| `@CIpv6`         | IPv6 Validation        | Standard IPv6 address format                                |
+| `@CDateRange`   | Date range check    | `min` start date, `max` end date                            |
+| `@CBankCard`     | BankCard Validation    |  Bank card number verification uses the Luhn algorithm by default, and you can specify the interception card number prefix.                                                      |
+| `@CUrl`          | URL      Validation    |  URL format verification                                                           |
+| `@CMoney`        | Money     Validation   |  Amount format verification<br/> Supports verification of amount formats of numbers, strings or BigDecimal types                                                           |
+| `@CMacAddress`   | Mac Address Validation |   Mac Address Validation                                                          |
 
 ---
 
