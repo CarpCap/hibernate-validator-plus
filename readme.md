@@ -7,7 +7,7 @@
 
 ---
 
-Hibernate Validator Plus 是基于 **Hibernate Validator** 的增强工具包，提供了更丰富、实用的校验注解、分组校验机制以及统一的校验工具类，让 Java 对象与请求参数验证更加简洁、高效。
+Hibernate Validator Plus 是基于 **Hibernate Validator** 的增强框架，提供了更丰富、实用的校验注解、分组校验机制以及统一的校验工具类，让 Java 对象与请求参数验证更加简洁、高效。
 
 📦 **特性：**
 - 内置常用校验注解（账号、密码、邮箱、身份证、IPv4 等）
