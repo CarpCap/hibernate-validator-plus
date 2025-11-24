@@ -8,6 +8,7 @@ import javax.validation.groups.Default;
 import java.io.File;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  * @author CarpCap
@@ -17,10 +18,13 @@ public class User {
     private String name;
     private Integer age;
     private Integer sex;
-    @CDateRange(groups = CPost.class,message = "时间错误d1",min = "20220601",max = "20220630")
+    @CDateRange(groups = CPost.class,min = "20220601",max = "20220630")
     private LocalDate d1;
-    @CDateRange(groups = {CPost.class, Default.class}, message = "日期需要大于等于202204 小于等于202206",min = "202204",max = "202206")
+    @CDateRange(groups = {CPost.class, Default.class},min = "20220401",max = "20220630")
     private String d2;
+    @CDateRange(min = "2022-08-01 00:30:00",max = "2022-08-30 12:30:00",allowNull = false)
+    private LocalDateTime d3;
+
     @CPhone(groups = CPost.class,allowNull = false)
     private String phone;
     //车牌
@@ -81,6 +85,14 @@ public class User {
     @CMacAddress(groups = CGet.class,allowNull = false)
     private String mac;
 
+
+    public LocalDateTime getD3() {
+        return d3;
+    }
+
+    public void setD3(LocalDateTime d3) {
+        this.d3 = d3;
+    }
 
     public String getIp66() {
         return ip66;

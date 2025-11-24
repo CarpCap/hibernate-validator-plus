@@ -1,5 +1,7 @@
 package com.carpcap.hvp.constraintvalidators;
 
+import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.date.LocalDateTimeUtil;
 import com.carpcap.hvp.utils.CValidNullUtil;
 import com.google.auto.service.AutoService;
 import org.hibernate.validator.internal.engine.constraintvalidation.ConstraintValidatorContextImpl;
@@ -7,8 +9,9 @@ import org.hibernate.validator.internal.engine.constraintvalidation.ConstraintVa
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
+import java.time.ZoneOffset;
 import java.util.Date;
 import java.util.Map;
 
@@ -17,10 +20,10 @@ import java.util.Map;
  * @author CarpCap
  */
 @AutoService(ConstraintValidator.class)
-public class CDateRangeLocalDateValidator extends AbstractCDateRangeValidator<LocalDate> {
+public class CDateRangeLocalDateTimeValidator extends AbstractCDateRangeValidator<LocalDateTime> {
 
     @Override
-    public boolean isValid(LocalDate value, ConstraintValidatorContext context) {
+    public boolean isValid(LocalDateTime value, ConstraintValidatorContext context) {
         int vn = CValidNullUtil.validNull(value, context);
         if (0 != vn) {
             return vn == 1;
@@ -33,9 +36,10 @@ public class CDateRangeLocalDateValidator extends AbstractCDateRangeValidator<Lo
         String min = attributes.get("min").toString();
         String format = attributes.get("format").toString();
 
-        Date date = Date.from(
-                value.atStartOfDay(ZoneId.systemDefault()).toInstant()
-        );
+        Date date = Date.from(value
+                .atZone(ZoneId.systemDefault())
+                .toInstant());
+
         return super.isValid(date, max, min, format);
     }
 
