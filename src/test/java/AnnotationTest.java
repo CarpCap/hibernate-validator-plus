@@ -37,7 +37,7 @@ public class AnnotationTest {
         user.setFile(file);
         //上面都是正确数据
 
-        Locale lo = new Locale("en");
+        Locale lo = new Locale("ja");
 
         Locale.setDefault(lo);
 
@@ -61,7 +61,7 @@ public class AnnotationTest {
         user.setMoneyInt(0);
         user.setMoneyBig(new BigDecimal("22.11"));
 
-        user.setMac("A0:1A:2B:3C:4D:5E222");
+        user.setMac("A0:1A:2B:3C:4D:5E");
 
         CValid.validate(user, CGet.class);
 
