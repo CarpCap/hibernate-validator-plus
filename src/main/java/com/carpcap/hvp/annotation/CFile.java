@@ -30,9 +30,19 @@ public @interface CFile {
     //单位bytes, 默认为1mb
     long fileSize() default 1024L * 1024L;
 
+
+    /**
+     * 是否允许null值
+     * @return true允许null，false不允许null
+     */
+    boolean allowNull() default true;
+
+
     Class<?>[] groups() default { };
 
     Class<? extends Payload>[] payload() default { };
+
+
 
     /**
      *

@@ -27,9 +27,17 @@ public @interface CIpv4 {
     String regexp() default "^((2(5[0-5]|[0-4]\\d))|[0-1]?\\d{1,2})(\\.((2(5[0-5]|[0-4]\\d))|[0-1]?\\d{1,2})){3}$";
 
 
+    /**
+     * 是否允许null值
+     * @return true允许null，false不允许null
+     */
+    boolean allowNull() default true;
+
+
     Class<?>[] groups() default { };
 
     Class<? extends Payload>[] payload() default { };
+
 
     /**
      *

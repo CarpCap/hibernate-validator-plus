@@ -1,6 +1,7 @@
 package com.carpcap.hvp.constraintvalidators;
 
 import com.carpcap.hvp.annotation.CMacAddress;
+import com.carpcap.hvp.utils.CValidNullUtil;
 import com.google.auto.service.AutoService;
 
 import javax.validation.ConstraintValidator;
@@ -28,9 +29,11 @@ public class CMacAddressValidator implements ConstraintValidator<CMacAddress, Ch
 
     @Override
     public boolean isValid(CharSequence value, ConstraintValidatorContext context) {
-        if (value == null || value.toString().trim().isEmpty()) {
-            return true;
+        int vn = CValidNullUtil.validNull(value, context);
+        if (0 != vn) {
+            return vn == 1;
         }
+
 
         String macAddress = value.toString().trim();
 

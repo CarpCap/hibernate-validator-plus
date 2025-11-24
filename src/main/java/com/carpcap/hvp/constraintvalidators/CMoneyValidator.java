@@ -1,6 +1,7 @@
 package com.carpcap.hvp.constraintvalidators;
 
 import com.carpcap.hvp.annotation.CMoney;
+import com.carpcap.hvp.utils.CValidNullUtil;
 import com.google.auto.service.AutoService;
 
 import javax.validation.ConstraintValidator;
@@ -60,9 +61,11 @@ public class CMoneyValidator implements ConstraintValidator<CMoney, Object> {
 
     @Override
     public boolean isValid(Object value, ConstraintValidatorContext context) {
-        if (value == null) {
-            return true;
+        int vn = CValidNullUtil.validNull(value, context);
+        if (0 != vn) {
+            return vn == 1;
         }
+
 
         BigDecimal amount;
         String valueStr;

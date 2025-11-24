@@ -37,6 +37,13 @@ public @interface CBankCard {
     int maxLength() default 19;
 
     /**
+     * 是否允许null值
+     * @return true允许null，false不允许null
+     */
+    boolean allowNull() default true;
+
+
+    /**
      * 是否启用Luhn算法验证，默认为true
      */
     boolean useLuhnCheck() default true;
@@ -64,6 +71,8 @@ public @interface CBankCard {
     Class<?>[] groups() default { };
 
     Class<? extends Payload>[] payload() default { };
+
+
 
     /**
      * @see CBankCard

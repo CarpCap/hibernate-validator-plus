@@ -1,6 +1,7 @@
 package com.carpcap.hvp.constraintvalidators;
 
 import com.carpcap.hvp.annotation.CBankCard;
+import com.carpcap.hvp.utils.CValidNullUtil;
 import com.google.auto.service.AutoService;
 
 import javax.validation.ConstraintValidator;
@@ -38,7 +39,7 @@ public class CBankCardValidator implements ConstraintValidator<CBankCard, CharSe
         this.useLuhnCheck = constraintAnnotation.useLuhnCheck();
         this.allowSpaces = constraintAnnotation.allowSpaces();
         this.allowHyphens = constraintAnnotation.allowHyphens();
-        
+
         // 初始化允许的前缀集合
         String[] allowed = constraintAnnotation.allowedPrefixes();
         if (allowed != null && allowed.length > 0) {
@@ -58,8 +59,9 @@ public class CBankCardValidator implements ConstraintValidator<CBankCard, CharSe
 
     @Override
     public boolean isValid(CharSequence value, ConstraintValidatorContext context) {
-        if (value == null || value.toString().trim().isEmpty()) {
-            return true;
+        int vn = CValidNullUtil.validNull(value, context);
+        if (0 != vn) {
+            return vn == 1;
         }
 
         String cardNumber = value.toString().trim();

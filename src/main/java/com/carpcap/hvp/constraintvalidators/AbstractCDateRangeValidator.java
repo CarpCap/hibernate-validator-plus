@@ -9,12 +9,10 @@ import java.util.Date;
 
 /**
  * 抽象类 日期验证器
+ *
  * @author CarpCap
  */
 public abstract class AbstractCDateRangeValidator<T> implements ConstraintValidator<CDateRange, T> {
-
-
-
 
 
     public Date stringToDate(String str, String format) {
@@ -29,6 +27,8 @@ public abstract class AbstractCDateRangeValidator<T> implements ConstraintValida
                     result = DateUtil.parse(str);
                 }
             }
+
+//            System.out.println("hvp dateRange stringToDate：str[" + str + "], format[" + format + "] , result[" + result + "]");
             return result;
         } catch (DateException e) {
             e.printStackTrace();
@@ -43,12 +43,15 @@ public abstract class AbstractCDateRangeValidator<T> implements ConstraintValida
         }
 
         Date maxDate = stringToDate(max, format);
+        maxDate=DateUtil.endOfDay(maxDate);
         Date minDate = stringToDate(min, format);
 
-        if (maxDate != null  && value.compareTo(maxDate) > 0) {
+
+//        System.out.println("hvp dateRange compare：valueDate[" + value + "] minDate[" + minDate + "] maxDate[" + maxDate + "]");
+        if (maxDate != null && value.compareTo(maxDate) > 0) {
             return false;
         }
-        if (minDate != null  && value.compareTo(minDate) < 0) {
+        if (minDate != null && value.compareTo(minDate) < 0) {
             return false;
         }
         return true;

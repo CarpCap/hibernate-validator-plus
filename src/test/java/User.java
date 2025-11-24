@@ -3,11 +3,10 @@ import com.carpcap.hvp.groups.CGet;
 import com.carpcap.hvp.groups.CPost;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.groups.Default;
 import java.io.File;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  * @author CarpCap
@@ -17,12 +16,14 @@ public class User {
     private String name;
     private Integer age;
     private Integer sex;
-    @CDateRange(groups = CPost.class,message = "时间错误d1",min = "20220601",max = "20220630")
+    @CDateRange(min = "2022-06-01",max = "2022-06-30")
     private LocalDate d1;
-    @CDateRange(groups = {CPost.class, Default.class}, message = "日期需要大于等于202204 小于等于202206",min = "202204",max = "202206")
+    @CDateRange(min = "2022-04-01",max = "2022-06-30")
     private String d2;
-    @CPhone(groups = CPost.class)
-    @NotNull
+    @CDateRange(min = "2022-08-01 00:30:00",max = "2022-08-30 12:30:00",allowNull = false)
+    private LocalDateTime d3;
+
+    @CPhone(groups = CPost.class,allowNull = false)
     private String phone;
     //车牌
     @CPlateNumber(groups = CPost.class)
@@ -32,7 +33,7 @@ public class User {
     @CFile(groups = CPost.class,fileNameSuffix = {"jpg","jpeg","png"})
     private String fileName;
 
-    @CFile(groups = CPost.class,fileSize = 1024*200)
+    @CFile(groups = CPost.class,fileSize = 1024*200,allowNull = false)
     private File file;
 
 
@@ -42,6 +43,9 @@ public class User {
 
     @CIpv6(groups = CPost.class)
     private String ip6;
+
+    @CIpv6(groups = CPost.class)
+    private String ip66;
     @CDomain(groups = CPost.class)
     private String domain;
 
@@ -50,6 +54,8 @@ public class User {
 
     @CAccount
     private String user;
+    @CAccount(max = 333)
+    private String user1;
     @CPassword
     private String passwd;
 
@@ -74,9 +80,33 @@ public class User {
     private BigDecimal moneyBig;
 
 
-    @CMacAddress(groups = CGet.class)
+    @CMacAddress(groups = CGet.class,allowNull = false)
     private String mac;
 
+
+    public LocalDateTime getD3() {
+        return d3;
+    }
+
+    public void setD3(LocalDateTime d3) {
+        this.d3 = d3;
+    }
+
+    public String getIp66() {
+        return ip66;
+    }
+
+    public void setIp66(String ip66) {
+        this.ip66 = ip66;
+    }
+
+    public String getUser1() {
+        return user1;
+    }
+
+    public void setUser1(String user1) {
+        this.user1 = user1;
+    }
 
     public String getIp6() {
         return ip6;

@@ -26,9 +26,19 @@ public @interface CPhone {
     String regexp() default "^((13[0-9])|(15[^4,\\D])|(14[57])|(17[0])|(17[7])|(18[0,0-9]))\\d{8}$";
 
 
+
+    /**
+     * 是否允许null值
+     * @return true允许null，false不允许null
+     */
+    boolean allowNull() default true;
+
+
+
     Class<?>[] groups() default { };
 
     Class<? extends Payload>[] payload() default { };
+
 
     /**
      *

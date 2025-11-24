@@ -6,6 +6,8 @@ import com.carpcap.hvp.utils.CValid;
 import java.io.File;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.Locale;
 
 /**
@@ -15,20 +17,23 @@ public class AnnotationTest {
     public static void main(String[] args) {
 
 
-
         User user = new User();
         user.setName("张三");
         user.setIp("127.0.2.3");
         user.setIp6("2001:db8::192.168.0.1");
+        user.setIp66("2001:db8::192.168.0.2");
         user.setDomain("中文.cn");
         user.setIdCard("687612346543176543");
         user.setUser("ubsdhdsj11111");
+        user.setUser1("ubsdhdsj112222222222222222222222222222111");
         user.setPasswd("jjre2311232222");
 
-        LocalDate localDate = LocalDate.of(2022, 6, 1);
+        LocalDate localDate = LocalDate.of(2022, 6, 30);
         user.setD1(localDate);
 
-        user.setD2("202204");
+        user.setD2("2022-06-30 11:11:11");
+
+        user.setD3(LocalDateTime.of(2022,8,1,0,30));
         user.setLpn("粤B39006");
         user.setFileName(".jpg");
         File file = new File("src/test/resource/3.png");

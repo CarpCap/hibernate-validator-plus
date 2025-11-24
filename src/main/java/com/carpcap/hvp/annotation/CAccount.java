@@ -36,9 +36,17 @@ public @interface CAccount {
      */
     int max() default 16;
 
+    /**
+     * 是否允许null值
+     * @return true允许null，false不允许null
+     */
+    boolean allowNull() default true;
+
     Class<?>[] groups() default { };
 
     Class<? extends Payload>[] payload() default { };
+
+
 
     /**
      *

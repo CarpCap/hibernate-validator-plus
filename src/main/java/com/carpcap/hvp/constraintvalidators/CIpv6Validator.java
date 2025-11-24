@@ -2,6 +2,7 @@ package com.carpcap.hvp.constraintvalidators;
 
 
 import com.carpcap.hvp.annotation.CIpv6;
+import com.carpcap.hvp.utils.CValidNullUtil;
 import com.google.auto.service.AutoService;
 
 import javax.validation.ConstraintValidator;
@@ -18,10 +19,13 @@ public class CIpv6Validator implements ConstraintValidator<CIpv6, CharSequence> 
 
     @Override
     public boolean isValid(CharSequence value, ConstraintValidatorContext context) {
-        // 空值检查由@NotNull等注解处理
-        if (value == null || value.toString().trim().isEmpty()) {
-            return true;
+        int vn = CValidNullUtil.validNull(value, context);
+        if (0 != vn) {
+            return vn == 1;
         }
+
+
+
 
         String valueStr = value.toString();
 

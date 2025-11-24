@@ -37,10 +37,18 @@ public @interface CPassword {
     int max() default 18;
 
 
+    /**
+     * 是否允许null值
+     * @return true允许null，false不允许null
+     */
+    boolean allowNull() default true;
+
+
 
     Class<?>[] groups() default { };
 
     Class<? extends Payload>[] payload() default { };
+
 
     /**
      *

@@ -24,6 +24,14 @@ public @interface CIpv6 {
 
     String message() default "{com.carpcap.hvp.annotation.CIpv6.message}";
 
+    /**
+     * 是否允许null值
+     * @return true允许null，false不允许null
+     */
+    boolean allowNull() default true;
+
+
+
     Class<?>[] groups() default { };
 
     Class<? extends Payload>[] payload() default { };

@@ -29,6 +29,15 @@ public @interface CMacAddress {
 
     String message() default "{com.carpcap.hvp.annotation.CMacAddress.message}";
 
+
+
+    /**
+     * 是否允许null值
+     * @return true允许null，false不允许null
+     */
+    boolean allowNull() default true;
+
+
     /**
      * 是否允许小写字母，默认为true
      */
@@ -47,6 +56,7 @@ public @interface CMacAddress {
     Class<?>[] groups() default { };
 
     Class<? extends Payload>[] payload() default { };
+
 
     /**
      * @see CMacAddress

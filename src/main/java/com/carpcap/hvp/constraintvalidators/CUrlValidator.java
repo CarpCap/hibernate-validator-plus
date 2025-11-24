@@ -2,6 +2,7 @@ package com.carpcap.hvp.constraintvalidators;
 
 import cn.hutool.core.lang.Validator;
 import com.carpcap.hvp.annotation.CUrl;
+import com.carpcap.hvp.utils.CValidNullUtil;
 import com.google.auto.service.AutoService;
 
 import javax.validation.ConstraintValidator;
@@ -35,9 +36,11 @@ public class CUrlValidator implements ConstraintValidator<CUrl, CharSequence> {
 
     @Override
     public boolean isValid(CharSequence value, ConstraintValidatorContext context) {
-        if (value == null || value.toString().trim().isEmpty()) {
-            return true;
+        int vn = CValidNullUtil.validNull(value, context);
+        if (0 != vn) {
+            return vn == 1;
         }
+
 
 
 
