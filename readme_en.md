@@ -16,10 +16,11 @@ Hibernate Validator Plus is an enhanced validation framework based on **Hibernat
 📦 **Features:**
 - Built-in commonly used validation annotations (account, password, email, ID card, IPv4, etc.)
 - Multiple built-in validation group schemes
-- Lightweight architecture with minimal dependencies
-- Supports both Spring MVC automatic validation and manual validation via utility classes
 - International i18n, supports Chinese, English, Japanese, Chinese, Russian, French, Spanish, etc..
 - Built-in allowable null judgment
+- It remains fully compatible with the Hibernate Validator native framework and can directly use all its built-in validation functions.
+- There are fewer dependencies, the architecture is more lightweight, and there is no forced dependence on other frameworks (such as spring).
+- Supports the direct introduction of Spring MVC and Spring Boot projects, can automatically verify, and provides manual calling of tool classes.
 
 
 ---
