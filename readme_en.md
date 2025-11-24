@@ -69,18 +69,18 @@ Location: [`groups`](src/main/java/com/carpcap/hvp/groups)
 ---
 ## 🔧 CValid Utility Class
 
-`CValid` provides multiple validation capabilities, including standard validation, fast-fail validation, property-level validation, and group-based validation.
+`CValid` provides multiple validation capabilities, including standard validation(Full Check), fast-fail validation, property-level validation, and group-based validation.
 
 Exception Class：ValidationException
 
-| Method Type                 | Validation Mode | Failure Behavior | Return Type    |
-|-----------------------------|-----------------|------------------|----------------|
-| `validate`                  | Fast-Fail ⚡     | Throws Exception ❗ | void           |
-| `tryValidate`               | Full Check      | No Exception     | List<String>   |
-| `tryFastValidate`           | Fast-Fail ⚡     | No Exception     | String         |
-| `validateProperty`          | Fast-Fail ⚡     | Throws Exception ❗ | void           |
-| `tryValidateProperty`       | Full Check      | No Exception     | List<String>   |
-| `tryFastValidateProperty`   | Fast-Fail ⚡     | No Exception     | String         |
+| Method Type                                                                   | Validation Mode | Failure Behavior | Return Type    |
+|-------------------------------------------------------------------------------|-----------------|------------------|----------------|
+| `validate(Object object) `         <br/> `validate(Object object, Class<?>... groups) `                                             | Fast-Fail ⚡     | Throws Exception ❗ | void           |
+| `tryValidate(Object object)`                 <br/>`tryValidate(Object object, Class<?>... groups)`                                     | Full Check      | No Exception     | List<String>   |
+| `tryFastValidate(Object object) `    <br/>`tryFastValidate(Object object, Class<?>... groups) `                                              | Fast-Fail ⚡     | No Exception     | String         |
+| `validateProperty(Object object, String propertyName, Class<?>... groups)`    | Fast-Fail ⚡     | Throws Exception ❗ | void           |
+| `tryValidateProperty(Object object, String propertyName, Class<?>... groups)` | Full Check      | No Exception     | List<String>   |
+| `tryFastValidateProperty(Object object, String propertyName, Class<?>... groups)`                                                   | Fast-Fail ⚡     | No Exception     | String         |
 
 
 ---

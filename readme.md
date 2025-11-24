@@ -67,18 +67,18 @@ Hibernate Validator Plus 是基于 **Hibernate Validator** 的增强框架，提
 
 ## 🔧 CValid 工具类
 
-`CValid` 提供普通校验、快速校验（fail-fast）、属性校验、分组校验等多种能力。
+`CValid` 提供普通校验(全量校验)、快速校验（fail-fast）、属性校验、分组校验等多种能力。
 
 异常类：ValidationException
 
 | 方法类型                       | 校验模式 | 失败行为 | 返回类型         |
 | ------------------------- | ---- | ---- | ------------ |
-| `validate`                 |快速校验 ⚡ | 抛异常❗  | void         |
-| `tryValidate`               | 全量校验 | 不抛异常 | List<String> |
-| `tryFastValidate`          | 快速校验  ⚡| 不抛异常 | String       |
-| `validateProperty`           | 快速校验  ⚡| 抛异常❗  | void         |
-| `tryValidateProperty`        | 全量校验 | 不抛异常 | List<String> |
-| `tryFastValidateProperty`   | 快速校验 ⚡ | 不抛异常 | String       |
+| `validate(Object object)`      <br/>`validate(Object object, Class<?>... groups)`             |快速校验 ⚡ | 抛异常❗  | void         |
+| `tryValidate(Object object)`    <br/>     `tryValidate(Object object, Class<?>... groups)`        | 全量校验 | 不抛异常 | List<String> |
+| `tryFastValidate(Object object)` <br/>  `tryFastValidate(Object object, Class<?>... groups)`        | 快速校验  ⚡| 不抛异常 | String       |
+| `validateProperty(Object object, String propertyName, Class<?>... groups)`           | 快速校验  ⚡| 抛异常❗  | void         |
+| `tryValidateProperty(Object object, String propertyName, Class<?>... groups)`        | 全量校验 | 不抛异常 | List<String> |
+| `tryFastValidateProperty(Object object, String propertyName, Class<?>... groups)`   | 快速校验 ⚡ | 不抛异常 | String       |
 
 
 
