@@ -31,7 +31,8 @@ public class AnnotationTest {
         LocalDate localDate = LocalDate.of(2022, 6, 30);
         user.setD1(localDate);
 
-        user.setD2("20220401");
+        user.setD2("2022-06-30 11:11:11");
+
         user.setD3(LocalDateTime.of(2022,8,1,0,30));
         user.setLpn("粤B39006");
         user.setFileName(".jpg");

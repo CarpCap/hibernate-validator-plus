@@ -43,6 +43,7 @@ public abstract class AbstractCDateRangeValidator<T> implements ConstraintValida
         }
 
         Date maxDate = stringToDate(max, format);
+        maxDate=DateUtil.endOfDay(maxDate);
         Date minDate = stringToDate(min, format);
 
 
