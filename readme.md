@@ -88,7 +88,7 @@ Hibernate Validator Plus 是基于 **Hibernate Validator** 的增强框架，提
 
 ## 🛠 使用示例
 
-示例 Spring Boot 项目地址：  
+示例 Spring Boot 项目：  
 🔗 https://github.com/carpcap/hibernate-validator-plus-demo
 
 ### 1. Maven 依赖
