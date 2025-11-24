@@ -21,6 +21,7 @@ Hibernate Validator Plus is an enhanced validation framework based on **Hibernat
 - It remains fully compatible with the Hibernate Validator native framework and can directly use all its built-in validation functions.
 - There are fewer dependencies, the architecture is more lightweight, and there is no forced dependence on other frameworks (such as spring).
 - Supports the direct introduction of Spring MVC and Spring Boot projects, can automatically verify, and provides manual calling of tool classes.
+- Support jdk8 or jdk8 or above version
 
 
 ---
@@ -86,7 +87,7 @@ Exception Class：ValidationException
 
 ## 🛠 Usage Example
 
-Demo project:  
+Demo Spring Boot project:  
 🔗 https://github.com/carpcap/hibernate-validator-plus-demo
 
 ### 1. Maven Dependency

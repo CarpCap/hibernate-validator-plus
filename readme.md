@@ -17,6 +17,7 @@ Hibernate Validator Plus 是基于 **Hibernate Validator** 的增强框架，提
 - 与 Hibernate Validator 原生框架保持完全兼容，可直接沿用其所有内置校验功能。
 - 依赖更少，架构更轻量，不强制依赖其他框架（如spring）。
 - 支持 Spring MVC、Spring Boot 项目直接引入，可自动校验，提供工具类手动调用。
+- 支持 jdk8 或 jdk8以上版本
 
 
 ---
@@ -87,7 +88,7 @@ Hibernate Validator Plus 是基于 **Hibernate Validator** 的增强框架，提
 
 ## 🛠 使用示例
 
-示例项目地址：  
+示例 Spring Boot 项目地址：  
 🔗 https://github.com/carpcap/hibernate-validator-plus-demo
 
 ### 1. Maven 依赖
