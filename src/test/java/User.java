@@ -3,8 +3,6 @@ import com.carpcap.hvp.groups.CGet;
 import com.carpcap.hvp.groups.CPost;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.groups.Default;
 import java.io.File;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -18,9 +16,9 @@ public class User {
     private String name;
     private Integer age;
     private Integer sex;
-    @CDateRange(groups = CPost.class,min = "20220601",max = "20220630")
+    @CDateRange(min = "2022-06-01",max = "2022-06-30")
     private LocalDate d1;
-    @CDateRange(groups = {CPost.class, Default.class},min = "20220401",max = "20220630")
+    @CDateRange(min = "2022-04-01",max = "2022-06-30")
     private String d2;
     @CDateRange(min = "2022-08-01 00:30:00",max = "2022-08-30 12:30:00",allowNull = false)
     private LocalDateTime d3;
