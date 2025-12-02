@@ -13,7 +13,7 @@
 | Features | Update Notes |
 |-------------|-------------------------------------|
 | `@CDateRange` | Provides LocalDateTime type support and fixes time zone issues. <br/> max date automatically supplements the last time. For example: if you enter 2022-06-30, the judgment will be 2022-06-30 23:59:59.|
-| Field allowNul | All annotations are added with the null field allowNull, which defaults to true and is allowed to be empty |
+| Field allowNull | All annotations are added with the null field allowNull, which defaults to true and is allowed to be empty |
 
 ---
 
