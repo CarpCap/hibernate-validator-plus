@@ -122,20 +122,6 @@ Manual validation using the provided utility class. Validation failures will thr
 
 This project is released under the **Apache License 2.0**.
 
-You may, under the terms of the license:
-
-✔ Use it commercially for free
-
-✔ Modify the source code
-
-✔ Distribute source or binary packages
-
-✔ Use it for secondary development
-
-✔ Use it privately
-
-❗ You must **retain the original author (CarpCap) copyright notice**
-
 You can find the full license text in the project's root directory (`LICENSE`), or visit:
 
 [https://www.apache.org/licenses/LICENSE-2.0](https://www.apache.org/licenses/LICENSE-2.0)
