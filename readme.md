@@ -5,8 +5,12 @@
 - [中文](readme.md)
 - [English](readme_en.md)
 
----
+![Java Version](https://img.shields.io/badge/Java-%3E%3D8-orange?logo=openjdk)
+![Hibernate Validator Version](https://img.shields.io/badge/validator-6.2.5.Final-green?logo=hibernate)
+![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)
 
+
+---
 Hibernate Validator Plus 是基于 **Hibernate Validator** 的增强框架，提供了更丰富、实用的校验注解、分组校验机制以及统一的校验工具类，让 Java 对象与请求参数验证更加简洁、高效。
 
 📦 **特性：**
