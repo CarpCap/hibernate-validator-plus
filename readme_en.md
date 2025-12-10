@@ -2,16 +2,17 @@
 
 # Hibernate Validator Plus 
 
+![Java Version](https://img.shields.io/badge/Java-%3E%3D8-orange?logo=openjdk)
+![Hibernate Validator Version](https://img.shields.io/badge/validator-6.2.5.Final-green?logo=hibernate)
+![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)
+
 🌍 选择语言/Select Language:
 
 - [中文](readme.md)
 - [English](readme_en.md)
 
-  <br>
 
-![Java Version](https://img.shields.io/badge/Java-%3E%3D8-orange?logo=openjdk)
-![Hibernate Validator Version](https://img.shields.io/badge/validator-6.2.5.Final-green?logo=hibernate)
-![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)
+
 
 
 Hibernate Validator Plus is an enhanced validation framework based on **Hibernate Validator**, providing rich validation annotations, flexible group validations, and unified validation utilities.
@@ -30,7 +31,7 @@ Hibernate Validator Plus is an enhanced validation framework based on **Hibernat
 
 
 
-# Versions
+## Versions
 [versions_en.md](docs/versions_en.md)
 
 
