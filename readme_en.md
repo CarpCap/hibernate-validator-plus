@@ -7,12 +7,12 @@
 - [中文](readme.md)
 - [English](readme_en.md)
 
+  <br>
 
 ![Java Version](https://img.shields.io/badge/Java-%3E%3D8-orange?logo=openjdk)
 ![Hibernate Validator Version](https://img.shields.io/badge/validator-6.2.5.Final-green?logo=hibernate)
 ![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)
 
----
 
 Hibernate Validator Plus is an enhanced validation framework based on **Hibernate Validator**, providing rich validation annotations, flexible group validations, and unified validation utilities.
 
@@ -29,12 +29,10 @@ Hibernate Validator Plus is an enhanced validation framework based on **Hibernat
 - Support jdk8 or jdk8 or above version
 
 
----
 
 # Versions
 [versions_en.md](docs/versions_en.md)
 
----
 
 ## 📘 Annotation Overview
 
@@ -57,7 +55,6 @@ Location: [`annotation`](src/main/java/com/carpcap/hvp/annotation)
 | `@CMoney`        | Money     Validation   | Amount format verification<br/> Supports verification of amount formats of numbers, strings or BigDecimal types            |
 | `@CMacAddress`   | Mac Address Validation | Mac Address Validation                                                                                                     |
 
----
 
 ## 📂 Validation Groups
 
@@ -71,7 +68,6 @@ Location: [`groups`](src/main/java/com/carpcap/hvp/groups)
 | `@CQueryDef`    | Query + default checks    |
 | ...             | More extensions supported |
 
----
 ## 🔧 CValid Utility Class
 
 `CValid` provides multiple validation capabilities, including standard validation(Full Check), fast-fail validation, property-level validation, and group-based validation.
@@ -88,7 +84,6 @@ Exception Class：ValidationException
 | `tryFastValidateProperty(Object object, String propertyName, Class<?>... groups)`                                                   | Fast-Fail ⚡     | No Exception     | String         |
 
 
----
 
 ## 🛠 Usage Example
 

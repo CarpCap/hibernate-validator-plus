@@ -5,12 +5,13 @@
 - [中文](readme.md)
 - [English](readme_en.md)
 
+  <br>
+
 ![Java Version](https://img.shields.io/badge/Java-%3E%3D8-orange?logo=openjdk)
 ![Hibernate Validator Version](https://img.shields.io/badge/validator-6.2.5.Final-green?logo=hibernate)
 ![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)
 
 
----
 Hibernate Validator Plus 是基于 **Hibernate Validator** 的增强框架，提供了更丰富、实用的校验注解、分组校验机制以及统一的校验工具类，让 Java 对象与请求参数验证更加简洁、高效。
 
 📦 **特性：**
@@ -24,7 +25,6 @@ Hibernate Validator Plus 是基于 **Hibernate Validator** 的增强框架，提
 - 支持 jdk8 或 jdk8以上版本
 
 
----
 
 # 更新日志
 [versions.md](docs/versions.md)
@@ -52,7 +52,6 @@ Hibernate Validator Plus 是基于 **Hibernate Validator** 的增强框架，提
 | `@CMoney`       | 金额     验证  | 金额验证<br/> 支持验证数字、字符串或BigDecimal类型的金额格式         |
 | `@CMacAddress`  | Mac地址验证    | MAC地址格式验证                                      |
 
----
 
 ## 📂 分组（Groups）
 
@@ -67,7 +66,6 @@ Hibernate Validator Plus 是基于 **Hibernate Validator** 的增强框架，提
 | 更多请看源码......  | ......    |
 
 
----
 
 ## 🔧 CValid 工具类
 
@@ -86,7 +84,6 @@ Hibernate Validator Plus 是基于 **Hibernate Validator** 的增强框架，提
 
 
 
----
 
 
 
