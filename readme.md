@@ -29,7 +29,6 @@ Hibernate Validator Plus 是基于 **Hibernate Validator** 的增强框架，提
 # 更新日志
 [versions.md](docs/versions.md)
 
----
 
 ## 📘 注解说明
 
