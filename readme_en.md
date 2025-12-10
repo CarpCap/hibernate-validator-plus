@@ -31,7 +31,7 @@ Hibernate Validator Plus is an enhanced validation framework based on **Hibernat
 
 
 
-## Versions
+## 📌 Versions
 [versions_en.md](docs/versions_en.md)
 
 
