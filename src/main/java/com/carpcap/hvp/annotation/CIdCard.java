@@ -22,7 +22,7 @@ public @interface CIdCard {
 
     String message() default "{com.carpcap.hvp.annotation.CIdCard.message}";
 
-    String regexp() default "^\\d{15}|\\d{18}$";
+    String regexp() default "^\\d{15}$|^\\d{18}$";
 
 
     /**

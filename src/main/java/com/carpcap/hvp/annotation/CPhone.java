@@ -23,7 +23,7 @@ public @interface CPhone {
 
     String message() default "{com.carpcap.hvp.annotation.CPhone.message}";
 
-    String regexp() default "^((13[0-9])|(15[^4,\\D])|(14[57])|(17[0])|(17[7])|(18[0,0-9]))\\d{8}$";
+    String regexp() default "^1(?:3[0-9]|4[01456789]|5[0-9]|66|7[0-9]|8[0-9]|9[0-9])\\d{8}$";
 
 
 
