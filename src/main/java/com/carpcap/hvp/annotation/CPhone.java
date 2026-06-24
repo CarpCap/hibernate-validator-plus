@@ -23,7 +23,18 @@ public @interface CPhone {
 
     String message() default "{com.carpcap.hvp.annotation.CPhone.message}";
 
-    String regexp() default "^1(?:3[0-9]|4[01456789]|5[0-9]|66|7[0-9]|8[0-9]|9[0-9])\\d{8}$";
+    String regexp() default "";
+
+
+
+   /**
+    * 手机号码所属国家/地区
+     * <p>可选值: CN, US, JP, KR, UK 等，每个 region 对应独立验证策略</p>
+    * <p>当指定 region 时，将使用该地区对应的手机号正则进行验证；</p>
+    * <p>当同时指定了 regexp，则 regexp 优先级更高</p>
+    * @return 地区代码
+    */
+    String region() default "CN";
 
 
 

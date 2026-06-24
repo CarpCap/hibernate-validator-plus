@@ -7,6 +7,8 @@ import java.io.File;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Instant;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 /**
@@ -25,7 +27,11 @@ public class AnnotationTest {
 
         testAllValidData();
         testNameNotBlank();
-        testPhone();
+        testPhoneCN();
+        testPhoneUS();
+        testPhoneJP();
+        testPhoneKR();
+        testPhoneUK();
         testIpv4();
         testIpv6();
         testDomain();
@@ -35,6 +41,8 @@ public class AnnotationTest {
         testDateRangeLocalDate();
         testDateRangeString();
         testDateRangeLocalDateTime();
+        testDateRangeInstant();
+        testDateRangeZonedDateTime();
         testPlateNumber();
         testFileName();
         testFile();
@@ -91,10 +99,16 @@ public class AnnotationTest {
         u.setD1(LocalDate.of(2022, 6, 15));
         u.setD2("2022-05-15 12:00:00");
         u.setD3(LocalDateTime.of(2022, 8, 15, 10, 0));
+        u.setD4(Instant.parse("2022-06-15T10:00:00Z"));
+        u.setD5(ZonedDateTime.parse("2022-07-15T10:00:00+08:00[Asia/Shanghai]"));
         u.setLpn("粤B39006");
         u.setFileName("test.png");
         u.setFile(new File("src/test/resource/3.png"));
         u.setPhone("13375483434");
+        u.setPhoneUS("2125551234");
+        u.setPhoneJP("09012345678");
+        u.setPhoneKR("01012345678");
+        u.setPhoneUK("07123456789");
         u.setUrl("http://127.0.0.1:2333");
         u.setBankCard("4111111111111111");
         u.setMoneyStr("123.45");
@@ -129,30 +143,137 @@ public class AnnotationTest {
         pass("name null, Default group", CValid.tryValidate(u));
     }
 
-    // ==================== Phone @CPhone(groups=CPost, allowNull=false) ====================
+    // ==================== Phone CN @CPhone(region="CN", groups=CPost, allowNull=false) ====================
 
-    private static void testPhone() {
-        System.out.println("\n--- [Phone @CPhone] ---");
+    private static void testPhoneCN() {
+        System.out.println("\n--- [Phone CN @CPhone(region=CN)] ---");
         User u = freshUser();
 
         u.setPhone("13375483434");
-        pass("phone 133...", CValid.tryValidate(u, CPost.class));
+        pass("CN phone 133...", CValid.tryValidate(u, CPost.class));
         u.setPhone("15912345678");
-        pass("phone 159...", CValid.tryValidate(u, CPost.class));
+        pass("CN phone 159...", CValid.tryValidate(u, CPost.class));
+        u.setPhone("19912345678");
+        pass("CN phone 199...", CValid.tryValidate(u, CPost.class));
 
         u.setPhone("12375483434");
-        fail("phone starts with 12", CValid.tryValidate(u, CPost.class));
+        fail("CN phone starts with 12", CValid.tryValidate(u, CPost.class));
         u.setPhone("1337548343");
-        fail("phone too short", CValid.tryValidate(u, CPost.class));
+        fail("CN phone too short (10 digits)", CValid.tryValidate(u, CPost.class));
         u.setPhone("133754834345");
-        fail("phone too long", CValid.tryValidate(u, CPost.class));
+        fail("CN phone too long (12 digits)", CValid.tryValidate(u, CPost.class));
         u.setPhone("1337548343a");
-        fail("phone has letter", CValid.tryValidate(u, CPost.class));
+        fail("CN phone has letter", CValid.tryValidate(u, CPost.class));
         u.setPhone(null);
-        fail("phone null (allowNull=false)", CValid.tryValidate(u, CPost.class));
+        fail("CN phone null (allowNull=false)", CValid.tryValidate(u, CPost.class));
     }
 
-    // ==================== IPv4 @CIpv4(groups=CPost) ====================
+    // ==================== Phone US @CPhone(region="US", groups=CPost, allowNull=false) ====================
+
+    private static void testPhoneUS() {
+        System.out.println("\n--- [Phone US @CPhone(region=US)] ---");
+        User u = freshUser();
+
+        u.setPhoneUS("2125551234");
+        pass("US phone 2125551234", CValid.tryValidate(u, CPost.class));
+        u.setPhoneUS("+12125551234");
+        pass("US phone +12125551234", CValid.tryValidate(u, CPost.class));
+        u.setPhoneUS("1-212-555-1234");
+        pass("US phone 1-212-555-1234", CValid.tryValidate(u, CPost.class));
+        u.setPhoneUS("(212) 555-1234");
+        pass("US phone (212) 555-1234", CValid.tryValidate(u, CPost.class));
+        u.setPhoneUS("5551234567");
+        pass("US phone 5551234567 (no 1 prefix)", CValid.tryValidate(u, CPost.class));
+
+        u.setPhoneUS("12345");
+        fail("US phone too short", CValid.tryValidate(u, CPost.class));
+        u.setPhoneUS("212555123");
+        fail("US phone 9 digits", CValid.tryValidate(u, CPost.class));
+        u.setPhoneUS("212-555-12a4");
+        fail("US phone has letter", CValid.tryValidate(u, CPost.class));
+        u.setPhoneUS(null);
+        fail("US phone null (allowNull=false)", CValid.tryValidate(u, CPost.class));
+    }
+
+    // ==================== Phone JP @CPhone(region="JP", groups=CPost, allowNull=false) ====================
+
+    private static void testPhoneJP() {
+        System.out.println("\n--- [Phone JP @CPhone(region=JP)] ---");
+        User u = freshUser();
+
+        u.setPhoneJP("09012345678");
+        pass("JP phone 09012345678 (mobile)", CValid.tryValidate(u, CPost.class));
+        u.setPhoneJP("08012345678");
+        pass("JP phone 08012345678 (mobile)", CValid.tryValidate(u, CPost.class));
+        u.setPhoneJP("0312345678");
+        pass("JP phone 0312345678 (Tokyo)", CValid.tryValidate(u, CPost.class));
+        u.setPhoneJP("0120123456");
+        pass("JP phone 0120123456 (toll-free)", CValid.tryValidate(u, CPost.class));
+
+        u.setPhoneJP("090123456");
+        fail("JP phone too short", CValid.tryValidate(u, CPost.class));
+        u.setPhoneJP("110");
+        fail("JP phone too short (110)", CValid.tryValidate(u, CPost.class));
+        u.setPhoneJP("0901234567a");
+        fail("JP phone has letter", CValid.tryValidate(u, CPost.class));
+        u.setPhoneJP("2125551234");
+        fail("JP phone does not start with 0", CValid.tryValidate(u, CPost.class));
+        u.setPhoneJP(null);
+        fail("JP phone null (allowNull=false)", CValid.tryValidate(u, CPost.class));
+    }
+
+    // ==================== Phone KR @CPhone(region="KR", groups=CPost, allowNull=false) ====================
+
+    private static void testPhoneKR() {
+        System.out.println("\n--- [Phone KR @CPhone(region=KR)] ---");
+        User u = freshUser();
+
+        u.setPhoneKR("01012345678");
+        u.setPhoneUK("07123456789");
+        pass("KR phone 01012345678 (mobile)", CValid.tryValidate(u, CPost.class));
+        u.setPhoneKR("0111234567");
+        pass("KR phone 0111234567 (old mobile)", CValid.tryValidate(u, CPost.class));
+        u.setPhoneKR("01612345678");
+        pass("KR phone 01612345678 (mobile)", CValid.tryValidate(u, CPost.class));
+
+        u.setPhoneKR("0123456789");
+        fail("KR phone starts with 01[0-9] only", CValid.tryValidate(u, CPost.class));
+        u.setPhoneKR("010123456");
+        fail("KR phone too short", CValid.tryValidate(u, CPost.class));
+        u.setPhoneKR("010123456789");
+        fail("KR phone too long", CValid.tryValidate(u, CPost.class));
+        u.setPhoneKR("0101234a567");
+        fail("KR phone has letter", CValid.tryValidate(u, CPost.class));
+        u.setPhoneKR(null);
+        fail("KR phone null (allowNull=false)", CValid.tryValidate(u, CPost.class));
+    }
+
+    // ==================== Phone UK @CPhone(region="UK", groups=CPost, allowNull=false) ====================
+
+    private static void testPhoneUK() {
+        System.out.println("\n--- [Phone UK @CPhone(region=UK)] ---");
+        User u = freshUser();
+
+        u.setPhoneUK("07123456789");
+        pass("UK phone 07123456789 (mobile)", CValid.tryValidate(u, CPost.class));
+        u.setPhoneUK("02079460958");
+        pass("UK phone 02079460958 (London)", CValid.tryValidate(u, CPost.class));
+        u.setPhoneUK("01632960001");
+        pass("UK phone 01632960001 (geographic)", CValid.tryValidate(u, CPost.class));
+        u.setPhoneUK("08001111111");
+        pass("UK phone 08001111111 (freephone)", CValid.tryValidate(u, CPost.class));
+
+        u.setPhoneUK("071234567");
+        fail("UK phone too short (9 digits)", CValid.tryValidate(u, CPost.class));
+        u.setPhoneUK("071234567890");
+        fail("UK phone too long (12 digits)", CValid.tryValidate(u, CPost.class));
+        u.setPhoneUK("12345678901");
+        fail("UK phone does not start with 0", CValid.tryValidate(u, CPost.class));
+        u.setPhoneUK("0712345678a");
+        fail("UK phone has letter", CValid.tryValidate(u, CPost.class));
+        u.setPhoneUK(null);
+        fail("UK phone null (allowNull=false)", CValid.tryValidate(u, CPost.class));
+    }
 
     private static void testIpv4() {
         System.out.println("\n--- [IPv4 @CIpv4] ---");
@@ -315,6 +436,42 @@ public class AnnotationTest {
         fail("d3 after max (day after)", CValid.tryValidate(u));
         u.setD3(null);
         fail("d3 null (allowNull=false)", CValid.tryValidate(u));
+    }
+
+    // ==================== DateRange Instant d4 ====================
+
+    private static void testDateRangeInstant() {
+        System.out.println("\n--- [DateRange d4 Instant min=2022-06-01 max=2022-06-30] ---");
+        User u = freshUser();
+
+        u.setD4(Instant.parse("2022-06-01T00:00:00Z"));
+        pass("d4 Instant min boundary", CValid.tryValidate(u));
+        u.setD4(Instant.parse("2022-06-30T15:59:59Z"));
+        pass("d4 Instant max boundary", CValid.tryValidate(u));
+
+        u.setD4(Instant.parse("2022-05-31T15:59:59Z"));
+        fail("d4 Instant before min", CValid.tryValidate(u));
+        u.setD4(Instant.parse("2022-07-01T00:00:00Z"));
+        fail("d4 Instant after max", CValid.tryValidate(u));
+    }
+
+    // ==================== DateRange ZonedDateTime d5 ====================
+
+    private static void testDateRangeZonedDateTime() {
+        System.out.println("\n--- [DateRange d5 ZonedDateTime min=2022-07-01 00:30:00 max=2022-07-30 12:30:00 allowNull=false] ---");
+        User u = freshUser();
+
+        u.setD5(ZonedDateTime.parse("2022-07-01T00:30:00+08:00[Asia/Shanghai]"));
+        pass("d5 ZonedDateTime min boundary", CValid.tryValidate(u));
+        u.setD5(ZonedDateTime.parse("2022-07-30T12:30:00+08:00[Asia/Shanghai]"));
+        pass("d5 ZonedDateTime max boundary", CValid.tryValidate(u));
+
+        u.setD5(ZonedDateTime.parse("2022-07-01T00:29:59+08:00[Asia/Shanghai]"));
+        fail("d5 ZonedDateTime before min", CValid.tryValidate(u));
+        u.setD5(ZonedDateTime.parse("2022-07-31T00:00:00+08:00[Asia/Shanghai]"));
+        fail("d5 ZonedDateTime after max", CValid.tryValidate(u));
+        u.setD5(null);
+        fail("d5 ZonedDateTime null (allowNull=false)", CValid.tryValidate(u));
     }
 
     // ==================== Plate Number @CPlateNumber(groups=CPost) ====================
