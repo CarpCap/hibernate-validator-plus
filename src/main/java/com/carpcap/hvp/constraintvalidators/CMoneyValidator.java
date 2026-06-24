@@ -110,8 +110,10 @@ public class CMoneyValidator implements ConstraintValidator<CMoney, Object> {
         // 验证小数部分位数
         String decimalPart = getDecimalPart(amount);
         if (decimalPart == null) {
-            // 没有小数部分
-            return allowNoDecimal;
+            // Number 类型无小数概念，跳过表示层检验
+            if (!(value instanceof Number)) {
+                return allowNoDecimal;
+            }
         } else if (decimalPart.length() > decimalPlaces) {
             // 小数位数超过限制
             return false;
@@ -122,9 +124,12 @@ public class CMoneyValidator implements ConstraintValidator<CMoney, Object> {
             return false;
         }
 
-        // 验证字符串格式（如果是从字符串转换的）
+        // 验证字符串输入 —— 先校验原始格式（货币符号、千分位），再校验清理后格式
         if (value instanceof String) {
-            return validateStringFormat(valueStr, integerPart, decimalPart);
+            if (!validateRawFormat(valueStr)) {
+                return false;
+            }
+            return validateStringFormat(cleanMoneyString(valueStr), integerPart, decimalPart);
         }
 
         return true;
@@ -134,8 +139,7 @@ public class CMoneyValidator implements ConstraintValidator<CMoney, Object> {
      * 清理格式化的金额字符串
      */
     private String cleanMoneyString(String valueStr) {
-        StringBuilder cleaned = new StringBuilder();
-        
+
         // 处理货币符号
         if (allowCurrencySymbol && !valueStr.isEmpty()) {
             char firstChar = valueStr.charAt(0);
@@ -176,61 +180,102 @@ public class CMoneyValidator implements ConstraintValidator<CMoney, Object> {
 
     /**
      * 验证金额字符串的格式
+     * 对清理后的纯数字字符串进行格式验证
      */
-    private boolean validateStringFormat(String valueStr, String integerPart, String decimalPart) {
+    private boolean validateStringFormat(String cleanedValueStr, String integerPart, String decimalPart) {
 
         StringBuilder regexBuilder = new StringBuilder();
 
         // 可选正负号
         regexBuilder.append("^[-+]?");
 
-        // 可选货币符号
-        if (allowCurrencySymbol) {
-            if (allowedCurrencySymbols.isEmpty()) {
-                // 正确写法：使用 OR（JDK8+）
-                regexBuilder.append("(?:\\p{Sc}|\\p{Punct})?");
-            } else {
-                regexBuilder.append("(?:");
-                for (String symbol : allowedCurrencySymbols) {
-                    regexBuilder.append(Pattern.quote(symbol)).append("|");
-                }
-                regexBuilder.deleteCharAt(regexBuilder.length() - 1); // 删除尾部 |
-                regexBuilder.append(")?");
-            }
-        }
-
-        // 整数部分（带千分位时整体要放一起）
-        if (allowThousandSeparator) {
-            // 规则：1~3 位开头，后面可以跟多个千分位
-            if (allowLeadingZero) {
-                regexBuilder.append("\\d{1,3}(?:[ ,]\\d{3})*");
-            } else {
-                regexBuilder.append("(?:0|[1-9]\\d{0,2})(?:[ ,]\\d{3})*");
-            }
+        // 整数部分 — 清理后字符串已是纯数字格式
+        if (allowLeadingZero) {
+            regexBuilder.append("\\d+");
         } else {
-            // 不带千分位
-            if (allowLeadingZero) {
-                regexBuilder.append("\\d+");
-            } else {
-                regexBuilder.append("(?:0|[1-9]\\d*)");
-            }
+            regexBuilder.append("(?:0|[1-9]\\d*)");
         }
 
         // 小数部分
         if (allowNoDecimal) {
-            // allowNoDecimal = true → 小数可有可无
             regexBuilder.append("(?:\\.\\d{1,").append(decimalPlaces).append("})?");
         } else {
-            // 必须有小数部分
             regexBuilder.append("\\.\\d{1,").append(decimalPlaces).append("}");
         }
 
         regexBuilder.append("$");
 
         Pattern pattern = Pattern.compile(regexBuilder.toString());
-        Matcher matcher = pattern.matcher(valueStr);
+        Matcher matcher = pattern.matcher(cleanedValueStr);
 
         return matcher.matches();
+    }
+
+    /**
+     * 验证原始输入字符串的装饰格式（货币符号、千分位）
+     * 与 cleanMoneyString() 使用同一套规则，确保格式校验和数值校验同步
+     */
+    private boolean validateRawFormat(String valueStr) {
+        String raw = valueStr;
+
+        // 1) 验证货币符号
+        if (allowCurrencySymbol) {
+            char firstChar = raw.charAt(0);
+            if (!Character.isDigit(firstChar) && firstChar != '-' && firstChar != '+') {
+                // 有货币符号前缀 —— 验证是否在允许列表中
+                String symbol = String.valueOf(firstChar);
+                if (!allowedCurrencySymbols.isEmpty() && !allowedCurrencySymbols.contains(symbol)) {
+                    return false;
+                }
+                raw = raw.substring(1).trim();
+            }
+            // 无货币符号也允许（allowCurrencySymbol 表示"允许出现"，而非"必须出现"）
+        } else {
+            // 不允许货币符号时，首位不应是货币符号类字符
+            char first = raw.charAt(0);
+            if (!Character.isDigit(first) && first != '-' && first != '+') {
+                return false;
+            }
+        }
+
+        // 2) 验证千分位
+        if (allowThousandSeparator) {
+            int dotIndex = raw.indexOf('.');
+            String intPart = (dotIndex == -1) ? raw : raw.substring(0, dotIndex);
+            if (intPart.startsWith("-") || intPart.startsWith("+")) {
+                intPart = intPart.substring(1);
+            }
+            if (intPart.contains(",")) {
+                if (!intPart.matches("\\d{1,3}(,\\d{3})*")) {
+                    return false;
+                }
+            }
+        } else {
+            if (raw.contains(",") || raw.contains(" ")) {
+                return false;
+            }
+        }
+
+        // 3) 清理后验证是否还有意外字符
+        StringBuilder cleanedCheck = new StringBuilder();
+        for (int i = 0; i < raw.length(); i++) {
+            char c = raw.charAt(i);
+            if (Character.isDigit(c) || c == '.' || c == '-' || c == '+') {
+                cleanedCheck.append(c);
+            } else if (c == ',') {
+                // 千分位已在步骤2验证，跳过
+            } else {
+                return false;
+            }
+        }
+
+        try {
+            new BigDecimal(cleanedCheck.toString());
+        } catch (NumberFormatException e) {
+            return false;
+        }
+
+        return true;
     }
 
 }

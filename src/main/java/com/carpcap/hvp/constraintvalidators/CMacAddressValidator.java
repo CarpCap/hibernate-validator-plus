@@ -48,44 +48,36 @@ public class CMacAddressValidator implements ConstraintValidator<CMacAddress, Ch
     private String buildMacAddressPattern() {
         StringBuilder patternBuilder = new StringBuilder();
         String hexCharPattern = allowLowercase ? "[0-9A-Fa-f]" : "[0-9A-F]";
-        String hexBytePattern;
+        String hexByte;
 
         if (allowOmittingLeadingZero) {
-            hexBytePattern = "(" + hexCharPattern + "(?:" + hexCharPattern + ")?)";
+            hexByte = "(" + hexCharPattern + "(?:" + hexCharPattern + ")?)";
         } else {
-            hexBytePattern = "(" + hexCharPattern + "{2})";
+            hexByte = "(" + hexCharPattern + "{2})";
         }
 
-        // 支持的分隔符：冒号、连字符或无分隔符
-        String separatorPattern = "([:-])?";
-        
-        // 基本的MAC地址格式（6字节）
-        String mac48Pattern = "^" + hexBytePattern + separatorPattern + 
-                               hexBytePattern + separatorPattern + 
-                               hexBytePattern + separatorPattern + 
-                               hexBytePattern + separatorPattern + 
-                               hexBytePattern + separatorPattern + 
-                               hexBytePattern + "$";
+        // 三种分离模式，各自强制分隔符一致
+        // 1) 无分隔符: AABBCCDDEEFF
+        // 2) 冒号分隔: AA:BB:CC:DD:EE:FF
+        // 3) 连字符分隔: AA-BB-CC-DD-EE-FF
+        int count = allowEui64 ? 8 : 6;
 
-        if (allowEui64) {
-            // EUI-64格式（8字节）
-            String eui64Pattern = "^" + hexBytePattern + separatorPattern + 
-                                  hexBytePattern + separatorPattern + 
-                                  hexBytePattern + separatorPattern + 
-                                  hexBytePattern + separatorPattern + 
-                                  hexBytePattern + separatorPattern + 
-                                  hexBytePattern + separatorPattern + 
-                                  hexBytePattern + separatorPattern + 
-                                  hexBytePattern + "$";
-            
-            // 组合两种模式
-            patternBuilder.append("(");
-            patternBuilder.append(mac48Pattern.substring(1, mac48Pattern.length() - 1));
-            patternBuilder.append("|").append(eui64Pattern.substring(1, eui64Pattern.length() - 1));
-            patternBuilder.append(")");
-        } else {
-            patternBuilder.append(mac48Pattern);
+        String noSep = hexByte;
+        String colonSep = hexByte;
+        String hyphenSep = hexByte;
+        for (int i = 1; i < count; i++) {
+            noSep += hexByte;
+            colonSep += ":" + hexByte;
+            hyphenSep += "-" + hexByte;
         }
+
+        patternBuilder.append("^(");
+        patternBuilder.append(noSep);
+        patternBuilder.append("|");
+        patternBuilder.append(colonSep);
+        patternBuilder.append("|");
+        patternBuilder.append(hyphenSep);
+        patternBuilder.append(")$");
 
         return patternBuilder.toString();
     }

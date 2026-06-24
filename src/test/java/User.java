@@ -7,6 +7,8 @@ import java.io.File;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Instant;
+import java.time.ZonedDateTime;
 
 /**
  * @author CarpCap
@@ -22,9 +24,22 @@ public class User {
     private String d2;
     @CDateRange(min = "2022-08-01 00:30:00",max = "2022-08-30 12:30:00",allowNull = false)
     private LocalDateTime d3;
+    @CDateRange(min = "2022-06-01",max = "2022-06-30")
+    private Instant d4;
+    @CDateRange(min = "2022-07-01 00:30:00",max = "2022-07-30 12:30:00",allowNull = false)
+    private ZonedDateTime d5;
 
-    @CPhone(groups = CPost.class,allowNull = false)
+    @CPhone(region = "CN", groups = CPost.class, allowNull = false)
     private String phone;
+    @CPhone(region = "US", groups = CPost.class, allowNull = false)
+    private String phoneUS;
+    @CPhone(region = "JP", groups = CPost.class, allowNull = false)
+    private String phoneJP;
+    @CPhone(region = "KR", groups = CPost.class, allowNull = false)
+    private String phoneKR;
+    @CPhone(region = "UK", groups = CPost.class, allowNull = false)
+    private String phoneUK;
+
     //车牌
     @CPlateNumber(groups = CPost.class)
     private String lpn;
@@ -90,6 +105,22 @@ public class User {
 
     public void setD3(LocalDateTime d3) {
         this.d3 = d3;
+    }
+
+    public Instant getD4() {
+        return d4;
+    }
+
+    public void setD4(Instant d4) {
+        this.d4 = d4;
+    }
+
+    public ZonedDateTime getD5() {
+        return d5;
+    }
+
+    public void setD5(ZonedDateTime d5) {
+        this.d5 = d5;
     }
 
     public String getIp66() {
@@ -261,6 +292,39 @@ public class User {
     public void setPhone(String phone) {
         this.phone = phone;
     }
+
+    public String getPhoneUS() {
+        return phoneUS;
+    }
+
+    public void setPhoneUS(String phoneUS) {
+        this.phoneUS = phoneUS;
+    }
+
+    public String getPhoneJP() {
+        return phoneJP;
+    }
+
+    public void setPhoneJP(String phoneJP) {
+        this.phoneJP = phoneJP;
+    }
+
+    public String getPhoneKR() {
+        return phoneKR;
+    }
+
+    public void setPhoneKR(String phoneKR) {
+        this.phoneKR = phoneKR;
+    }
+
+    public String getPhoneUK() {
+        return phoneUK;
+    }
+
+    public void setPhoneUK(String phoneUK) {
+        this.phoneUK = phoneUK;
+    }
+
 
     public String getIp() {
         return ip;

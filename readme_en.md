@@ -20,7 +20,7 @@ Hibernate Validator Plus is an enhanced validation framework based on **Hibernat
 
 
 📦 **Features:**
-- Built-in commonly used validation annotations (account, password, email, ID card, IPv4, etc.)
+- Built-in commonly used validation annotations (account, password, ID card, IPv4, etc.)
 - Multiple built-in validation group schemes
 - International i18n, supports Chinese, English, Japanese, Chinese, Russian, French, Spanish, etc..
 - Built-in allowable null judgment
@@ -45,7 +45,6 @@ Location: [`annotation`](src/main/java/com/carpcap/hvp/annotation)
 | `@CPassword`    | Password validation | 6–18 chars, with at least 1 letter and at least 1 number.                                                                  |
 | `@CIdCard`      | ID card validation  | Supports common CN ID formats                                                                                              |
 | `@CPhone`       | Phone validation    | Mainland China mobile numbers                                                                                              |
-| `@CEmail`       | Email validation    | RFC-compliant email rule                                                                                                   |
 | `@CFile`        | File validation     | Default max size 1 MB, file suffix supported                                                                               |
 | `@CPlateNumber` | Plate number check  | Supports both new & old CN vehicle plates                                                                                  |
 | `@CIpv4`        | Ipv4 validation     | Standard IPv4 address format                                                                                               |
