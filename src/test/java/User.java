@@ -39,6 +39,17 @@ public class User {
     private String phoneKR;
     @CPhone(region = "UK", groups = CPost.class, allowNull = false)
     private String phoneUK;
+    @CPostCode(region = "CN", groups = CPost.class, allowNull = false)
+    private String postCodeCN;
+    @CPostCode(region = "US", groups = CPost.class, allowNull = false)
+    private String postCodeUS;
+    @CPostCode(region = "JP", groups = CPost.class, allowNull = false)
+    private String postCodeJP;
+    @CPostCode(region = "UK", groups = CPost.class, allowNull = false)
+    private String postCodeUK;
+    @CPostCode(region = "KR", groups = CPost.class, allowNull = false)
+    private String postCodeKR;
+
 
     //车牌
     @CPlateNumber(groups = CPost.class)
@@ -324,6 +335,46 @@ public class User {
     public void setPhoneUK(String phoneUK) {
         this.phoneUK = phoneUK;
     }
+    public String getPostCodeCN() {
+        return postCodeCN;
+    }
+
+    public void setPostCodeCN(String postCodeCN) {
+        this.postCodeCN = postCodeCN;
+    }
+
+    public String getPostCodeUS() {
+        return postCodeUS;
+    }
+
+    public void setPostCodeUS(String postCodeUS) {
+        this.postCodeUS = postCodeUS;
+    }
+
+    public String getPostCodeJP() {
+        return postCodeJP;
+    }
+
+    public void setPostCodeJP(String postCodeJP) {
+        this.postCodeJP = postCodeJP;
+    }
+
+    public String getPostCodeUK() {
+        return postCodeUK;
+    }
+
+    public void setPostCodeUK(String postCodeUK) {
+        this.postCodeUK = postCodeUK;
+    }
+
+    public String getPostCodeKR() {
+        return postCodeKR;
+    }
+
+    public void setPostCodeKR(String postCodeKR) {
+        this.postCodeKR = postCodeKR;
+    }
+
 
 
     public String getIp() {
