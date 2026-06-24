@@ -29,7 +29,7 @@ hibernate-validator-plus/
 ├── src/
 │   ├── main/
 │   │   ├── java/com/carpcap/hvp/
-│   │   │   ├── annotation/               # 校验注解定义 (15个)
+│   │   │   ├── annotation/               # 校验注解定义 (14个)
 │   │   │   ├── constraintvalidators/     # 校验器实现 (23个)
 │   │   │   ├── groups/                   # 校验分组接口 (16个)
 │   │   │   └── utils/                    # 工具类 (2个)
@@ -57,7 +57,6 @@ hibernate-validator-plus/
 |------|------|----------|
 | @CAccount | 账号格式验证 | regexp（正则）, min/max（长度范围，默认 5-16） |
 | @CPassword | 密码强度验证 | min/max（长度 6-18），默认需包含字母+数字 |
-| @CEmail | 邮箱格式验证 | RFC 标准校验（复用 Hutool） |
 | @CIdCard | 中国身份证号验证 | 支持 15/18 位格式 |
 | @CPhone | 手机号验证 | region 参数支持 CN/US/JP/KR 等多国号码 |
 | @CIpv4 | IPv4 地址验证 | 标准 IPv4 正则 |

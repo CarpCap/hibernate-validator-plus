@@ -139,8 +139,7 @@ public class CMoneyValidator implements ConstraintValidator<CMoney, Object> {
      * 清理格式化的金额字符串
      */
     private String cleanMoneyString(String valueStr) {
-        StringBuilder cleaned = new StringBuilder();
-        
+
         // 处理货币符号
         if (allowCurrencySymbol && !valueStr.isEmpty()) {
             char firstChar = valueStr.charAt(0);
