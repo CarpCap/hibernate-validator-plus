@@ -32,6 +32,11 @@ public class AnnotationTest {
         testPhoneJP();
         testPhoneKR();
         testPhoneUK();
+        testPassportCN();
+        testPassportUS();
+        testPassportJP();
+        testPassportUK();
+        testPassportKR();
         testIpv4();
         testIpv6();
         testDomain();
@@ -109,6 +114,11 @@ public class AnnotationTest {
         u.setPhoneJP("09012345678");
         u.setPhoneKR("01012345678");
         u.setPhoneUK("07123456789");
+        u.setPassport("E12345678");
+        u.setPassportUS("123456789");
+        u.setPassportJP("AB1234567");
+        u.setPassportUK("A12345678");
+        u.setPassportKR("M12345678");
         u.setUrl("http://127.0.0.1:2333");
         u.setBankCard("4111111111111111");
         u.setMoneyStr("123.45");
@@ -275,6 +285,123 @@ public class AnnotationTest {
         fail("UK phone null (allowNull=false)", CValid.tryValidate(u, CPost.class));
     }
 
+
+    // ==================== Passport CN @CPassport(region="CN", groups=CPost, allowNull=false) ====================
+
+    private static void testPassportCN() {
+        System.out.println("\n--- [Passport CN @CPassport(region=CN)] ---");
+        User u = freshUser();
+
+        u.setPassport("E12345678");
+        pass("CN passport E12345678 (electronic)", CValid.tryValidate(u, CPost.class));
+        u.setPassport("G12345678");
+        pass("CN passport G12345678 (old)", CValid.tryValidate(u, CPost.class));
+        u.setPassport("D12345678");
+        pass("CN passport D12345678 (diplomatic)", CValid.tryValidate(u, CPost.class));
+
+        u.setPassport("123456789");
+        fail("CN passport pure digits", CValid.tryValidate(u, CPost.class));
+        u.setPassport("E1234567");
+        fail("CN passport too short (8 chars)", CValid.tryValidate(u, CPost.class));
+        u.setPassport("E123456789");
+        fail("CN passport too long (10 chars)", CValid.tryValidate(u, CPost.class));
+        u.setPassport("AB1234567");
+        fail("CN passport two letters prefix", CValid.tryValidate(u, CPost.class));
+        u.setPassport("e12345678");
+        fail("CN passport lowercase letter", CValid.tryValidate(u, CPost.class));
+        u.setPassport(null);
+        fail("CN passport null (allowNull=false)", CValid.tryValidate(u, CPost.class));
+    }
+
+    // ==================== Passport US @CPassport(region="US", groups=CPost, allowNull=false) ====================
+
+    private static void testPassportUS() {
+        System.out.println("\n--- [Passport US @CPassport(region=US)] ---");
+        User u = freshUser();
+
+        u.setPassportUS("123456789");
+        pass("US passport 123456789", CValid.tryValidate(u, CPost.class));
+        u.setPassportUS("000000000");
+        pass("US passport 000000000", CValid.tryValidate(u, CPost.class));
+
+        u.setPassportUS("12345678");
+        fail("US passport too short (8 digits)", CValid.tryValidate(u, CPost.class));
+        u.setPassportUS("1234567890");
+        fail("US passport too long (10 digits)", CValid.tryValidate(u, CPost.class));
+        u.setPassportUS("A12345678");
+        fail("US passport has letter", CValid.tryValidate(u, CPost.class));
+        u.setPassportUS(null);
+        fail("US passport null (allowNull=false)", CValid.tryValidate(u, CPost.class));
+    }
+
+    // ==================== Passport JP @CPassport(region="JP", groups=CPost, allowNull=false) ====================
+
+    private static void testPassportJP() {
+        System.out.println("\n--- [Passport JP @CPassport(region=JP)] ---");
+        User u = freshUser();
+
+        u.setPassportJP("AB1234567");
+        pass("JP passport AB1234567", CValid.tryValidate(u, CPost.class));
+        u.setPassportJP("XY9999999");
+        pass("JP passport XY9999999", CValid.tryValidate(u, CPost.class));
+
+        u.setPassportJP("A12345678");
+        fail("JP passport only one letter", CValid.tryValidate(u, CPost.class));
+        u.setPassportJP("AB123456");
+        fail("JP passport too short", CValid.tryValidate(u, CPost.class));
+        u.setPassportJP("AB12345678");
+        fail("JP passport too long", CValid.tryValidate(u, CPost.class));
+        u.setPassportJP("ab1234567");
+        fail("JP passport lowercase letters", CValid.tryValidate(u, CPost.class));
+        u.setPassportJP(null);
+        fail("JP passport null (allowNull=false)", CValid.tryValidate(u, CPost.class));
+    }
+
+    // ==================== Passport UK @CPassport(region="UK", groups=CPost, allowNull=false) ====================
+
+    private static void testPassportUK() {
+        System.out.println("\n--- [Passport UK @CPassport(region=UK)] ---");
+        User u = freshUser();
+
+        u.setPassportUK("A12345678");
+        pass("UK passport A12345678", CValid.tryValidate(u, CPost.class));
+        u.setPassportUK("Z99999999");
+        pass("UK passport Z99999999", CValid.tryValidate(u, CPost.class));
+
+        u.setPassportUK("123456789");
+        fail("UK passport no letter prefix", CValid.tryValidate(u, CPost.class));
+        u.setPassportUK("AB1234567");
+        fail("UK passport two letters prefix", CValid.tryValidate(u, CPost.class));
+        u.setPassportUK("A1234567");
+        fail("UK passport too short (8 chars)", CValid.tryValidate(u, CPost.class));
+        u.setPassportUK("A123456789");
+        fail("UK passport too long (10 chars)", CValid.tryValidate(u, CPost.class));
+        u.setPassportUK(null);
+        fail("UK passport null (allowNull=false)", CValid.tryValidate(u, CPost.class));
+    }
+
+    // ==================== Passport KR @CPassport(region="KR", groups=CPost, allowNull=false) ====================
+
+    private static void testPassportKR() {
+        System.out.println("\n--- [Passport KR @CPassport(region=KR)] ---");
+        User u = freshUser();
+
+        u.setPassportKR("M12345678");
+        pass("KR passport M12345678", CValid.tryValidate(u, CPost.class));
+        u.setPassportKR("S12345678");
+        pass("KR passport S12345678 (diplomatic)", CValid.tryValidate(u, CPost.class));
+
+        u.setPassportKR("123456789");
+        fail("KR passport no letter prefix", CValid.tryValidate(u, CPost.class));
+        u.setPassportKR("AB1234567");
+        fail("KR passport two letters prefix", CValid.tryValidate(u, CPost.class));
+        u.setPassportKR("M1234567");
+        fail("KR passport too short (8 chars)", CValid.tryValidate(u, CPost.class));
+        u.setPassportKR("M123456789");
+        fail("KR passport too long (10 chars)", CValid.tryValidate(u, CPost.class));
+        u.setPassportKR(null);
+        fail("KR passport null (allowNull=false)", CValid.tryValidate(u, CPost.class));
+    }
     private static void testIpv4() {
         System.out.println("\n--- [IPv4 @CIpv4] ---");
         User u = freshUser();

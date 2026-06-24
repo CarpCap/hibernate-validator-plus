@@ -40,6 +40,21 @@ public class User {
     @CPhone(region = "UK", groups = CPost.class, allowNull = false)
     private String phoneUK;
 
+    @CPassport(groups = CPost.class, allowNull = false)
+    private String passport;
+
+    @CPassport(region = "US", groups = CPost.class, allowNull = false)
+    private String passportUS;
+
+    @CPassport(region = "JP", groups = CPost.class, allowNull = false)
+    private String passportJP;
+
+    @CPassport(region = "UK", groups = CPost.class, allowNull = false)
+    private String passportUK;
+
+    @CPassport(region = "KR", groups = CPost.class, allowNull = false)
+    private String passportKR;
+
     //车牌
     @CPlateNumber(groups = CPost.class)
     private String lpn;
@@ -323,6 +338,46 @@ public class User {
 
     public void setPhoneUK(String phoneUK) {
         this.phoneUK = phoneUK;
+    }
+
+    public String getPassport() {
+        return passport;
+    }
+
+    public void setPassport(String passport) {
+        this.passport = passport;
+    }
+
+    public String getPassportUS() {
+        return passportUS;
+    }
+
+    public void setPassportUS(String passportUS) {
+        this.passportUS = passportUS;
+    }
+
+    public String getPassportJP() {
+        return passportJP;
+    }
+
+    public void setPassportJP(String passportJP) {
+        this.passportJP = passportJP;
+    }
+
+    public String getPassportUK() {
+        return passportUK;
+    }
+
+    public void setPassportUK(String passportUK) {
+        this.passportUK = passportUK;
+    }
+
+    public String getPassportKR() {
+        return passportKR;
+    }
+
+    public void setPassportKR(String passportKR) {
+        this.passportKR = passportKR;
     }
 
 
