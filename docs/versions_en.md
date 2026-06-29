@@ -1,8 +1,31 @@
-
+﻿
 # 📌 Changelog (English Version)
 
 
 ## ☕ Version 1.2.x Series
+
+---
+### 🥩1.2.2
+
+
+> **🎉 New Feature**
+
+| Annotations | Description |
+|-------------|-------------|
+| `@CPassport` | Passport number validation, supports CN/US/JP/UK/KR formats |
+| `@CPostCode` | Postal code validation, supports CN/US/JP/UK/KR formats |
+
+> **🔄 Update**
+
+| Features | Update Notes |
+|----------|-------------|
+| `@CPhone` | Added `region` parameter for multi-country phone validation (CN/US/JP/KR/UK) |
+| `@CDateRange` | Added `Instant` and `ZonedDateTime` type support |
+
+> **🛠 Improvements**
+
+* 💾 i18n message files converted to Unicode encoding, fixing garbled characters in non-UTF-8 environments
+* ✏️ Improved code comments and test cases
 
 ---
 

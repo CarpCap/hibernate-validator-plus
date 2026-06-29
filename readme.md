@@ -97,7 +97,7 @@ Hibernate Validator Plus 是基于 **Hibernate Validator** 的增强框架，提
 <dependency>
     <groupId>com.carpcap</groupId>
     <artifactId>hibernate-validator-plus</artifactId>
-    <version>1.2.1</version>
+    <version>1.2.2</version>
 </dependency>
 ```
 
