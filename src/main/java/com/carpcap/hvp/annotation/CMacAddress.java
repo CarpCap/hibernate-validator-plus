@@ -40,16 +40,19 @@ public @interface CMacAddress {
 
     /**
      * 是否允许小写字母，默认为true
+     * @return true允许小写字母，false不允许
      */
     boolean allowLowercase() default true;
 
     /**
      * 是否允许省略前导零，默认为false
+     * @return true允许省略前导零，false不允许
      */
     boolean allowOmittingLeadingZero() default false;
 
     /**
      * 是否允许IEEE EUI-64格式（8个字节），默认为false
+     * @return true允许EUI-64格式，false不允许
      */
     boolean allowEui64() default false;
 

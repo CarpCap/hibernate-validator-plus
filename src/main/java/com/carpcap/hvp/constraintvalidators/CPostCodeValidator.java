@@ -12,7 +12,7 @@ import java.util.Map;
 import java.util.regex.Pattern;
 
 /**
- * @CPostCode 校验器
+ * CPostCode 校验器
  * <p>支持 CN/US/JP/UK/KR 五国邮编格式，也支持自定义正则</p>
  *
  * @author CarpCap

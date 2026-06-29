@@ -34,16 +34,19 @@ public @interface CUrl {
 
     /**
      * 允许的URL协议列表，默认为http和https
+     * @return 允许的URL协议数组
      */
     String[] protocols() default {"http", "https"};
 
     /**
      * 是否允许使用localhost or 127.0.0.1，默认为false
+     * @return true允许localhost/IP，false不允许
      */
     boolean allowLocalhost() default true;
 
     /**
      * 是否允许使用IP地址，默认为false
+     * @return true允许IP地址，false不允许
      */
     boolean allowIp() default true;
 
