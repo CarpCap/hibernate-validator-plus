@@ -32,6 +32,11 @@ public class AnnotationTest {
         testPhoneJP();
         testPhoneKR();
         testPhoneUK();
+        testPassportCN();
+        testPassportUS();
+        testPassportJP();
+        testPassportUK();
+        testPassportKR();
         testIpv4();
         testIpv6();
         testDomain();
@@ -50,6 +55,11 @@ public class AnnotationTest {
         testBankCard();
         testMoney();
         testMacAddress();
+        testPostCodeCN();
+        testPostCodeUS();
+        testPostCodeJP();
+        testPostCodeUK();
+        testPostCodeKR();
         testGroupInheritance();
 
         System.out.println("\n============================================");
@@ -109,12 +119,22 @@ public class AnnotationTest {
         u.setPhoneJP("09012345678");
         u.setPhoneKR("01012345678");
         u.setPhoneUK("07123456789");
+        u.setPassport("E12345678");
+        u.setPassportUS("123456789");
+        u.setPassportJP("AB1234567");
+        u.setPassportUK("A12345678");
+        u.setPassportKR("M12345678");
         u.setUrl("http://127.0.0.1:2333");
         u.setBankCard("4111111111111111");
         u.setMoneyStr("123.45");
         u.setMoneyInt(100);
         u.setMoneyBig(new BigDecimal("22.11"));
         u.setMac("A0:1A:2B:3C:4D:5E");
+        u.setPostCodeCN("518057");
+        u.setPostCodeUS("10001");
+        u.setPostCodeJP("100-0001");
+        u.setPostCodeUK("SW1A 1AA");
+        u.setPostCodeKR("04524");
         return u;
     }
 
@@ -275,6 +295,123 @@ public class AnnotationTest {
         fail("UK phone null (allowNull=false)", CValid.tryValidate(u, CPost.class));
     }
 
+
+    // ==================== Passport CN @CPassport(region="CN", groups=CPost, allowNull=false) ====================
+
+    private static void testPassportCN() {
+        System.out.println("\n--- [Passport CN @CPassport(region=CN)] ---");
+        User u = freshUser();
+
+        u.setPassport("E12345678");
+        pass("CN passport E12345678 (electronic)", CValid.tryValidate(u, CPost.class));
+        u.setPassport("G12345678");
+        pass("CN passport G12345678 (old)", CValid.tryValidate(u, CPost.class));
+        u.setPassport("D12345678");
+        pass("CN passport D12345678 (diplomatic)", CValid.tryValidate(u, CPost.class));
+
+        u.setPassport("123456789");
+        fail("CN passport pure digits", CValid.tryValidate(u, CPost.class));
+        u.setPassport("E1234567");
+        fail("CN passport too short (8 chars)", CValid.tryValidate(u, CPost.class));
+        u.setPassport("E123456789");
+        fail("CN passport too long (10 chars)", CValid.tryValidate(u, CPost.class));
+        u.setPassport("AB1234567");
+        fail("CN passport two letters prefix", CValid.tryValidate(u, CPost.class));
+        u.setPassport("e12345678");
+        fail("CN passport lowercase letter", CValid.tryValidate(u, CPost.class));
+        u.setPassport(null);
+        fail("CN passport null (allowNull=false)", CValid.tryValidate(u, CPost.class));
+    }
+
+    // ==================== Passport US @CPassport(region="US", groups=CPost, allowNull=false) ====================
+
+    private static void testPassportUS() {
+        System.out.println("\n--- [Passport US @CPassport(region=US)] ---");
+        User u = freshUser();
+
+        u.setPassportUS("123456789");
+        pass("US passport 123456789", CValid.tryValidate(u, CPost.class));
+        u.setPassportUS("000000000");
+        pass("US passport 000000000", CValid.tryValidate(u, CPost.class));
+
+        u.setPassportUS("12345678");
+        fail("US passport too short (8 digits)", CValid.tryValidate(u, CPost.class));
+        u.setPassportUS("1234567890");
+        fail("US passport too long (10 digits)", CValid.tryValidate(u, CPost.class));
+        u.setPassportUS("A12345678");
+        fail("US passport has letter", CValid.tryValidate(u, CPost.class));
+        u.setPassportUS(null);
+        fail("US passport null (allowNull=false)", CValid.tryValidate(u, CPost.class));
+    }
+
+    // ==================== Passport JP @CPassport(region="JP", groups=CPost, allowNull=false) ====================
+
+    private static void testPassportJP() {
+        System.out.println("\n--- [Passport JP @CPassport(region=JP)] ---");
+        User u = freshUser();
+
+        u.setPassportJP("AB1234567");
+        pass("JP passport AB1234567", CValid.tryValidate(u, CPost.class));
+        u.setPassportJP("XY9999999");
+        pass("JP passport XY9999999", CValid.tryValidate(u, CPost.class));
+
+        u.setPassportJP("A12345678");
+        fail("JP passport only one letter", CValid.tryValidate(u, CPost.class));
+        u.setPassportJP("AB123456");
+        fail("JP passport too short", CValid.tryValidate(u, CPost.class));
+        u.setPassportJP("AB12345678");
+        fail("JP passport too long", CValid.tryValidate(u, CPost.class));
+        u.setPassportJP("ab1234567");
+        fail("JP passport lowercase letters", CValid.tryValidate(u, CPost.class));
+        u.setPassportJP(null);
+        fail("JP passport null (allowNull=false)", CValid.tryValidate(u, CPost.class));
+    }
+
+    // ==================== Passport UK @CPassport(region="UK", groups=CPost, allowNull=false) ====================
+
+    private static void testPassportUK() {
+        System.out.println("\n--- [Passport UK @CPassport(region=UK)] ---");
+        User u = freshUser();
+
+        u.setPassportUK("A12345678");
+        pass("UK passport A12345678", CValid.tryValidate(u, CPost.class));
+        u.setPassportUK("Z99999999");
+        pass("UK passport Z99999999", CValid.tryValidate(u, CPost.class));
+
+        u.setPassportUK("123456789");
+        fail("UK passport no letter prefix", CValid.tryValidate(u, CPost.class));
+        u.setPassportUK("AB1234567");
+        fail("UK passport two letters prefix", CValid.tryValidate(u, CPost.class));
+        u.setPassportUK("A1234567");
+        fail("UK passport too short (8 chars)", CValid.tryValidate(u, CPost.class));
+        u.setPassportUK("A123456789");
+        fail("UK passport too long (10 chars)", CValid.tryValidate(u, CPost.class));
+        u.setPassportUK(null);
+        fail("UK passport null (allowNull=false)", CValid.tryValidate(u, CPost.class));
+    }
+
+    // ==================== Passport KR @CPassport(region="KR", groups=CPost, allowNull=false) ====================
+
+    private static void testPassportKR() {
+        System.out.println("\n--- [Passport KR @CPassport(region=KR)] ---");
+        User u = freshUser();
+
+        u.setPassportKR("M12345678");
+        pass("KR passport M12345678", CValid.tryValidate(u, CPost.class));
+        u.setPassportKR("S12345678");
+        pass("KR passport S12345678 (diplomatic)", CValid.tryValidate(u, CPost.class));
+
+        u.setPassportKR("123456789");
+        fail("KR passport no letter prefix", CValid.tryValidate(u, CPost.class));
+        u.setPassportKR("AB1234567");
+        fail("KR passport two letters prefix", CValid.tryValidate(u, CPost.class));
+        u.setPassportKR("M1234567");
+        fail("KR passport too short (8 chars)", CValid.tryValidate(u, CPost.class));
+        u.setPassportKR("M123456789");
+        fail("KR passport too long (10 chars)", CValid.tryValidate(u, CPost.class));
+        u.setPassportKR(null);
+        fail("KR passport null (allowNull=false)", CValid.tryValidate(u, CPost.class));
+    }
     private static void testIpv4() {
         System.out.println("\n--- [IPv4 @CIpv4] ---");
         User u = freshUser();
@@ -669,5 +806,125 @@ public class AnnotationTest {
         u = freshUser();
         u.setIdCard("12345");
         fail("CPostDef invalid idCard (Default)", CValid.tryValidate(u, CPostDef.class));
+    }
+
+    // ==================== PostCode CN @CPostCode(region="CN", groups=CPost, allowNull=false) ====================
+
+    private static void testPostCodeCN() {
+        System.out.println("\n--- [PostCode CN @CPostCode(region=CN)] ---");
+        User u = freshUser();
+
+        u.setPostCodeCN("518057");
+        pass("CN postcode 518057", CValid.tryValidate(u, CPost.class));
+        u.setPostCodeCN("100010");
+        pass("CN postcode 100010", CValid.tryValidate(u, CPost.class));
+
+        u.setPostCodeCN("12345");
+        fail("CN postcode too short (5 digits)", CValid.tryValidate(u, CPost.class));
+        u.setPostCodeCN("1234567");
+        fail("CN postcode too long (7 digits)", CValid.tryValidate(u, CPost.class));
+        u.setPostCodeCN("12a456");
+        fail("CN postcode has letter", CValid.tryValidate(u, CPost.class));
+        u.setPostCodeCN("100-001");
+        fail("CN postcode with hyphen", CValid.tryValidate(u, CPost.class));
+        u.setPostCodeCN(null);
+        fail("CN postcode null (allowNull=false)", CValid.tryValidate(u, CPost.class));
+    }
+
+    // ==================== PostCode US @CPostCode(region="US", groups=CPost, allowNull=false) ====================
+
+    private static void testPostCodeUS() {
+        System.out.println("\n--- [PostCode US @CPostCode(region=US)] ---");
+        User u = freshUser();
+
+        u.setPostCodeUS("10001");
+        pass("US postcode 10001 (5-digit)", CValid.tryValidate(u, CPost.class));
+        u.setPostCodeUS("90210");
+        pass("US postcode 90210 (5-digit)", CValid.tryValidate(u, CPost.class));
+        u.setPostCodeUS("10001-1234");
+        pass("US postcode 10001-1234 (ZIP+4)", CValid.tryValidate(u, CPost.class));
+
+        u.setPostCodeUS("1234");
+        fail("US postcode too short (4 digits)", CValid.tryValidate(u, CPost.class));
+        u.setPostCodeUS("123456");
+        fail("US postcode 6 digits", CValid.tryValidate(u, CPost.class));
+        u.setPostCodeUS("10001-123");
+        fail("US postcode ZIP+3", CValid.tryValidate(u, CPost.class));
+        u.setPostCodeUS("10-001");
+        fail("US postcode with hyphen in wrong position", CValid.tryValidate(u, CPost.class));
+        u.setPostCodeUS(null);
+        fail("US postcode null (allowNull=false)", CValid.tryValidate(u, CPost.class));
+    }
+
+    // ==================== PostCode JP @CPostCode(region="JP", groups=CPost, allowNull=false) ====================
+
+    private static void testPostCodeJP() {
+        System.out.println("\n--- [PostCode JP @CPostCode(region=JP)] ---");
+        User u = freshUser();
+
+        u.setPostCodeJP("100-0001");
+        pass("JP postcode 100-0001", CValid.tryValidate(u, CPost.class));
+        u.setPostCodeJP("530-0001");
+        pass("JP postcode 530-0001", CValid.tryValidate(u, CPost.class));
+
+        u.setPostCodeJP("100-000");
+        fail("JP postcode too short (7 chars)", CValid.tryValidate(u, CPost.class));
+        u.setPostCodeJP("1000-000");
+        fail("JP postcode 4-3 format", CValid.tryValidate(u, CPost.class));
+        u.setPostCodeJP("100 0001");
+        fail("JP postcode with space instead of hyphen", CValid.tryValidate(u, CPost.class));
+        u.setPostCodeJP("1000001");
+        fail("JP postcode no hyphen", CValid.tryValidate(u, CPost.class));
+        u.setPostCodeJP(null);
+        fail("JP postcode null (allowNull=false)", CValid.tryValidate(u, CPost.class));
+    }
+
+    // ==================== PostCode UK @CPostCode(region="UK", groups=CPost, allowNull=false) ====================
+
+    private static void testPostCodeUK() {
+        System.out.println("\n--- [PostCode UK @CPostCode(region=UK)] ---");
+        User u = freshUser();
+
+        u.setPostCodeUK("SW1A 1AA");
+        pass("UK postcode SW1A 1AA", CValid.tryValidate(u, CPost.class));
+        u.setPostCodeUK("M1 1AE");
+        pass("UK postcode M1 1AE", CValid.tryValidate(u, CPost.class));
+        u.setPostCodeUK("EC1A 1BB");
+        pass("UK postcode EC1A 1BB", CValid.tryValidate(u, CPost.class));
+
+        u.setPostCodeUK("SW1A1AA");
+        pass("UK postcode SW1A1AA (no space)", CValid.tryValidate(u, CPost.class));
+
+        u.setPostCodeUK("12345");
+        fail("UK postcode all digits", CValid.tryValidate(u, CPost.class));
+        u.setPostCodeUK("SW1A-1AA");
+        fail("UK postcode with hyphen", CValid.tryValidate(u, CPost.class));
+        u.setPostCodeUK("SW1A  1AA");
+        fail("UK postcode double space", CValid.tryValidate(u, CPost.class));
+        u.setPostCodeUK(null);
+        fail("UK postcode null (allowNull=false)", CValid.tryValidate(u, CPost.class));
+    }
+
+    // ==================== PostCode KR @CPostCode(region="KR", groups=CPost, allowNull=false) ====================
+
+    private static void testPostCodeKR() {
+        System.out.println("\n--- [PostCode KR @CPostCode(region=KR)] ---");
+        User u = freshUser();
+
+        u.setPostCodeKR("04524");
+        pass("KR postcode 04524", CValid.tryValidate(u, CPost.class));
+        u.setPostCodeKR("03187");
+        pass("KR postcode 03187", CValid.tryValidate(u, CPost.class));
+
+        u.setPostCodeKR("1234");
+        fail("KR postcode too short (4 digits)", CValid.tryValidate(u, CPost.class));
+        u.setPostCodeKR("123456");
+        fail("KR postcode too long (6 digits)", CValid.tryValidate(u, CPost.class));
+        u.setPostCodeKR("12a45");
+        fail("KR postcode has letter", CValid.tryValidate(u, CPost.class));
+        u.setPostCodeKR("045-24");
+        fail("KR postcode with hyphen", CValid.tryValidate(u, CPost.class));
+        u.setPostCodeKR(null);
+        fail("KR postcode null (allowNull=false)", CValid.tryValidate(u, CPost.class));
     }
 }

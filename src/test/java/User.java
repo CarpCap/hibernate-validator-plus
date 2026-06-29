@@ -39,6 +39,32 @@ public class User {
     private String phoneKR;
     @CPhone(region = "UK", groups = CPost.class, allowNull = false)
     private String phoneUK;
+    @CPostCode(region = "CN", groups = CPost.class, allowNull = false)
+    private String postCodeCN;
+    @CPostCode(region = "US", groups = CPost.class, allowNull = false)
+    private String postCodeUS;
+    @CPostCode(region = "JP", groups = CPost.class, allowNull = false)
+    private String postCodeJP;
+    @CPostCode(region = "UK", groups = CPost.class, allowNull = false)
+    private String postCodeUK;
+    @CPostCode(region = "KR", groups = CPost.class, allowNull = false)
+    private String postCodeKR;
+
+
+    @CPassport(groups = CPost.class, allowNull = false)
+    private String passport;
+
+    @CPassport(region = "US", groups = CPost.class, allowNull = false)
+    private String passportUS;
+
+    @CPassport(region = "JP", groups = CPost.class, allowNull = false)
+    private String passportJP;
+
+    @CPassport(region = "UK", groups = CPost.class, allowNull = false)
+    private String passportUK;
+
+    @CPassport(region = "KR", groups = CPost.class, allowNull = false)
+    private String passportKR;
 
     //车牌
     @CPlateNumber(groups = CPost.class)
@@ -323,6 +349,86 @@ public class User {
 
     public void setPhoneUK(String phoneUK) {
         this.phoneUK = phoneUK;
+    }
+    public String getPostCodeCN() {
+        return postCodeCN;
+    }
+
+    public void setPostCodeCN(String postCodeCN) {
+        this.postCodeCN = postCodeCN;
+    }
+
+    public String getPostCodeUS() {
+        return postCodeUS;
+    }
+
+    public void setPostCodeUS(String postCodeUS) {
+        this.postCodeUS = postCodeUS;
+    }
+
+    public String getPostCodeJP() {
+        return postCodeJP;
+    }
+
+    public void setPostCodeJP(String postCodeJP) {
+        this.postCodeJP = postCodeJP;
+    }
+
+    public String getPostCodeUK() {
+        return postCodeUK;
+    }
+
+    public void setPostCodeUK(String postCodeUK) {
+        this.postCodeUK = postCodeUK;
+    }
+
+    public String getPostCodeKR() {
+        return postCodeKR;
+    }
+
+    public void setPostCodeKR(String postCodeKR) {
+        this.postCodeKR = postCodeKR;
+    }
+
+
+    public String getPassport() {
+        return passport;
+    }
+
+    public void setPassport(String passport) {
+        this.passport = passport;
+    }
+
+    public String getPassportUS() {
+        return passportUS;
+    }
+
+    public void setPassportUS(String passportUS) {
+        this.passportUS = passportUS;
+    }
+
+    public String getPassportJP() {
+        return passportJP;
+    }
+
+    public void setPassportJP(String passportJP) {
+        this.passportJP = passportJP;
+    }
+
+    public String getPassportUK() {
+        return passportUK;
+    }
+
+    public void setPassportUK(String passportUK) {
+        this.passportUK = passportUK;
+    }
+
+    public String getPassportKR() {
+        return passportKR;
+    }
+
+    public void setPassportKR(String passportKR) {
+        this.passportKR = passportKR;
     }
 
 
