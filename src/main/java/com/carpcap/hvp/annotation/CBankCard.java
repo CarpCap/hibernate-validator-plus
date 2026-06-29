@@ -28,11 +28,13 @@ public @interface CBankCard {
 
     /**
      * 最小卡号长度，默认为13
+     * @return 最小卡号长度
      */
     int minLength() default 13;
 
     /**
      * 最大卡号长度，默认为19
+     * @return 最大卡号长度
      */
     int maxLength() default 19;
 
@@ -45,26 +47,31 @@ public @interface CBankCard {
 
     /**
      * 是否启用Luhn算法验证，默认为true
+     * @return true启用Luhn算法验证，false不启用
      */
     boolean useLuhnCheck() default true;
 
     /**
      * 是否允许空格分隔符，默认为true
+     * @return true允许空格分隔符，false不允许
      */
     boolean allowSpaces() default true;
 
     /**
      * 是否允许连字符分隔符，默认为true
+     * @return true允许连字符分隔符，false不允许
      */
     boolean allowHyphens() default true;
 
     /**
      * 允许的银行前缀列表，空表示允许任何前缀
+     * @return 允许的银行前缀数组
      */
     String[] allowedPrefixes() default { };
 
     /**
      * 禁止的银行前缀列表，空表示不禁止任何前缀
+     * @return 禁止的银行前缀数组
      */
     String[] forbiddenPrefixes() default { };
 

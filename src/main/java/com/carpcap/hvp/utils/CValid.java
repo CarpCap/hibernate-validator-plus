@@ -85,10 +85,11 @@ public class CValid {
     }
 
     /**
-     * 指定分组规则校验
+    * 指定分组规则校验
      * 失败 返回错误信息 集合
      *
      * @param object 校验对象
+     * @param groups 校验分组
      * @return 失败信息 集合
      * @author CarpCap
      * @since 2025/11/23 11:51
@@ -101,10 +102,11 @@ public class CValid {
 
     /**
      * 指定分组规则校验
-     * 快速校验，遇到一个失败结果直接返回 不进行全部校验
+      * 快速校验，遇到一个失败结果直接返回 不进行全部校验
      * 失败 返回错误信息
      *
      * @param object 校验对象
+     * @param groups 校验分组
      * @return 失败信息
      * @author CarpCap
      * @since 2025/11/23 11:51
@@ -138,6 +140,7 @@ public class CValid {
      * @param object       校验对象
      * @param propertyName 参数名称
      * @param groups       分组
+     * @return 失败信息 集合
      * @author CarpCap
      * @since 2025/11/23 11:20
      */
@@ -151,9 +154,9 @@ public class CValid {
     /**
      * 指定某个参数+分组规则校验
      * 快速校验，遇到一个失败结果直接返回 不进行全部校验
-     * 失败 返回错误信息
      * @param object       校验对象
      * @param propertyName 参数名称
+     * @return 失败信息
      * @param groups       分组
      * @author CarpCap
      * @since 2025/11/23 11:20

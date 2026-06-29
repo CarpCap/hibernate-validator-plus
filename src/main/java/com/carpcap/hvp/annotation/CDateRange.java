@@ -43,6 +43,7 @@ public @interface CDateRange {
      * 示例1：2022-01-01
      * 示例2：2022-01-01 00:00:00
      * 不推荐：2022-01 、 202201
+     * @return 最小日期字符串
      */
     String min() default "";
 
@@ -55,6 +56,7 @@ public @interface CDateRange {
      * 示例1：2022-01-01（等于2022-01-01 23:59:59）
      * 示例2：2022-01-01 23:59:59
      * 不推荐：2022-01 、 202201
+     * @return 最大日期字符串
      */
     String max() default "";
 
@@ -63,6 +65,7 @@ public @interface CDateRange {
      * 如果==null或“”，则使用hutool项目DateUtil.class自动操作解析。
      * yyyyMM需要手动设置。
      * 请注意：format参数只会影响校验，并不会影响接收参数，序列化相关的内容。
+     * @return 日期格式字符串，为空时自动解析
      */
     String format() default "";
 

@@ -26,8 +26,8 @@ public class CValidNullUtil {
     /**
      * 判空
      *
-     * @param obj
-     * @param context
+     * @param obj 待校验对象
+     * @param context 校验器上下文
      * @return 1成功 不需要后续验证  0需要后续验证   -1失败
      * @author CarpCap
      * @since 2025/11/23 22:21
