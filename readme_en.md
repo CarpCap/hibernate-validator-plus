@@ -31,8 +31,13 @@ Hibernate Validator Plus is an enhanced validation framework based on **Hibernat
 
 
 
-## 📌 Versions
-[versions_en.md](docs/versions_en.md)
+
+## 📃 Docs
+
+- [Usage Guide](docs/usage.md)
+
+- [Change Log](docs/versions_en.md)
+
 
 
 ## 📘 Annotation Overview
@@ -84,39 +89,6 @@ Exception Class：ValidationException
 | `validateProperty(Object object, String propertyName, Class<?>... groups)`    | Fast-Fail ⚡     | Throws Exception ❗ | void           |
 | `tryValidateProperty(Object object, String propertyName, Class<?>... groups)` | Full Check      | No Exception     | List<String>   |
 | `tryFastValidateProperty(Object object, String propertyName, Class<?>... groups)`                                                   | Fast-Fail ⚡     | No Exception     | String         |
-
-
-
-## 🛠 Usage Example
-
-Demo Spring Boot project:  
-🔗 https://github.com/carpcap/hibernate-validator-plus-demo
-
-### 1. Maven Dependency
-
-```xml
-<dependency>
-    <groupId>com.carpcap</groupId>
-    <artifactId>hibernate-validator-plus</artifactId>
-    <version>1.2.2</version>
-</dependency>
-```
-
-
-### Validate according to different groups
-
-Declare validation groups:
-
-![Group Declaration](docs/img0.png)
-
-Automatic validation through Spring MVC:
-
-![Spring MVC Validation](docs/img1.png)
-
-Manual validation using the provided utility class. Validation failures will throw `ValidationException`:
-
-![Manual Validation](docs/img2.png)
-
 
 
 
