@@ -191,6 +191,51 @@ public class GlobalExceptionHandler {
 
 ---
 
+### 4.3 Custom Validator Configuration
+
+In Spring Boot, you can inject Spring-managed `Validator` instances into `CValid` through a configuration class:
+
+```java
+import com.carpcap.hvp.utils.CValid;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
+
+@Configuration
+public class ValidatorConfig {
+
+    /**
+     * Registers a fail-fast validator as a default bean
+     * and replaces the fail-fast validator used by CValid.
+     *
+     * @author CarpCap
+     */
+    @Bean
+    @Primary
+    public LocalValidatorFactoryBean defaultValidator() {
+        LocalValidatorFactoryBean validator = new LocalValidatorFactoryBean();
+        validator.getValidationPropertyMap().put("hibernate.validator.fail_fast", "true");
+        CValid.setFastValidator(validator);
+        return validator;
+    }
+
+    /**
+     * Replaces the default validator used by CValid.
+     *
+     * @author CarpCap
+     */
+    @Bean
+    public LocalValidatorFactoryBean normalValidator() {
+        LocalValidatorFactoryBean validator = new LocalValidatorFactoryBean();
+        CValid.setValidator(validator);
+        return validator;
+    }
+}
+```
+
+---
+
 ## 5. Quick Start Summary
 
 1. Add the dependency `hibernate-validator-plus`

@@ -14,12 +14,12 @@ import java.util.Set;
 public class CValid {
 
     // 正常校验器
-    private static final Validator validator =
+    private static Validator validator =
             Validation.buildDefaultValidatorFactory().getValidator();
 
 
     // 快速校验器
-    private static final Validator fastValidator = Validation.byDefaultProvider()
+    private static Validator fastValidator = Validation.byDefaultProvider()
             .configure()
             .addProperty("hibernate.validator.fail_fast", "true")
             .buildValidatorFactory().getValidator();
@@ -215,5 +215,21 @@ public class CValid {
             result.add(item.getMessage());
         }
         return result;
+    }
+
+    public static Validator getValidator() {
+        return validator;
+    }
+
+    public static void setValidator(Validator validator) {
+        CValid.validator = validator;
+    }
+
+    public static Validator getFastValidator() {
+        return fastValidator;
+    }
+
+    public static void setFastValidator(Validator fastValidator) {
+        CValid.fastValidator = fastValidator;
     }
 }

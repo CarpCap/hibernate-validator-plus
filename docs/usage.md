@@ -193,6 +193,51 @@ public class GlobalExceptionHandler {
 
 ---
 
+### 4.3 自定义校验器配置
+
+在 Spring Boot 中，可以通过配置类将 Spring 管理的 `Validator` 注入 `CValid`：
+
+```java
+import com.carpcap.hvp.utils.CValid;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
+
+@Configuration
+public class ValidatorConfig {
+
+    /**
+     * 将 fail-fast 校验器设置为默认 Bean，
+     * 并替换 CValid 的快速校验器。
+     *
+     * @author CarpCap
+     */
+    @Bean
+    @Primary
+    public LocalValidatorFactoryBean defaultValidator() {
+        LocalValidatorFactoryBean validator = new LocalValidatorFactoryBean();
+        validator.getValidationPropertyMap().put("hibernate.validator.fail_fast", "true");
+        CValid.setFastValidator(validator);
+        return validator;
+    }
+
+    /**
+     * 替换 CValid 的默认校验器。
+     *
+     * @author CarpCap
+     */
+    @Bean
+    public LocalValidatorFactoryBean normalValidator() {
+        LocalValidatorFactoryBean validator = new LocalValidatorFactoryBean();
+        CValid.setValidator(validator);
+        return validator;
+    }
+}
+```
+
+---
+
 ## 5. 快速上手总结
 
 1. 引入依赖 `hibernate-validator-plus`

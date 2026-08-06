@@ -5,6 +5,15 @@
 ## ☕ Version 1.2.x Series
 
 ---
+### 🥩1.2.3
+
+> **🔄 Update**
+
+| Features | Update Notes |
+|----------|-------------|
+| `CValid` | Added getter and setter methods for the default `validator` and fail-fast `fastValidator`, allowing custom `Validator` instances to be injected in Spring Boot environments |
+
+---
 ### 🥩1.2.2
 
 
