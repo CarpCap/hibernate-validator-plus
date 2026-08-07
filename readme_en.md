@@ -48,7 +48,7 @@ Location: [`annotation`](src/main/java/com/carpcap/hvp/annotation)
 |-----------------|---------------------|----------------------------------------------------------------------------------------------------------------------------|
 | `@CAccount`     | Account validation  | Starts with a letter, 5–16 chars, alphanumeric + `_`                                                                       |
 | `@CPassword`    | Password validation | 6–18 chars, with at least 1 letter and at least 1 number.                                                                  |
-| `@CIdCard`      | ID card validation  | Supports common CN ID formats                                                                                              |
+| `@CIdCard`      | ID number validation | Supports CN/US/JP/KR/UK via region (CN by default); regexp overrides the regional rule                                    |
 | `@CPhone`       | Phone validation    | Mainland China mobile numbers; supports region parameter switching CN/US/JP/UK/KR                                                                                           |
 | `@CPassport`    | Passport validation | Default: CN passport format; supports region parameter switching CN/US/JP/UK/KR                                            |
 | `@CPostCode`    | Postcode validation | Default: CN postcode format; supports region parameter switching CN/US/JP/UK/KR                                            |

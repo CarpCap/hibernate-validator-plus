@@ -486,7 +486,7 @@ public class AnnotationTest {
         u.setIdCard("11010519491231002X");
         pass("idCard 18 digits with uppercase X", CValid.tryValidate(u));
         u.setIdCard("110101900101001");
-        pass("idCard 15 digits", CValid.tryValidate(u));
+        fail("idCard legacy 15 digits not supported", CValid.tryValidate(u));
         u.setIdCard("110101202402290016");
         pass("idCard valid leap day", CValid.tryValidate(u));
 

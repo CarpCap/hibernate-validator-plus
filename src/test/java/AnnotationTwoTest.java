@@ -30,7 +30,7 @@ public class AnnotationTwoTest {
     @Test
     public void shouldPassAdvancedSuite() {
         assertEquals("高级测试存在失败检查", 0, AnnotationTwoTest.runAllTests());
-        assertEquals("高级测试检查数量发生变化", 172, AnnotationTwoTest.getTestCount());
+        assertEquals("高级测试检查数量发生变化", 187, AnnotationTwoTest.getTestCount());
     }
 
 
@@ -66,6 +66,7 @@ public class AnnotationTwoTest {
         testIpv4EdgeCases();
         testIpv6EdgeCases();
         testIdCardEdgeCases();
+        testIdCardRegions();
         testDomainEdgeCases();
         testPlateNumberEdgeCases();
         testMoneyEdgeCases();
@@ -832,10 +833,10 @@ public class AnnotationTwoTest {
         u.setIdCard("110101199001010015");
         pass("idCard valid 18-digit", CValid.tryValidate(u));
 
-        // 15-digit (no check digit)
+        // Legacy 15-digit ID cards are no longer supported
         u = freshBaseUser();
         u.setIdCard("110101900101001");
-        pass("idCard valid 15 digits", CValid.tryValidate(u));
+        fail("idCard legacy 15 digits not supported", CValid.tryValidate(u));
 
         // Invalid
         u = freshBaseUser();
@@ -853,6 +854,49 @@ public class AnnotationTwoTest {
         u = freshBaseUser();
         u.setIdCard("12345678901234567a");
         fail("idCard has letter in digits", CValid.tryValidate(u));
+    }
+
+    private static void testIdCardRegions() {
+        System.out.println("\n--- [ID Card Regions] ---");
+        IdCardRegionBean bean = new IdCardRegionBean();
+
+        bean.setCn("11010519491231002X");
+        pass("idCard CN uppercase X", CValid.tryValidateProperty(bean, "cn"));
+        bean.setCn("11010519491231002x");
+        pass("idCard CN lowercase x", CValid.tryValidateProperty(bean, "cn"));
+        bean.setCn("110105194912310021");
+        fail("idCard CN invalid check digit", CValid.tryValidateProperty(bean, "cn"));
+
+        bean.setCnMixedCase("110101199001010015");
+        pass("idCard region cN with spaces", CValid.tryValidateProperty(bean, "cnMixedCase"));
+
+        bean.setUs("123456789");
+        pass("idCard US SSN without separators", CValid.tryValidateProperty(bean, "us"));
+        bean.setUs("123-45-6789");
+        pass("idCard US SSN with separators", CValid.tryValidateProperty(bean, "us"));
+        bean.setUs("000-12-3456");
+        fail("idCard US invalid area number", CValid.tryValidateProperty(bean, "us"));
+
+        bean.setJp("123456789018");
+        pass("idCard JP valid My Number", CValid.tryValidateProperty(bean, "jp"));
+        bean.setJp("123456789019");
+        fail("idCard JP invalid check digit", CValid.tryValidateProperty(bean, "jp"));
+
+        bean.setKr("900101-1234568");
+        pass("idCard KR valid resident number", CValid.tryValidateProperty(bean, "kr"));
+        bean.setKr("991332-1234567");
+        fail("idCard KR invalid birth date", CValid.tryValidateProperty(bean, "kr"));
+
+        bean.setUk("AB123456C");
+        pass("idCard UK valid NINO", CValid.tryValidateProperty(bean, "uk"));
+        bean.setUk("GB123456C");
+        fail("idCard UK invalid prefix", CValid.tryValidateProperty(bean, "uk"));
+
+        bean.setCustom("ID-42");
+        pass("idCard custom regexp overrides region", CValid.tryValidateProperty(bean, "custom"));
+        bean.setUnknown("123456789");
+        rejectOrThrow("unknown idCard region must not be silently accepted",
+            () -> CValid.tryValidateProperty(bean, "unknown"));
     }
 
     // ==================== 15. Domain Edge Cases ====================
@@ -1187,6 +1231,41 @@ public class AnnotationTwoTest {
         public void setPassport(String passport) { this.passport = passport; }
         public String getPostCode() { return postCode; }
         public void setPostCode(String postCode) { this.postCode = postCode; }
+    }
+
+    public static class IdCardRegionBean {
+        @CIdCard
+        private String cn;
+
+        @CIdCard(region = " cN ")
+        private String cnMixedCase;
+
+        @CIdCard(region = "US")
+        private String us;
+
+        @CIdCard(region = "JP")
+        private String jp;
+
+        @CIdCard(region = "KR")
+        private String kr;
+
+        @CIdCard(region = "UK")
+        private String uk;
+
+        @CIdCard(region = "UNKNOWN", regexp = "^ID-\\d+$")
+        private String custom;
+
+        @CIdCard(region = "UNKNOWN")
+        private String unknown;
+
+        public void setCn(String cn) { this.cn = cn; }
+        public void setCnMixedCase(String cnMixedCase) { this.cnMixedCase = cnMixedCase; }
+        public void setUs(String us) { this.us = us; }
+        public void setJp(String jp) { this.jp = jp; }
+        public void setKr(String kr) { this.kr = kr; }
+        public void setUk(String uk) { this.uk = uk; }
+        public void setCustom(String custom) { this.custom = custom; }
+        public void setUnknown(String unknown) { this.unknown = unknown; }
     }
 
     public static class OptionalFileBean {

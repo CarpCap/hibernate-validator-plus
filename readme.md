@@ -39,7 +39,7 @@ Hibernate Validator Plus 是基于 **Hibernate Validator** 的增强框架，提
 |-----------------|------------|-------------------------------------------------|
 | `@CAccount`     | 账号格式验证     | 默认：字母开头，5–16 字符，允许字母数字下划线                       |
 | `@CPassword`    | 密码强度验证     | 默认：密码长度要求6-18，至少1个字母，至少1个数字。                    |
-| `@CIdCard`      | 身份证号验证     | 默认：适配中国大陆身份证格式                                  |
+| `@CIdCard`      | 身份号码验证     | region 支持 CN/US/JP/KR/UK，默认 CN；regexp 可覆盖地区规则     |
 | `@CPhone`       | 手机号验证      | 默认：中国手机号；支持 region 参数切换 CN/US/JP/KR/UK   |
 | `@CPassport`    | 护照号验证      | 默认：中国护照格式；支持 region 参数切换 CN/US/JP/UK/KR  |
 | `@CPostCode`    | 邮编格式验证     | 默认：中国邮编；支持 region 参数切换 CN/US/JP/UK/KR    |

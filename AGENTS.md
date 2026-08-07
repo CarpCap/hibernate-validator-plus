@@ -65,7 +65,7 @@ hibernate-validator-plus/
 |------|------|----------|
 | @CAccount | 账号格式验证 | regexp（正则）, min/max（长度范围，默认 5-16） |
 | @CPassword | 密码强度验证 | min/max（长度 6-18），默认需包含字母+数字 |
-| @CIdCard | 中国身份证号验证 | 支持 15/18 位格式 |
+| @CIdCard | 身份号码验证 | region 支持 CN/US/JP/KR/UK，CN 仅支持 18 位格式 |
 | @CPhone | 手机号验证 | region 参数支持 CN/US/JP/KR 等多国号码 |
 | @CIpv4 | IPv4 地址验证 | 标准 IPv4 正则 |
 | @CIpv6 | IPv6 地址验证 | 通过 InetAddress 原生解析 |
@@ -98,7 +98,7 @@ hibernate-validator-plus/
 | CIpAddressValidator | @CIpv4 | 直接继承 AbstractCPatternValidator |
 | CDomainValidator | @CDomain | 直接继承 AbstractCPatternValidator |
 | CPhoneValidator | @CPhone | 扩展正则校验，支持多地区手机号模板 |
-| CIdCardValidator | @CIdCard | 扩展正则校验 |
+| CIdCardValidator | @CIdCard | 分地区校验身份号码，CN/JP/KR 支持校验位算法 |
 | CPlateNumberValidator | @CPlateNumber | 扩展正则校验 |
 | CUrlValidator | @CUrl | 使用 java.net.URL 解析 + 正则回退 |
 | CBankCardValidator | @CBankCard | Luhn 算法校验，前缀黑白名单 |
@@ -214,8 +214,8 @@ hibernate-validator-plus/
 
 按修复优先级排列：
 
-1. **P0（已修复）：自动化测试实际未运行**：已使用 JUnit 4 接入两个套件入口；`mvn test` 当前执行 2 个测试，并校验内部 379 个检查全部通过。
-2. **P0：18 位身份证末位 X 永远无法通过**：`CIdCardValidator` 的基础正则要求 18 位全部为数字，先于校验位逻辑执行；虽然校验位实现支持 `X`，但该分支无法到达。
+1. **P0（已修复）：自动化测试实际未运行**：已使用 JUnit 4 接入两个套件入口；`mvn test` 当前执行 2 个测试，并覆盖内部 407 个检查。
+2. **P0（已修复）：18 位身份证末位 X 永远无法通过**：CN 格式现已允许末位 `X/x` 进入 ISO 7064 校验位逻辑，并补充出生日期合法性校验。
 3. **P1：CDateRange 的精确 max 时间失效**：所有非空 max 都被无条件调用 `DateUtil.endOfDay()`，例如 max=`2022-08-30 12:30:00` 实际会放宽到当天 23:59:59.999。
 4. **P1（已修复）：未知 region 被静默放行**：地区代码现已忽略大小写和首尾空格；无自定义 regexp 且地区不受支持时抛出 ConstraintDeclarationException。
 5. **P1（已修复）：CFile 会把不存在的文件当作 null**：allowNull 现在仅作用于 null；不存在的路径和目录均校验失败。
@@ -228,7 +228,7 @@ hibernate-validator-plus/
 
 ### 下一版本：1.2.4 质量修复
 
-暂缓增加注解，先将上述未修复的 P0/P1 问题处理完毕。当前已通过 JUnit 4 最小接入解决零测试问题，后续可再将 main 测试迁移为 JUnit 5 参数化测试。其余最低验收范围包括身份证 X、精确日期上限、非法 region、不存在文件和 IPv6 主机名。
+暂缓增加注解，先将上述未修复的 P0/P1 问题处理完毕。当前已通过 JUnit 4 最小接入解决零测试问题，后续可再将 main 测试迁移为 JUnit 5 参数化测试。其余最低验收范围包括精确日期上限和 IPv6 主机名。
 
 ### 下一项功能：@CEnumValue
 

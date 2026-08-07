@@ -11,6 +11,9 @@ import static java.lang.annotation.ElementType.*;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
+ * 身份号码校验注解
+ * <p>默认校验中国身份证号，支持按 region 切换国家/地区。</p>
+ *
  * @author CarpCap
  */
 @Documented
@@ -22,7 +25,19 @@ public @interface CIdCard {
 
     String message() default "{com.carpcap.hvp.annotation.CIdCard.message}";
 
-    String regexp() default "^\\d{15}$|^\\d{18}$";
+    /**
+     * 自定义正则表达式，配置后优先于 region
+     * @return 正则表达式
+     */
+    String regexp() default "";
+
+    /**
+     * 身份号码所属国家/地区
+     * <p>支持 CN、US、JP、KR、UK，不区分大小写并忽略首尾空格。</p>
+     * <p>不支持的地区会抛出 {@link javax.validation.ConstraintDeclarationException}。</p>
+     * @return 地区代码
+     */
+    String region() default "CN";
 
 
     /**
