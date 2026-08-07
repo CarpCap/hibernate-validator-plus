@@ -39,7 +39,7 @@ public class AnnotationTwoTest {
         passCount = 0;
         failCount = 0;
 
-        System.out.println("=== hibernate-validator-plus AnnotationTwoTest (Advanced) ===\n");
+        System.out.println("=== hibernate-validator-plus 注解高级测试 ===\n");
 
         // === CValid utility method variants ===
         testCValidUtils();
@@ -77,7 +77,7 @@ public class AnnotationTwoTest {
         testRepeatableAnnotations();
 
         System.out.println("\n============================================");
-        System.out.println("TEST2 Total: " + testCount + ", Passed: " + passCount + ", Failed: " + failCount);
+        System.out.println("测试二 总数: " + testCount + "，通过: " + passCount + "，失败: " + failCount);
         System.out.println("============================================");
         return failCount;
     }
@@ -92,10 +92,10 @@ public class AnnotationTwoTest {
         testCount++;
         if (violations == null || violations.isEmpty()) {
             passCount++;
-            System.out.println("[PASS] " + label);
+            System.out.println("[通过] 第 " + testCount + " 项检查");
         } else {
             failCount++;
-            System.out.println("[FAIL] " + label + " => violations: " + violations);
+            System.out.println("[失败] 第 " + testCount + " 项检查，违反项：" + violations);
         }
     }
 
@@ -103,27 +103,27 @@ public class AnnotationTwoTest {
         testCount++;
         if (violation == null || violation.trim().isEmpty()) {
             passCount++;
-            System.out.println("[PASS] " + label);
+            System.out.println("[通过] 第 " + testCount + " 项检查");
         } else {
             failCount++;
-            System.out.println("[FAIL] " + label + " => violation: " + violation);
+            System.out.println("[失败] 第 " + testCount + " 项检查，违反项：" + violation);
         }
     }
 
     private static void pass(String label) {
         testCount++;
         passCount++;
-        System.out.println("[PASS] " + label);
+        System.out.println("[通过] 第 " + testCount + " 项检查");
     }
 
     private static void fail(String label, List<String> violations) {
         testCount++;
         if (violations != null && !violations.isEmpty()) {
             passCount++;
-            System.out.println("[PASS] " + label + " => " + violations.get(0));
+            System.out.println("[通过] 第 " + testCount + " 项检查，按预期发现违反项：" + violations.get(0));
         } else {
             failCount++;
-            System.out.println("[FAIL] " + label + " => expected violation, got none");
+            System.out.println("[失败] 第 " + testCount + " 项检查，预期出现违反项，但实际没有");
         }
     }
 
@@ -131,10 +131,10 @@ public class AnnotationTwoTest {
         testCount++;
         if (violation != null && !violation.trim().isEmpty()) {
             passCount++;
-            System.out.println("[PASS] " + label + " => " + violation);
+            System.out.println("[通过] 第 " + testCount + " 项检查，按预期发现违反项：" + violation);
         } else {
             failCount++;
-            System.out.println("[FAIL] " + label + " => expected violation, got none");
+            System.out.println("[失败] 第 " + testCount + " 项检查，预期出现违反项，但实际没有");
         }
     }
 
@@ -143,13 +143,13 @@ public class AnnotationTwoTest {
         try {
             runnable.run();
             failCount++;
-            System.out.println("[FAIL] " + label + " => expected exception, got none");
+            System.out.println("[失败] 第 " + testCount + " 项检查，预期抛出异常，但实际没有");
         } catch (ValidationException e) {
             passCount++;
-            System.out.println("[PASS] " + label + " => " + e.getMessage());
+            System.out.println("[通过] 第 " + testCount + " 项检查，按预期抛出异常：" + e.getMessage());
         } catch (Exception e) {
             failCount++;
-            System.out.println("[FAIL] " + label + " => unexpected " + e.getClass().getSimpleName() + ": " + e.getMessage());
+            System.out.println("[失败] 第 " + testCount + " 项检查，出现非预期异常 " + e.getClass().getSimpleName() + "：" + e.getMessage());
         }
     }
 
@@ -159,17 +159,17 @@ public class AnnotationTwoTest {
             List<String> violations = validationCall.validate();
             if (violations != null && !violations.isEmpty()) {
                 passCount++;
-                System.out.println("[PASS] " + label + " => " + violations.get(0));
+                System.out.println("[通过] 第 " + testCount + " 项检查，按预期发现违反项：" + violations.get(0));
             } else {
                 failCount++;
-                System.out.println("[FAIL] " + label + " => invalid configuration was silently accepted");
+                System.out.println("[失败] 第 " + testCount + " 项检查，无效配置被静默接受");
             }
         } catch (ValidationException e) {
             passCount++;
-            System.out.println("[PASS] " + label + " => " + e.getClass().getSimpleName() + ": " + e.getMessage());
+            System.out.println("[通过] 第 " + testCount + " 项检查，按预期抛出 " + e.getClass().getSimpleName() + "：" + e.getMessage());
         } catch (Exception e) {
             failCount++;
-            System.out.println("[FAIL] " + label + " => unexpected " + e.getClass().getSimpleName() + ": " + e.getMessage());
+            System.out.println("[失败] 第 " + testCount + " 项检查，出现非预期异常 " + e.getClass().getSimpleName() + "：" + e.getMessage());
         }
     }
 
@@ -178,10 +178,10 @@ public class AnnotationTwoTest {
         try {
             runnable.run();
             passCount++;
-            System.out.println("[PASS] " + label);
+            System.out.println("[通过] 第 " + testCount + " 项检查");
         } catch (Exception e) {
             failCount++;
-            System.out.println("[FAIL] " + label + " => unexpected exception: " + e.getMessage());
+            System.out.println("[失败] 第 " + testCount + " 项检查，出现非预期异常：" + e.getMessage());
         }
     }
 
@@ -237,7 +237,7 @@ public class AnnotationTwoTest {
     // ==================== 1. CValid Utility Methods ====================
 
     private static void testCValidUtils() {
-        System.out.println("\n--- [CValid Utility Methods] ---");
+        System.out.println("\n--- [CValid 工具方法] ---");
 
         // ---- validate() - throws ValidationException on failure ----
         User u = freshBaseUser();
@@ -295,7 +295,7 @@ public class AnnotationTwoTest {
     // ==================== 2. allowNull Defaults (allowNull = true) ====================
 
     private static void testAllowNullDefaults() {
-        System.out.println("\n--- [allowNull Defaults (allowNull=true)] ---");
+        System.out.println("\n--- [allowNull 默认行为 (allowNull=true)] ---");
 
         User2 u = freshUser2();
         u.setAccountAllowNull(null);
@@ -318,7 +318,7 @@ public class AnnotationTwoTest {
     // ==================== 3. All Group Types ====================
 
     private static void testAllGroups() {
-        System.out.println("\n--- [All Groups] ---");
+        System.out.println("\n--- [全部校验分组] ---");
 
         // CCreate group
         User2 u = freshUser2();
@@ -366,7 +366,7 @@ public class AnnotationTwoTest {
     // ==================== 4. URL Config Variants ====================
 
     private static void testUrlConfigVariants() {
-        System.out.println("\n--- [URL Config Variants] ---");
+        System.out.println("\n--- [URL 配置变体] ---");
         User2 u;
 
         // --- allowLocalhost = false ---
@@ -408,7 +408,7 @@ public class AnnotationTwoTest {
     // ==================== 5. BankCard Config Variants ====================
 
     private static void testBankCardConfigVariants() {
-        System.out.println("\n--- [BankCard Config Variants] ---");
+        System.out.println("\n--- [银行卡配置变体] ---");
         User2 u;
 
         // --- allowedPrefixes = {"62"} ---
@@ -448,7 +448,7 @@ public class AnnotationTwoTest {
     // ==================== 6. Money Config Variants ====================
 
     private static void testMoneyConfigVariants() {
-        System.out.println("\n--- [Money Config Variants] ---");
+        System.out.println("\n--- [金额配置变体] ---");
         User2 u;
 
         // --- allowCurrencySymbol = false ---
@@ -539,7 +539,7 @@ public class AnnotationTwoTest {
     // ==================== 7. MAC Config Variants ====================
 
     private static void testMacConfigVariants() {
-        System.out.println("\n--- [MAC Config Variants] ---");
+        System.out.println("\n--- [MAC 地址配置变体] ---");
         User2 u;
 
         // --- allowLowercase = false ---
@@ -585,7 +585,7 @@ public class AnnotationTwoTest {
     // ==================== 8. DateRange Custom Format ====================
 
     private static void testDateRangeCustomFormat() {
-        System.out.println("\n--- [DateRange Custom Format] ---");
+        System.out.println("\n--- [日期范围自定义格式] ---");
         User2 u;
 
         u = freshUser2();
@@ -630,7 +630,7 @@ public class AnnotationTwoTest {
     // ==================== 9. Account Custom Config ====================
 
     private static void testAccountCustomConfig() {
-        System.out.println("\n--- [Account Custom Config] ---");
+        System.out.println("\n--- [账号自定义配置] ---");
         User2 u;
 
         // --- Custom min/max (3-10) ---
@@ -663,7 +663,7 @@ public class AnnotationTwoTest {
     // ==================== 10. Password Custom Config ====================
 
     private static void testPasswordCustomConfig() {
-        System.out.println("\n--- [Password Custom Config] ---");
+        System.out.println("\n--- [密码自定义配置] ---");
         User2 u;
 
         // --- Custom min/max (8-20) ---
@@ -692,7 +692,7 @@ public class AnnotationTwoTest {
     // ==================== 11. Custom Regexp Override ====================
 
     private static void testCustomRegexpOverride() {
-        System.out.println("\n--- [Custom Regexp Override] ---");
+        System.out.println("\n--- [自定义正则覆盖] ---");
         User2 u;
 
         // --- CPhone with custom regexp ^13\\d{9}$ ---
@@ -746,7 +746,7 @@ public class AnnotationTwoTest {
     // ==================== 12. IPv4 Edge Cases ====================
 
     private static void testIpv4EdgeCases() {
-        System.out.println("\n--- [IPv4 Edge Cases] ---");
+        System.out.println("\n--- [IPv4 边界场景] ---");
         User u;
 
         // Additional valid IPv4 cases
@@ -787,7 +787,7 @@ public class AnnotationTwoTest {
     // ==================== 13. IPv6 Edge Cases ====================
 
     private static void testIpv6EdgeCases() {
-        System.out.println("\n--- [IPv6 Edge Cases] ---");
+        System.out.println("\n--- [IPv6 边界场景] ---");
         User u;
 
         // Additional valid IPv6 formats
@@ -829,7 +829,7 @@ public class AnnotationTwoTest {
     // ==================== 14. ID Card Edge Cases ====================
 
     private static void testIdCardEdgeCases() {
-        System.out.println("\n--- [ID Card Edge Cases] ---");
+        System.out.println("\n--- [身份号码边界场景] ---");
         User u;
 
         // Additional valid ID card numbers
@@ -866,7 +866,7 @@ public class AnnotationTwoTest {
     }
 
     private static void testIdCardRegions() {
-        System.out.println("\n--- [ID Card Regions] ---");
+        System.out.println("\n--- [身份号码地区规则] ---");
         IdCardRegionBean bean = new IdCardRegionBean();
 
         bean.setCn("11010519491231002X");
@@ -911,7 +911,7 @@ public class AnnotationTwoTest {
     // ==================== 15. Domain Edge Cases ====================
 
     private static void testDomainEdgeCases() {
-        System.out.println("\n--- [Domain Edge Cases] ---");
+        System.out.println("\n--- [域名边界场景] ---");
         User u;
 
         // Valid domains
@@ -956,7 +956,7 @@ public class AnnotationTwoTest {
     // ==================== 16. Plate Number Edge Cases ====================
 
     private static void testPlateNumberEdgeCases() {
-        System.out.println("\n--- [Plate Number Edge Cases] ---");
+        System.out.println("\n--- [车牌号边界场景] ---");
         User u;
 
         // Valid plates
@@ -1005,7 +1005,7 @@ public class AnnotationTwoTest {
     // ==================== 17. Money Edge Cases ====================
 
     private static void testMoneyEdgeCases() {
-        System.out.println("\n--- [Money Edge Cases] ---");
+        System.out.println("\n--- [金额边界场景] ---");
         User u;
 
         // String money edge cases
@@ -1068,7 +1068,7 @@ public class AnnotationTwoTest {
     // ==================== 18. File Edge Cases ====================
 
     private static void testFileEdgeCases() {
-        System.out.println("\n--- [File Edge Cases] ---");
+        System.out.println("\n--- [文件边界场景] ---");
         User u;
 
         // File name suffix validation
@@ -1097,7 +1097,7 @@ public class AnnotationTwoTest {
     // ==================== 19. Invalid Configuration and File Semantics ====================
 
     private static void testInvalidConfigurationAndFileSemantics() {
-        System.out.println("\n--- [Invalid Configuration and File Semantics] ---");
+        System.out.println("\n--- [无效配置与文件语义] ---");
 
         UnsupportedRegionBean regionBean = new UnsupportedRegionBean();
         regionBean.setPhone("13800138000");
@@ -1132,7 +1132,7 @@ public class AnnotationTwoTest {
     // ==================== 20. @Repeatable Annotations ====================
 
     private static void testRepeatableAnnotations() {
-        System.out.println("\n--- [@Repeatable Annotations] ---");
+        System.out.println("\n--- [@Repeatable 可重复注解] ---");
 
         // Use static inner test entity with @Repeatable @CAccount
         RepeatableTestBean r = new RepeatableTestBean();
@@ -1164,7 +1164,7 @@ public class AnnotationTwoTest {
         } else {
             testCount++;
             failCount++;
-            System.out.println("[FAIL] repeatable fast-validate should have returned error for len=3");
+            System.out.println("[失败] 第 " + testCount + " 项检查，长度为 3 时快速校验应返回错误");
         }
     }
 
@@ -1216,8 +1216,8 @@ public class AnnotationTwoTest {
     // ==================== Static Inner Entity: @Repeatable Test ====================
 
     public static class RepeatableTestBean {
-        @CAccount(min = 3, max = 20, message = "Account constraint A failed")
-        @CAccount(min = 5, max = 10, message = "Account constraint B failed")
+        @CAccount(min = 3, max = 20, message = "账号约束 A 校验失败")
+        @CAccount(min = 5, max = 10, message = "账号约束 B 校验失败")
         private String account;
 
         public String getAccount() { return account; }

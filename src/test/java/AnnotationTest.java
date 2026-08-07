@@ -38,7 +38,7 @@ public class AnnotationTest {
         passCount = 0;
         failCount = 0;
 
-        System.out.println("=== hibernate-validator-plus Annotation Test ===\n");
+        System.out.println("=== hibernate-validator-plus 注解基础测试 ===\n");
 
         testAllValidData();
         testNameNotBlank();
@@ -78,7 +78,7 @@ public class AnnotationTest {
         testGroupInheritance();
 
         System.out.println("\n============================================");
-        System.out.println("Test1  Total: " + testCount + ", Passed: " + passCount + ", Failed: " + failCount);
+        System.out.println("测试一 总数: " + testCount + "，通过: " + passCount + "，失败: " + failCount);
         System.out.println("============================================");
         return failCount;
     }
@@ -93,10 +93,10 @@ public class AnnotationTest {
         testCount++;
         if (violations == null || violations.isEmpty()) {
             passCount++;
-            System.out.println("[PASS] " + label);
+            System.out.println("[通过] 第 " + testCount + " 项检查");
         } else {
             failCount++;
-            System.out.println("[FAIL] " + label + " => violations: " + violations);
+            System.out.println("[失败] 第 " + testCount + " 项检查，违反项：" + violations);
         }
     }
 
@@ -105,10 +105,10 @@ public class AnnotationTest {
         testCount++;
         if (violations != null && !violations.isEmpty()) {
             passCount++;
-            System.out.println("[PASS] " + label + " => " + violations.get(0));
+            System.out.println("[通过] 第 " + testCount + " 项检查，按预期发现违反项：" + violations.get(0));
         } else {
             failCount++;
-            System.out.println("[FAIL] " + label + " => expected violation, got none");
+            System.out.println("[失败] 第 " + testCount + " 项检查，预期出现违反项，但实际没有");
         }
     }
 
@@ -158,7 +158,7 @@ public class AnnotationTest {
     // ==================== All valid data ====================
 
     private static void testAllValidData() {
-        System.out.println("\n--- [All Valid Data] ---");
+        System.out.println("\n--- [全部有效数据] ---");
         User u = freshUser();
         pass("Default group", CValid.tryValidate(u));
         pass("CPost group", CValid.tryValidate(u, CPost.class));
@@ -168,7 +168,7 @@ public class AnnotationTest {
     // ==================== Name (@NotBlank, groups=CPost) ====================
 
     private static void testNameNotBlank() {
-        System.out.println("\n--- [Name @NotBlank] ---");
+        System.out.println("\n--- [名称 @NotBlank] ---");
         User u = freshUser();
         u.setName("");
         fail("name empty (CPost)", CValid.tryValidate(u, CPost.class));
@@ -183,7 +183,7 @@ public class AnnotationTest {
     // ==================== Phone CN @CPhone(region="CN", groups=CPost, allowNull=false) ====================
 
     private static void testPhoneCN() {
-        System.out.println("\n--- [Phone CN @CPhone(region=CN)] ---");
+        System.out.println("\n--- [中国手机号 @CPhone(region=CN)] ---");
         User u = freshUser();
 
         u.setPhone("13375483434");
@@ -208,7 +208,7 @@ public class AnnotationTest {
     // ==================== Phone US @CPhone(region="US", groups=CPost, allowNull=false) ====================
 
     private static void testPhoneUS() {
-        System.out.println("\n--- [Phone US @CPhone(region=US)] ---");
+        System.out.println("\n--- [美国手机号 @CPhone(region=US)] ---");
         User u = freshUser();
 
         u.setPhoneUS("2125551234");
@@ -235,7 +235,7 @@ public class AnnotationTest {
     // ==================== Phone JP @CPhone(region="JP", groups=CPost, allowNull=false) ====================
 
     private static void testPhoneJP() {
-        System.out.println("\n--- [Phone JP @CPhone(region=JP)] ---");
+        System.out.println("\n--- [日本手机号 @CPhone(region=JP)] ---");
         User u = freshUser();
 
         u.setPhoneJP("09012345678");
@@ -262,7 +262,7 @@ public class AnnotationTest {
     // ==================== Phone KR @CPhone(region="KR", groups=CPost, allowNull=false) ====================
 
     private static void testPhoneKR() {
-        System.out.println("\n--- [Phone KR @CPhone(region=KR)] ---");
+        System.out.println("\n--- [韩国手机号 @CPhone(region=KR)] ---");
         User u = freshUser();
 
         u.setPhoneKR("01012345678");
@@ -288,7 +288,7 @@ public class AnnotationTest {
     // ==================== Phone UK @CPhone(region="UK", groups=CPost, allowNull=false) ====================
 
     private static void testPhoneUK() {
-        System.out.println("\n--- [Phone UK @CPhone(region=UK)] ---");
+        System.out.println("\n--- [英国手机号 @CPhone(region=UK)] ---");
         User u = freshUser();
 
         u.setPhoneUK("07123456789");
@@ -316,7 +316,7 @@ public class AnnotationTest {
     // ==================== Passport CN @CPassport(region="CN", groups=CPost, allowNull=false) ====================
 
     private static void testPassportCN() {
-        System.out.println("\n--- [Passport CN @CPassport(region=CN)] ---");
+        System.out.println("\n--- [中国护照 @CPassport(region=CN)] ---");
         User u = freshUser();
 
         u.setPassport("E12345678");
@@ -343,7 +343,7 @@ public class AnnotationTest {
     // ==================== Passport US @CPassport(region="US", groups=CPost, allowNull=false) ====================
 
     private static void testPassportUS() {
-        System.out.println("\n--- [Passport US @CPassport(region=US)] ---");
+        System.out.println("\n--- [美国护照 @CPassport(region=US)] ---");
         User u = freshUser();
 
         u.setPassportUS("123456789");
@@ -364,7 +364,7 @@ public class AnnotationTest {
     // ==================== Passport JP @CPassport(region="JP", groups=CPost, allowNull=false) ====================
 
     private static void testPassportJP() {
-        System.out.println("\n--- [Passport JP @CPassport(region=JP)] ---");
+        System.out.println("\n--- [日本护照 @CPassport(region=JP)] ---");
         User u = freshUser();
 
         u.setPassportJP("AB1234567");
@@ -387,7 +387,7 @@ public class AnnotationTest {
     // ==================== Passport UK @CPassport(region="UK", groups=CPost, allowNull=false) ====================
 
     private static void testPassportUK() {
-        System.out.println("\n--- [Passport UK @CPassport(region=UK)] ---");
+        System.out.println("\n--- [英国护照 @CPassport(region=UK)] ---");
         User u = freshUser();
 
         u.setPassportUK("A12345678");
@@ -410,7 +410,7 @@ public class AnnotationTest {
     // ==================== Passport KR @CPassport(region="KR", groups=CPost, allowNull=false) ====================
 
     private static void testPassportKR() {
-        System.out.println("\n--- [Passport KR @CPassport(region=KR)] ---");
+        System.out.println("\n--- [韩国护照 @CPassport(region=KR)] ---");
         User u = freshUser();
 
         u.setPassportKR("M12345678");
@@ -464,7 +464,7 @@ public class AnnotationTest {
     // ==================== Domain @CDomain(groups=CPost) ====================
 
     private static void testDomain() {
-        System.out.println("\n--- [Domain @CDomain] ---");
+        System.out.println("\n--- [域名 @CDomain] ---");
         User u = freshUser();
 
         u.setDomain("example.com");
@@ -479,7 +479,7 @@ public class AnnotationTest {
     // ==================== ID Card @CIdCard ====================
 
     private static void testIdCard() {
-        System.out.println("\n--- [ID Card @CIdCard] ---");
+        System.out.println("\n--- [身份号码 @CIdCard] ---");
         User u = freshUser();
 
         u.setIdCard("110101199001010015");
@@ -504,7 +504,7 @@ public class AnnotationTest {
     // ==================== Account @CAccount ====================
 
     private static void testAccount() {
-        System.out.println("\n--- [Account @CAccount] ---");
+        System.out.println("\n--- [账号 @CAccount] ---");
         User u = freshUser();
 
         u.setUser("abcde");
@@ -527,7 +527,7 @@ public class AnnotationTest {
     // ==================== Password @CPassword ====================
 
     private static void testPassword() {
-        System.out.println("\n--- [Password @CPassword] ---");
+        System.out.println("\n--- [密码 @CPassword] ---");
         User u = freshUser();
 
         u.setPasswd("abc123");
@@ -548,7 +548,7 @@ public class AnnotationTest {
     // ==================== DateRange LocalDate d1 ====================
 
     private static void testDateRangeLocalDate() {
-        System.out.println("\n--- [DateRange d1 min=2022-06-01 max=2022-06-30] ---");
+        System.out.println("\n--- [日期范围 d1 min=2022-06-01 max=2022-06-30] ---");
         User u = freshUser();
 
         u.setD1(LocalDate.of(2022, 6, 1));
@@ -565,7 +565,7 @@ public class AnnotationTest {
     // ==================== DateRange String d2 ====================
 
     private static void testDateRangeString() {
-        System.out.println("\n--- [DateRange d2 min=2022-04-01 max=2022-06-30] ---");
+        System.out.println("\n--- [日期范围 d2 min=2022-04-01 max=2022-06-30] ---");
         User u = freshUser();
 
         u.setD2("2022-04-01");
@@ -582,7 +582,7 @@ public class AnnotationTest {
     // ==================== DateRange LocalDateTime d3 ====================
 
     private static void testDateRangeLocalDateTime() {
-        System.out.println("\n--- [DateRange d3 min=2022-08-01 00:30:00 max=2022-08-30 12:30:00 allowNull=false] ---");
+        System.out.println("\n--- [日期范围 d3 min=2022-08-01 00:30:00 max=2022-08-30 12:30:00 allowNull=false] ---");
         User u = freshUser();
 
         u.setD3(LocalDateTime.of(2022, 8, 1, 0, 30));
@@ -592,7 +592,7 @@ public class AnnotationTest {
 
         u.setD3(LocalDateTime.of(2022, 8, 1, 0, 29, 59));
         fail("d3 before min", CValid.tryValidate(u));
-        u.setD3(LocalDateTime.of(2022, 8, 30, 12, 29, 1));
+        u.setD3(LocalDateTime.of(2022, 8, 30, 12, 30, 1));
         fail("d3 one second after exact max", CValid.tryValidate(u));
         u.setD3(LocalDateTime.of(2022, 8, 31, 0, 0));
         fail("d3 after max (day after)", CValid.tryValidate(u));
@@ -603,7 +603,7 @@ public class AnnotationTest {
     // ==================== DateRange Instant d4 ====================
 
     private static void testDateRangeInstant() {
-        System.out.println("\n--- [DateRange d4 Instant min=2022-06-01 max=2022-06-30] ---");
+        System.out.println("\n--- [日期范围 d4 Instant min=2022-06-01 max=2022-06-30] ---");
         User u = freshUser();
 
         u.setD4(Instant.parse("2022-06-01T00:00:00Z"));
@@ -620,7 +620,7 @@ public class AnnotationTest {
     // ==================== DateRange ZonedDateTime d5 ====================
 
     private static void testDateRangeZonedDateTime() {
-        System.out.println("\n--- [DateRange d5 ZonedDateTime min=2022-07-01 00:30:00 max=2022-07-30 12:30:00 allowNull=false] ---");
+        System.out.println("\n--- [日期范围 d5 ZonedDateTime min=2022-07-01 00:30:00 max=2022-07-30 12:30:00 allowNull=false] ---");
         User u = freshUser();
 
         u.setD5(ZonedDateTime.parse("2022-07-01T00:30:00+08:00[Asia/Shanghai]"));
@@ -641,7 +641,7 @@ public class AnnotationTest {
     // ==================== Plate Number @CPlateNumber(groups=CPost) ====================
 
     private static void testPlateNumber() {
-        System.out.println("\n--- [Plate @CPlateNumber] ---");
+        System.out.println("\n--- [车牌号 @CPlateNumber] ---");
         User u = freshUser();
 
         u.setLpn("京A12345");
@@ -660,7 +660,7 @@ public class AnnotationTest {
     // ==================== File Name @CFile(groups=CPost, suffix=jpg/jpeg/png) ====================
 
     private static void testFileName() {
-        System.out.println("\n--- [FileName @CFile suffix=jpg/jpeg/png] ---");
+        System.out.println("\n--- [文件名 @CFile suffix=jpg/jpeg/png] ---");
         User u = freshUser();
 
         u.setFileName("photo.jpg");
@@ -679,7 +679,7 @@ public class AnnotationTest {
     // ==================== File @CFile(groups=CPost, size<=200KB, allowNull=false) ====================
 
     private static void testFile() {
-        System.out.println("\n--- [File @CFile size<=200KB allowNull=false] ---");
+        System.out.println("\n--- [文件 @CFile size<=200KB allowNull=false] ---");
         User u = freshUser();
 
         u.setFile(new File("src/test/resource/3.png"));
@@ -720,7 +720,7 @@ public class AnnotationTest {
     // ==================== Bank Card @CBankCard(groups=CGet) ====================
 
     private static void testBankCard() {
-        System.out.println("\n--- [BankCard @CBankCard] ---");
+        System.out.println("\n--- [银行卡 @CBankCard] ---");
 
         User u = freshUser();
         u.setBankCard("4111111111111111");
@@ -746,7 +746,7 @@ public class AnnotationTest {
     // ==================== Money @CMoney(groups=CGet) ====================
 
     private static void testMoney() {
-        System.out.println("\n--- [Money @CMoney] ---");
+        System.out.println("\n--- [金额 @CMoney] ---");
 
         User u = freshUser();
         u.setMoneyStr("123.45");
@@ -822,7 +822,7 @@ public class AnnotationTest {
     // ==================== Group Inheritance CPostDef ====================
 
     private static void testGroupInheritance() {
-        System.out.println("\n--- [Group Inheritance CPostDef = CPost + Default] ---");
+        System.out.println("\n--- [分组继承 CPostDef = CPost + Default] ---");
 
         User u = freshUser();
         pass("CPostDef all valid", CValid.tryValidate(u, CPostDef.class));
@@ -838,7 +838,7 @@ public class AnnotationTest {
     // ==================== PostCode CN @CPostCode(region="CN", groups=CPost, allowNull=false) ====================
 
     private static void testPostCodeCN() {
-        System.out.println("\n--- [PostCode CN @CPostCode(region=CN)] ---");
+        System.out.println("\n--- [中国邮政编码 @CPostCode(region=CN)] ---");
         User u = freshUser();
 
         u.setPostCodeCN("518057");
@@ -861,7 +861,7 @@ public class AnnotationTest {
     // ==================== PostCode US @CPostCode(region="US", groups=CPost, allowNull=false) ====================
 
     private static void testPostCodeUS() {
-        System.out.println("\n--- [PostCode US @CPostCode(region=US)] ---");
+        System.out.println("\n--- [美国邮政编码 @CPostCode(region=US)] ---");
         User u = freshUser();
 
         u.setPostCodeUS("10001");
@@ -886,7 +886,7 @@ public class AnnotationTest {
     // ==================== PostCode JP @CPostCode(region="JP", groups=CPost, allowNull=false) ====================
 
     private static void testPostCodeJP() {
-        System.out.println("\n--- [PostCode JP @CPostCode(region=JP)] ---");
+        System.out.println("\n--- [日本邮政编码 @CPostCode(region=JP)] ---");
         User u = freshUser();
 
         u.setPostCodeJP("100-0001");
@@ -909,7 +909,7 @@ public class AnnotationTest {
     // ==================== PostCode UK @CPostCode(region="UK", groups=CPost, allowNull=false) ====================
 
     private static void testPostCodeUK() {
-        System.out.println("\n--- [PostCode UK @CPostCode(region=UK)] ---");
+        System.out.println("\n--- [英国邮政编码 @CPostCode(region=UK)] ---");
         User u = freshUser();
 
         u.setPostCodeUK("SW1A 1AA");
@@ -935,7 +935,7 @@ public class AnnotationTest {
     // ==================== PostCode KR @CPostCode(region="KR", groups=CPost, allowNull=false) ====================
 
     private static void testPostCodeKR() {
-        System.out.println("\n--- [PostCode KR @CPostCode(region=KR)] ---");
+        System.out.println("\n--- [韩国邮政编码 @CPostCode(region=KR)] ---");
         User u = freshUser();
 
         u.setPostCodeKR("04524");

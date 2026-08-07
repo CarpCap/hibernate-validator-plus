@@ -214,7 +214,7 @@ hibernate-validator-plus/
 
 按修复优先级排列：
 
-1. **P0（已修复）：自动化测试实际未运行**：已使用 JUnit 4 接入两个套件入口；`mvn test` 当前执行 2 个测试，并覆盖内部 409 个检查。
+1. **P0（已修复）：自动化测试实际未运行**：已使用 JUnit 4 接入自动测试；基础与高级套件覆盖内部 409 个检查，地区规则矩阵另覆盖 120 个现实场景。
 2. **P0（已修复）：18 位身份证末位 X 永远无法通过**：CN 格式现已允许末位 `X/x` 进入 ISO 7064 校验位逻辑，并补充出生日期合法性校验。
 3. **P1（已修复）：CDateRange 的精确 max 时间失效**：仅纯日期上限会补全到当天结束；包含时间精度的 max 保持原始解析结果。
 4. **P1（已修复）：未知 region 被静默放行**：地区代码现已忽略大小写和首尾空格；无自定义 regexp 且地区不受支持时抛出 ConstraintDeclarationException。
@@ -223,6 +223,7 @@ hibernate-validator-plus/
 7. **P2：日期配置错误产生副作用和非约束异常**：日期解析失败会 `printStackTrace()` 并抛出无 cause 的 RuntimeException，不利于服务端日志治理和定位注解配置错误。
 8. **P2：依赖 Hibernate Validator 内部实现**：多个验证器将标准 `ConstraintValidatorContext` 强转为 `ConstraintValidatorContextImpl`，升级 Hibernate Validator 或更换 Bean Validation 实现时可能失败。
 9. **P2：构建插件版本不完整**：`maven-compiler-plugin` 未固定版本，Maven 每次构建都会警告，构建结果可能随 Maven 环境变化。
+10. **P1：部分 region 规则与现实格式不一致**：新增的 120 条地区规则测试显示，手机号对 US 号段、JP/KR/UK 常用分隔格式支持不足；US 新版和 UK 护照格式错误；邮编只检查字符形状，未排除多个未分配区间。`CIdCard` 的 30 条地区场景当前全部通过。
 
 ## 建议路线
 
