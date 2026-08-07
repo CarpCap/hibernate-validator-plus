@@ -23,6 +23,7 @@ public class AnnotationTest3 {
     public static void main(String[] args) {
         User3 user = new User3();
         user.setName("张三");
+        user.setEmail("qweqw@cc.qq.com");
 
         // 1. 默认分组校验：失败抛 ValidationException
         CValid.validate(user);

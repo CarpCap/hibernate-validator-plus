@@ -52,6 +52,7 @@ Location: [`annotation`](src/main/java/com/carpcap/hvp/annotation)
 | `@CPhone`       | Phone validation    | Mainland China mobile numbers; supports region parameter switching CN/US/JP/UK/KR                                                                                           |
 | `@CPassport`    | Passport validation | Default: CN passport format; supports region parameter switching CN/US/JP/UK/KR                                            |
 | `@CPostCode`    | Postcode validation | Default: CN postcode format; supports region parameter switching CN/US/JP/UK/KR                                            |
+| `@CEmail`       | Email validation    | Supports domain blacklists, whitelists, and maximum subdomain level                                                       |
 | `@CFile`        | File validation     | Default max size 1 MB, file suffix supported                                                                               |
 | `@CPlateNumber` | Plate number check  | Supports both new & old CN vehicle plates                                                                                  |
 | `@CIpv4`        | Ipv4 validation     | Standard IPv4 address format                                                                                               |

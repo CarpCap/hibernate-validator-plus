@@ -1,4 +1,5 @@
 import com.carpcap.hvp.annotation.CAccount;
+import com.carpcap.hvp.annotation.CEmail;
 import com.carpcap.hvp.annotation.CPhone;
 import com.carpcap.hvp.groups.CGet;
 import com.carpcap.hvp.groups.CPost;
@@ -22,6 +23,18 @@ public class User3 {
     // 仅 CGet 分组生效，且不允许为 null
     @CPhone(region = "CN", groups = CGet.class, allowNull = false)
     private String phone;
+
+    @CEmail(level = 1, listMode = CEmail.ListMode.WHITELIST,domains = {"outlook.com","qq.com"})
+    private String email;
+
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
     public String getAccount() {
         return account;
