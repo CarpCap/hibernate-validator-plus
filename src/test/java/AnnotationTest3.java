@@ -13,7 +13,7 @@ import java.time.ZonedDateTime;
 import java.util.List;
 
 /**
- * AnnotationTest2 - Advanced dimension tests
+ * AnnotationTwoTest - Advanced dimension tests
  * CValid API variants, all groups, annotation attributes, @Repeatable, custom regex, edge cases
  *
  * @author CarpCap

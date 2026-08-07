@@ -2,6 +2,7 @@ import com.carpcap.hvp.groups.CGet;
 import com.carpcap.hvp.groups.CPost;
 import com.carpcap.hvp.groups.CPostDef;
 import com.carpcap.hvp.utils.CValid;
+import org.junit.Test;
 
 import java.io.File;
 import java.math.BigDecimal;
@@ -10,6 +11,8 @@ import java.time.LocalDateTime;
 import java.time.Instant;
 import java.time.ZonedDateTime;
 import java.util.List;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * AnnotationTest - 正确数据与错误数据的完整验证测试
@@ -22,7 +25,19 @@ public class AnnotationTest {
     private static int passCount = 0;
     private static int failCount = 0;
 
-    public static void main(String[] args) {
+
+    @Test
+    public void shouldPassBasicSuite() {
+        assertEquals("基础测试存在失败检查", 0, runAllTests());
+        assertEquals("基础测试检查数量发生变化", 220, getTestCount());
+    }
+
+
+    static int runAllTests() {
+        testCount = 0;
+        passCount = 0;
+        failCount = 0;
+
         System.out.println("=== hibernate-validator-plus Annotation Test ===\n");
 
         testAllValidData();
@@ -65,10 +80,11 @@ public class AnnotationTest {
         System.out.println("\n============================================");
         System.out.println("Total: " + testCount + ", Passed: " + passCount + ", Failed: " + failCount);
         System.out.println("============================================");
+        return failCount;
+    }
 
-        if (failCount > 0) {
-            System.exit(1);
-        }
+    static int getTestCount() {
+        return testCount;
     }
 
     // ==================== Helpers ====================
@@ -467,13 +483,19 @@ public class AnnotationTest {
 
         u.setIdCard("110101199001010015");
         pass("idCard 18 digits correct check", CValid.tryValidate(u));
+        u.setIdCard("11010519491231002X");
+        pass("idCard 18 digits with uppercase X", CValid.tryValidate(u));
         u.setIdCard("110101900101001");
         pass("idCard 15 digits", CValid.tryValidate(u));
+        u.setIdCard("110101202402290016");
+        pass("idCard valid leap day", CValid.tryValidate(u));
 
         u.setIdCard("123456789012345678");
         fail("idCard wrong province", CValid.tryValidate(u));
         u.setIdCard("110101199001010014");
         fail("idCard wrong check digit", CValid.tryValidate(u));
+        u.setIdCard("110101202302290019");
+        fail("idCard invalid non-leap day", CValid.tryValidate(u));
         u.setIdCard("12345");
         fail("idCard too short", CValid.tryValidate(u));
     }
@@ -569,6 +591,8 @@ public class AnnotationTest {
 
         u.setD3(LocalDateTime.of(2022, 8, 1, 0, 29, 59));
         fail("d3 before min", CValid.tryValidate(u));
+        u.setD3(LocalDateTime.of(2022, 8, 30, 12, 30, 1));
+        fail("d3 one second after exact max", CValid.tryValidate(u));
         u.setD3(LocalDateTime.of(2022, 8, 31, 0, 0));
         fail("d3 after max (day after)", CValid.tryValidate(u));
         u.setD3(null);
@@ -605,6 +629,8 @@ public class AnnotationTest {
 
         u.setD5(ZonedDateTime.parse("2022-07-01T00:29:59+08:00[Asia/Shanghai]"));
         fail("d5 ZonedDateTime before min", CValid.tryValidate(u));
+        u.setD5(ZonedDateTime.parse("2022-07-30T12:30:01+08:00[Asia/Shanghai]"));
+        fail("d5 ZonedDateTime one second after exact max", CValid.tryValidate(u));
         u.setD5(ZonedDateTime.parse("2022-07-31T00:00:00+08:00[Asia/Shanghai]"));
         fail("d5 ZonedDateTime after max", CValid.tryValidate(u));
         u.setD5(null);

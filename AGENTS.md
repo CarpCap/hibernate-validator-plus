@@ -1,10 +1,18 @@
 # Hibernate Validator Plus — 项目知识库
 
+## 协作约定
+
+- 用户名：CarpCap；默认使用中文沟通。
+- 所有文本和源码使用 UTF-8 编码。
+- 新增或修改代码时，仅在必要位置添加简洁、明确的注释。
+- 禁止批量删除文件或目录；禁止使用 `del /s`、`rd /s`、`rmdir /s`、`Remove-Item -Recurse`、`rm -rf`。
+- 如需删除文件，只能一次删除一个已确认的明确路径；如需批量删除，停止操作并请用户手动处理。
+
 ## 项目概述
 
 Hibernate Validator Plus（简称 HVP）是基于 **Hibernate Validator 6.2.5.Final** 的增强校验框架，提供更丰富、实用的校验注解、分组校验机制以及统一的校验工具类。项目由作者 **CarpCap** 开发，采用 Apache License 2.0 开源协议。
 
-- **Maven 坐标**: `com.carpcap:hibernate-validator-plus:1.2.2-SNAPSHOT`
+- **Maven 坐标**: `com.carpcap:hibernate-validator-plus:1.2.3`
 - **JDK 版本**: >= JDK 8
 - **核心依赖**: hibernate-validator 6.2.5.Final, hutool-core 5.8.41, jakarta.el 3.0.4
 - **自动注册**: 使用 Google Auto Service (`@AutoService`) 自动注册 ConstraintValidator 实现
@@ -29,17 +37,17 @@ hibernate-validator-plus/
 ├── src/
 │   ├── main/
 │   │   ├── java/com/carpcap/hvp/
-│   │   │   ├── annotation/               # 校验注解定义 (14个)
-│   │   │   ├── constraintvalidators/     # 校验器实现 (23个)
+│   │   │   ├── annotation/               # 校验注解定义（16 个）
+│   │   │   ├── constraintvalidators/     # 验证器源码（25 个：22 个具体实现 + 3 个抽象基类）
 │   │   │   ├── groups/                   # 校验分组接口 (16个)
 │   │   │   └── utils/                    # 工具类 (2个)
 │   │   └── resources/
-│   │       └── ValidationMessages*.properties  # 国际化消息 (17种语言)
+│   │       └── ValidationMessages*.properties  # 17 个 ResourceBundle 文件
 │   └── test/
 │       ├── java/
-│       │   ├── AnnotationTest.java       # 完整测试类
-│       │   └── User.java                 # 测试用实体
-│       └── resource/
+│       │   ├── AnnotationTest*.java      # 3 个 main 方法测试/演示类
+│       │   └── User*.java                # 3 个测试实体
+│       └── resource/                     # 注意：当前使用单数 resource，非 Maven 默认 resources
 │           └── 3.png                     # 文件校验测试资源
 ```
 
@@ -69,6 +77,8 @@ hibernate-validator-plus/
 | @CMoney | 金额格式验证 | min/max, 整数/小数位数, 货币符号, 千分位 |
 | @CDateRange | 日期范围验证 | min/max 日期, format, 支持 String/Date/LocalDate/LocalDateTime/Instant/ZonedDateTime |
 | @CMacAddress | MAC 地址验证 | allowLowercase, allowEui64, allowOmittingLeadingZero |
+| @CPassport | 护照号验证 | region/regexp，内置 CN/US/JP/UK/KR |
+| @CPostCode | 邮政编码验证 | region/regexp，内置 CN/US/JP/UK/KR |
 
 ### 注解设计模式
 
@@ -95,6 +105,8 @@ hibernate-validator-plus/
 | CMoneyValidator | @CMoney | 复杂金额格式校验（符号/千分位/小数位） |
 | CMacAddressValidator | @CMacAddress | 动态构建正则，支持多种格式 |
 | CIpv6Validator | @CIpv6 | 使用 InetAddress.getByName() 原生解析 |
+| CPassportValidator | @CPassport | 按 region 选择护照号正则，regexp 优先 |
+| CPostCodeValidator | @CPostCode | 按 region 选择邮编正则，regexp 优先 |
 | CDateRange*Validator (6个) | @CDateRange | 分别支持 Date/LocalDate/LocalDateTime/Instant/ZonedDateTime/String |
 | AbstractCFileValidator | 抽象基类 | 文件校验基类（后缀名、大小） |
 | CFileValidator | @CFile | java.io.File 类型验证 |
@@ -150,7 +162,7 @@ hibernate-validator-plus/
 ## 国际化（i18n）
 
 消息文件位于 `src/main/resources/`，命名遵循 Java ResourceBundle 规范。
-支持 **17 种语言**：英语（默认）、简体中文、繁体中文、日语、韩语、法语、德语、西班牙语、俄语、阿拉伯语、印地语、意大利语、荷兰语、葡萄牙语、泰语、越南语。
+当前共有 **17 个 ResourceBundle 文件**：一个默认英文文件，以及 16 个语言/地区变体文件（其中中文包含 `zh`、`zh_CN`、`zh_TW`）。
 
 消息支持 Hibernate Validator 的 Expression Language 插值表达式。
 
@@ -159,7 +171,8 @@ hibernate-validator-plus/
 ## 版本历史
 
 ### 1.2.x 系列
-- **1.2.2-SNAPSHOT**: 当前开发版本
+- **1.2.3**: 当前版本；CValid 的普通/快速 Validator 增加 get/set 方法，支持注入自定义实例
+- **1.2.2**: 新增 @CPassport、@CPostCode；@CPhone 增加多地区支持；@CDateRange 增加 Instant/ZonedDateTime
 - **1.2.1**: 修复 @CDateRange 时区问题，max 日期自动补全到 23:59:59；所有注解增加 allowNull 字段
 - **1.2.0**: 新增 @CBankCard、@CUrl、@CMoney、@CMacAddress、@CIpv6；@CAccount/@CPassword 增加 min/max；@CDomain 支持中文域名
 
@@ -180,7 +193,9 @@ hibernate-validator-plus/
 
 - **Maven 构建**: 编译目标 Java 1.8，源码编码 UTF-8
 - **发布到 Maven Central**: 通过 Sonatype Central Publishing Plugin 发布，自动打包源码 + Javadoc + GPG 签名
-- **测试**: 运行 AnnotationTest 的 main 方法即可执行全部测试用例
+- **Maven 测试现状**: 使用 JUnit 4 接入两个套件入口；`mvn test` 实际执行 2 个测试，内部覆盖 379 个检查
+- **手工测试入口**: 仍可分别运行 `AnnotationTest`、`AnnotationTwoTest`、`AnnotationTest3` 的 main 方法；前两组当前合计 379 个计数用例
+- **测试资源目录**: 当前为 `src/test/resource/`（单数），Maven 默认目录是 `src/test/resources/`
 
 ---
 
@@ -192,3 +207,36 @@ hibernate-validator-plus/
 4. **抽象基类模式**: 减少重复代码，正则类/日期类/文件类各有抽象基类
 5. **分组继承链**: 每个业务分组有对应的 *Def 接口继承 Default，解决分组校验时默认约束不被执行的常见问题
 6. **轻量无侵入**: 不强制依赖 Spring，但完全兼容 Spring 生态
+
+---
+
+## 已知问题（2026-08-07）
+
+按修复优先级排列：
+
+1. **P0（已修复）：自动化测试实际未运行**：已使用 JUnit 4 接入两个套件入口；`mvn test` 当前执行 2 个测试，并校验内部 379 个检查全部通过。
+2. **P0：18 位身份证末位 X 永远无法通过**：`CIdCardValidator` 的基础正则要求 18 位全部为数字，先于校验位逻辑执行；虽然校验位实现支持 `X`，但该分支无法到达。
+3. **P1：CDateRange 的精确 max 时间失效**：所有非空 max 都被无条件调用 `DateUtil.endOfDay()`，例如 max=`2022-08-30 12:30:00` 实际会放宽到当天 23:59:59.999。
+4. **P1：未知 region 被静默放行**：CPhone、CPassport、CPostCode 查不到地区正则时返回 true；region 拼写错误会关闭约束。
+5. **P1：CFile 会把不存在的文件当作 null**：当 `allowNull=true` 时，不存在的路径直接通过；同时未检查 `File.isFile()`，目录也可能进入后缀/大小校验。
+6. **P1：IPv6 校验可能访问 DNS**：`InetAddress.getByName()` 会解析主机名，校验耗时和结果依赖网络/DNS；拥有 AAAA 记录的域名还可能被误判为 IPv6 字面量。
+7. **P2：日期配置错误产生副作用和非约束异常**：日期解析失败会 `printStackTrace()` 并抛出无 cause 的 RuntimeException，不利于服务端日志治理和定位注解配置错误。
+8. **P2：依赖 Hibernate Validator 内部实现**：多个验证器将标准 `ConstraintValidatorContext` 强转为 `ConstraintValidatorContextImpl`，升级 Hibernate Validator 或更换 Bean Validation 实现时可能失败。
+9. **P2：构建插件版本不完整**：`maven-compiler-plugin` 未固定版本，Maven 每次构建都会警告，构建结果可能随 Maven 环境变化。
+
+## 建议路线
+
+### 下一版本：1.2.4 质量修复
+
+暂缓增加注解，先将上述未修复的 P0/P1 问题处理完毕。当前已通过 JUnit 4 最小接入解决零测试问题，后续可再将 main 测试迁移为 JUnit 5 参数化测试。其余最低验收范围包括身份证 X、精确日期上限、非法 region、不存在文件和 IPv6 主机名。
+
+### 下一项功能：@CEnumValue
+
+质量修复后，优先新增通用的枚举值约束，而不是继续增加单一国家格式注解。建议支持：
+
+- 校验 Enum、String 和 Number 类型；
+- 通过 `enumClass` 指定枚举，通过 `property` 指定取 `name`、`code` 等字段/无参方法；
+- `ignoreCase`、`allowNull`、groups、payload 和 `@Repeatable`；
+- 初始化阶段缓存允许值，避免每次校验反射扫描；配置错误应抛 `ConstraintDeclarationException`。
+
+该功能适用于状态、类型、渠道、业务代码等高频 API 入参，复用范围明显高于新增一种格式正则。

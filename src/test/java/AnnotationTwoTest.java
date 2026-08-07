@@ -2,6 +2,7 @@ import com.carpcap.hvp.User2;
 import com.carpcap.hvp.annotation.*;
 import com.carpcap.hvp.groups.*;
 import com.carpcap.hvp.utils.CValid;
+import org.junit.Test;
 
 import javax.validation.ValidationException;
 import java.io.File;
@@ -12,20 +13,33 @@ import java.time.Instant;
 import java.time.ZonedDateTime;
 import java.util.List;
 
+import static org.junit.Assert.assertEquals;
+
 /**
- * AnnotationTest2 - Advanced dimension tests
+ * AnnotationTwoTest - Advanced dimension tests
  * CValid API variants, all groups, annotation attributes, @Repeatable, custom regex, edge cases
  *
  * @author CarpCap
  */
-public class AnnotationTest2 {
+public class AnnotationTwoTest {
 
     private static int testCount = 0;
     private static int passCount = 0;
     private static int failCount = 0;
 
-    public static void main(String[] args) {
-        System.out.println("=== hibernate-validator-plus AnnotationTest2 (Advanced) ===\n");
+    @Test
+    public void shouldPassAdvancedSuite() {
+        assertEquals("高级测试存在失败检查", 0, AnnotationTwoTest.runAllTests());
+        assertEquals("高级测试检查数量发生变化", 172, AnnotationTwoTest.getTestCount());
+    }
+
+
+    static int runAllTests() {
+        testCount = 0;
+        passCount = 0;
+        failCount = 0;
+
+        System.out.println("=== hibernate-validator-plus AnnotationTwoTest (Advanced) ===\n");
 
         // === CValid utility method variants ===
         testCValidUtils();
@@ -56,6 +70,7 @@ public class AnnotationTest2 {
         testPlateNumberEdgeCases();
         testMoneyEdgeCases();
         testFileEdgeCases();
+        testInvalidConfigurationAndFileSemantics();
 
         // === @Repeatable ===
         testRepeatableAnnotations();
@@ -63,10 +78,11 @@ public class AnnotationTest2 {
         System.out.println("\n============================================");
         System.out.println("Total: " + testCount + ", Passed: " + passCount + ", Failed: " + failCount);
         System.out.println("============================================");
+        return failCount;
+    }
 
-        if (failCount > 0) {
-            System.exit(1);
-        }
+    static int getTestCount() {
+        return testCount;
     }
 
     // ==================== Helpers ====================
@@ -131,8 +147,28 @@ public class AnnotationTest2 {
             passCount++;
             System.out.println("[PASS] " + label + " => " + e.getMessage());
         } catch (Exception e) {
+            failCount++;
+            System.out.println("[FAIL] " + label + " => unexpected " + e.getClass().getSimpleName() + ": " + e.getMessage());
+        }
+    }
+
+    private static void rejectOrThrow(String label, ValidationCall validationCall) {
+        testCount++;
+        try {
+            List<String> violations = validationCall.validate();
+            if (violations != null && !violations.isEmpty()) {
+                passCount++;
+                System.out.println("[PASS] " + label + " => " + violations.get(0));
+            } else {
+                failCount++;
+                System.out.println("[FAIL] " + label + " => invalid configuration was silently accepted");
+            }
+        } catch (ValidationException e) {
             passCount++;
             System.out.println("[PASS] " + label + " => " + e.getClass().getSimpleName() + ": " + e.getMessage());
+        } catch (Exception e) {
+            failCount++;
+            System.out.println("[FAIL] " + label + " => unexpected " + e.getClass().getSimpleName() + ": " + e.getMessage());
         }
     }
 
@@ -151,6 +187,11 @@ public class AnnotationTest2 {
     @FunctionalInterface
     interface RunnableWithException {
         void run() throws Exception;
+    }
+
+    @FunctionalInterface
+    interface ValidationCall {
+        List<String> validate() throws Exception;
     }
 
     // ==================== Entity Factory ====================
@@ -278,20 +319,23 @@ public class AnnotationTest2 {
     private static void testAllGroups() {
         System.out.println("\n--- [All Groups] ---");
 
+        // CCreate group
         User2 u = freshUser2();
         u.setIpCreateGroup(null);
-        u.setDomainCreateGroup(null);
+        fail("CCreate group - invalid ip", CValid.tryValidateProperty(u, "ipCreateGroup", CCreate.class));
 
-        // CCreate group
-        fail("CCreate group - invalid ip", CValid.tryValidate(u, CCreate.class));
-        fail("CCreate group - invalid domain", CValid.tryValidate(u, CCreate.class));
+        u = freshUser2();
+        u.setDomainCreateGroup(null);
+        fail("CCreate group - invalid domain", CValid.tryValidateProperty(u, "domainCreateGroup", CCreate.class));
 
         // CCreateDef = CCreate + Default
-        // The ip and domain fields have CCreate group, so CCreateDef validates them too
+        u = freshUser2();
         u.setIpCreateGroup(null);
+        fail("CCreateDef group - invalid ip", CValid.tryValidateProperty(u, "ipCreateGroup", CCreateDef.class));
+
+        u = freshUser2();
         u.setDomainCreateGroup(null);
-        fail("CCreateDef group - invalid ip", CValid.tryValidate(u, CCreateDef.class));
-        fail("CCreateDef group - invalid domain", CValid.tryValidate(u, CCreateDef.class));
+        fail("CCreateDef group - invalid domain", CValid.tryValidateProperty(u, "domainCreateGroup", CCreateDef.class));
 
         // CQuery / CUpdate / CDelete / CPut / CPatch groups
         // Use the existing User entity which has CPost and CGet group fields
@@ -997,7 +1041,42 @@ public class AnnotationTest2 {
         fail("file not exists", CValid.tryValidate(u, CPost.class));
     }
 
-    // ==================== 19. @Repeatable Annotations ====================
+    // ==================== 19. Invalid Configuration and File Semantics ====================
+
+    private static void testInvalidConfigurationAndFileSemantics() {
+        System.out.println("\n--- [Invalid Configuration and File Semantics] ---");
+
+        UnsupportedRegionBean regionBean = new UnsupportedRegionBean();
+        regionBean.setPhone("13800138000");
+        regionBean.setPassport("E12345678");
+        regionBean.setPostCode("100000");
+        rejectOrThrow("unknown phone region must not be silently accepted",
+            () -> CValid.tryValidateProperty(regionBean, "phone"));
+        rejectOrThrow("unknown passport region must not be silently accepted",
+            () -> CValid.tryValidateProperty(regionBean, "passport"));
+        rejectOrThrow("unknown postcode region must not be silently accepted",
+            () -> CValid.tryValidateProperty(regionBean, "postCode"));
+
+        OptionalFileBean fileBean = new OptionalFileBean();
+        fileBean.setFile(null);
+        pass("optional file allows null", CValid.tryValidateProperty(fileBean, "file"));
+
+        fileBean.setFile(new File("nonexistent-optional-file.png"));
+        fail("optional file rejects nonexistent path", CValid.tryValidateProperty(fileBean, "file"));
+
+        fileBean.setFile(new File("src/test/resource"));
+        fail("file constraint rejects directory", CValid.tryValidateProperty(fileBean, "file"));
+
+        User2 u = freshUser2();
+        u.setUrlRequired("   ");
+        fail("required URL rejects blank value", CValid.tryValidateProperty(u, "urlRequired", CGet.class));
+
+        u = freshUser2();
+        u.setMoneyRequired("   ");
+        fail("required money rejects blank value", CValid.tryValidateProperty(u, "moneyRequired", CGet.class));
+    }
+
+    // ==================== 20. @Repeatable Annotations ====================
 
     private static void testRepeatableAnnotations() {
         System.out.println("\n--- [@Repeatable Annotations] ---");
@@ -1090,5 +1169,31 @@ public class AnnotationTest2 {
 
         public String getAccount() { return account; }
         public void setAccount(String account) { this.account = account; }
+    }
+
+    public static class UnsupportedRegionBean {
+        @CPhone(region = "UNKNOWN")
+        private String phone;
+
+        @CPassport(region = "UNKNOWN")
+        private String passport;
+
+        @CPostCode(region = "UNKNOWN")
+        private String postCode;
+
+        public String getPhone() { return phone; }
+        public void setPhone(String phone) { this.phone = phone; }
+        public String getPassport() { return passport; }
+        public void setPassport(String passport) { this.passport = passport; }
+        public String getPostCode() { return postCode; }
+        public void setPostCode(String postCode) { this.postCode = postCode; }
+    }
+
+    public static class OptionalFileBean {
+        @CFile
+        private File file;
+
+        public File getFile() { return file; }
+        public void setFile(File file) { this.file = file; }
     }
 }
