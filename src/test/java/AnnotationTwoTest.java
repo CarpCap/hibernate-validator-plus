@@ -76,7 +76,7 @@ public class AnnotationTwoTest {
         testRepeatableAnnotations();
 
         System.out.println("\n============================================");
-        System.out.println("Total: " + testCount + ", Passed: " + passCount + ", Failed: " + failCount);
+        System.out.println("TEST2 Total: " + testCount + ", Passed: " + passCount + ", Failed: " + failCount);
         System.out.println("============================================");
         return failCount;
     }

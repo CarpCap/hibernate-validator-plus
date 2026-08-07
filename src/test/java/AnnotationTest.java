@@ -78,7 +78,7 @@ public class AnnotationTest {
         testGroupInheritance();
 
         System.out.println("\n============================================");
-        System.out.println("Total: " + testCount + ", Passed: " + passCount + ", Failed: " + failCount);
+        System.out.println("Test1  Total: " + testCount + ", Passed: " + passCount + ", Failed: " + failCount);
         System.out.println("============================================");
         return failCount;
     }
