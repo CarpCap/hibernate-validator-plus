@@ -35,24 +35,24 @@ Hibernate Validator Plus 是基于 **Hibernate Validator** 的增强框架，提
 
 目录位置：[`annotation`](src/main/java/com/carpcap/hvp/annotation)
 
-| 注解名称            | 功能说明       | 详细描述                                            |
-|-----------------|------------|-------------------------------------------------|
-| `@CAccount`     | 账号格式验证     | 默认：字母开头，5–16 字符，允许字母数字下划线                       |
-| `@CPassword`    | 密码强度验证     | 默认：密码长度要求6-18，至少1个字母，至少1个数字。                    |
-| `@CIdCard`      | 身份号码验证     | region 支持 CN/US/JP/KR/UK，默认 CN；regexp 可覆盖地区规则     |
-| `@CPhone`       | 手机号验证      | 默认：中国手机号；支持 region 参数切换 CN/US/JP/KR/UK   |
-| `@CPassport`    | 护照号验证      | 默认：中国护照格式；支持 region 参数切换 CN/US/JP/UK/KR  |
-| `@CPostCode`    | 邮编格式验证     | 默认：中国邮编；支持 region 参数切换 CN/US/JP/UK/KR    |
-| `@CEmail`       | 邮箱格式验证     | 支持域名黑白名单及最大子域层级限制                         |
-| `@CFile`        | 文件验证       | 默认：最大 1 MB；可指定后缀 `fileNameSuffix`               |
-| `@CPlateNumber` | 车牌号验证      | 默认：中国车牌                                         |
-| `@CIpv4`        | Ipv4 验证    | 合法 IPv4 地址格式                                    |
-| `@CIpv6`        | IPv6 验证    | 合法 IPv6 地址格式                                    |
-| `@CDateRange`   | 日期范围验证     | `min` 最小日期、`max` 最大日期，推荐格式：yyyy-MM-dd HH:mm:ss  |
-| `@CBankCard`    | 银行卡号 验证    | 银行卡号验证，默认使用Luhn算法，可以指定拦截卡号前缀.                   |
-| `@CUrl`         | URL      验证 | URL格式 验证                                        |
-| `@CMoney`       | 金额     验证  | 金额验证<br/> 支持验证数字、字符串或BigDecimal类型的金额格式          |
-| `@CMacAddress`  | Mac地址验证    | MAC地址格式验证                                       |
+| 注解名称            | 功能说明       | 详细描述                                           |
+|-----------------|------------|------------------------------------------------|
+| `@CAccount`     | 账号格式验证     | 默认：字母开头，5–16 字符，允许字母数字下划线                      |
+| `@CPassword`    | 密码强度验证     | 默认：密码长度要求6-18，至少1个字母，至少1个数字。                   |
+| `@CIdCard`      | 身份号码验证     | region 支持 CN/US/JP/KR/UK，默认 CN；regexp 可覆盖地区规则  |
+| `@CPhone`       | 手机号验证      | 默认：中国手机号；支持 region 参数切换 CN/US/JP/KR/UK         |
+| `@CPassport`    | 护照号验证      | 默认：中国护照格式；支持 region 参数切换 CN/US/JP/UK/KR        |
+| `@CPostCode`    | 邮编格式验证     | 默认：中国邮编；支持 region 参数切换 CN/US/JP/UK/KR          |
+| `@CEmail`       | 邮箱格式验证     | 支持域名黑白名单及最大子域层级限制.                             |
+| `@CFile`        | 文件验证       | 默认：最大 1 MB；可指定后缀 `fileNameSuffix`              |
+| `@CPlateNumber` | 车牌号验证      | 默认：中国车牌                                        |
+| `@CIpv4`        | Ipv4 验证    | 合法 IPv4 地址格式                                   |
+| `@CIpv6`        | IPv6 验证    | 合法 IPv6 地址格式                                   |
+| `@CDateRange`   | 日期范围验证     | `min` 最小日期、`max` 最大日期，推荐格式：yyyy-MM-dd HH:mm:ss |
+| `@CBankCard`    | 银行卡号 验证    | 银行卡号验证，默认使用Luhn算法，可以指定拦截卡号前缀.                  |
+| `@CUrl`         | URL      验证 | URL格式 验证                                       |
+| `@CMoney`       | 金额     验证  | 金额验证<br/> 支持验证数字、字符串或BigDecimal类型的金额格式         |
+| `@CMacAddress`  | Mac地址验证    | MAC地址格式验证                                      |
 
 
 ## 📂 分组（Groups）
@@ -72,6 +72,8 @@ Hibernate Validator Plus 是基于 **Hibernate Validator** 的增强框架，提
 ## 🔧 CValid 工具类
 
 `CValid` 提供普通校验(全量校验)、快速校验（fail-fast）、属性校验、分组校验等多种能力。
+
+Spring boot 环境下建议替换掉CValid内置的validator与fastValidator, 教程文档有案例
 
 异常类：ValidationException
 

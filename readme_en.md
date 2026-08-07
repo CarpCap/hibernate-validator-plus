@@ -80,6 +80,8 @@ Location: [`groups`](src/main/java/com/carpcap/hvp/groups)
 
 `CValid` provides multiple validation capabilities, including standard validation(Full Check), fast-fail validation, property-level validation, and group-based validation.
 
+In the Spring Boot environment, it is recommended to replace the built-in validator of CValid with fastValidator. There are examples in the tutorial documentation.
+
 Exception Class：ValidationException
 
 | Method Type                                                                   | Validation Mode | Failure Behavior | Return Type    |
