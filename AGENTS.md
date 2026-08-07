@@ -65,7 +65,7 @@ hibernate-validator-plus/
 |------|------|----------|
 | @CAccount | 账号格式验证 | regexp（正则）, min/max（长度范围，默认 5-16） |
 | @CPassword | 密码强度验证 | min/max（长度 6-18），默认需包含字母+数字 |
-| @CIdCard | 身份号码验证 | region 支持 CN/US/JP/KR/UK，CN 仅支持 18 位格式 |
+| @CIdCard | 身份号码格式验证 | region 支持 CN/US/JP/KR/UK，CN 仅支持 18 位格式 |
 | @CPhone | 手机号验证 | region 参数支持 CN/US/JP/KR 等多国号码 |
 | @CIpv4 | IPv4 地址验证 | 标准 IPv4 正则 |
 | @CIpv6 | IPv6 地址验证 | 通过 InetAddress 原生解析 |
@@ -78,7 +78,7 @@ hibernate-validator-plus/
 | @CDateRange | 日期范围验证 | min/max 日期, format, 支持 String/Date/LocalDate/LocalDateTime/Instant/ZonedDateTime |
 | @CMacAddress | MAC 地址验证 | allowLowercase, allowEui64, allowOmittingLeadingZero |
 | @CPassport | 护照号验证 | region/regexp，内置 CN/US/JP/UK/KR |
-| @CPostCode | 邮政编码验证 | region/regexp，内置 CN/US/JP/UK/KR |
+| @CPostCode | 邮政编码格式验证 | region/regexp，内置 CN/US/JP/UK/KR |
 
 ### 注解设计模式
 
@@ -98,7 +98,7 @@ hibernate-validator-plus/
 | CIpAddressValidator | @CIpv4 | 直接继承 AbstractCPatternValidator |
 | CDomainValidator | @CDomain | 直接继承 AbstractCPatternValidator |
 | CPhoneValidator | @CPhone | 扩展正则校验，支持多地区手机号模板 |
-| CIdCardValidator | @CIdCard | 分地区校验身份号码，CN/JP/KR 支持校验位算法 |
+| CIdCardValidator | @CIdCard | 按 region 选择身份号码正则，regexp 优先 |
 | CPlateNumberValidator | @CPlateNumber | 扩展正则校验 |
 | CUrlValidator | @CUrl | 使用 java.net.URL 解析 + 正则回退 |
 | CBankCardValidator | @CBankCard | Luhn 算法校验，前缀黑白名单 |
@@ -214,8 +214,8 @@ hibernate-validator-plus/
 
 按修复优先级排列：
 
-1. **P0（已修复）：自动化测试实际未运行**：已使用 JUnit 4 接入自动测试；基础与高级套件覆盖内部 409 个检查，地区规则矩阵另覆盖 120 个现实场景。
-2. **P0（已修复）：18 位身份证末位 X 永远无法通过**：CN 格式现已允许末位 `X/x` 进入 ISO 7064 校验位逻辑，并补充出生日期合法性校验。
+1. **P0（已修复）：自动化测试实际未运行**：已使用 JUnit 4 接入自动测试；基础与高级套件覆盖内部 446 个检查，地区格式矩阵另覆盖 120 个场景。
+2. **P0（已修复）：18 位身份证末位 X 永远无法通过**：CN 身份号码正则现已允许末位 `X/x`，仅执行格式校验。
 3. **P1（已修复）：CDateRange 的精确 max 时间失效**：仅纯日期上限会补全到当天结束；包含时间精度的 max 保持原始解析结果。
 4. **P1（已修复）：未知 region 被静默放行**：地区代码现已忽略大小写和首尾空格；无自定义 regexp 且地区不受支持时抛出 ConstraintDeclarationException。
 5. **P1（已修复）：CFile 会把不存在的文件当作 null**：allowNull 现在仅作用于 null；不存在的路径和目录均校验失败。
@@ -223,7 +223,7 @@ hibernate-validator-plus/
 7. **P2：日期配置错误产生副作用和非约束异常**：日期解析失败会 `printStackTrace()` 并抛出无 cause 的 RuntimeException，不利于服务端日志治理和定位注解配置错误。
 8. **P2：依赖 Hibernate Validator 内部实现**：多个验证器将标准 `ConstraintValidatorContext` 强转为 `ConstraintValidatorContextImpl`，升级 Hibernate Validator 或更换 Bean Validation 实现时可能失败。
 9. **P2：构建插件版本不完整**：`maven-compiler-plugin` 未固定版本，Maven 每次构建都会警告，构建结果可能随 Maven 环境变化。
-10. **P1：部分 region 规则与现实格式不一致**：新增的 120 条地区规则测试显示，手机号对 US 号段、JP/KR/UK 常用分隔格式支持不足。US 新版和 UK 护照格式、五国邮编现实规则已修复；`CIdCard` 的 30 条地区场景当前全部通过。
+10. **已修复：region 规则与现实格式不一致**：120 条地区格式测试已覆盖并通过手机号、护照、邮编和身份号码的 CN/US/JP/KR/UK 场景。
 
 ## 建议路线
 

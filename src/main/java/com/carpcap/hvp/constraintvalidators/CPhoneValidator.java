@@ -22,11 +22,20 @@ public class CPhoneValidator extends AbstractCPatternValidator<CPhone> {
     private String pattern;
 
     static {
-        REGION_PATTERNS.put("CN", "^1(?:3[0-9]|4[01456789]|5[0-9]|66|7[0-9]|8[0-9]|9[0-9])\\d{8}$");
-        REGION_PATTERNS.put("US", "^(\\+?1)?[-.\\s]?\\(?\\d{3}\\)?[-.\\s]?\\d{3}[-.\\s]?\\d{4}$");
-        REGION_PATTERNS.put("JP", "^0[1-9]\\d{8,9}$");
-        REGION_PATTERNS.put("KR", "^01[016789][-.\\s]?\\d{3,4}[-.\\s]?\\d{4}$");
-        REGION_PATTERNS.put("UK", "^0[1-9]\\d{8,9}$");
+        // 中国大陆手机号
+        REGION_PATTERNS.put("CN", "^1\\d{10}$");
+
+        // 美国手机号（数据库存10位本地号码）
+        REGION_PATTERNS.put("US", "^[2-9]\\d{2}[2-9]\\d{2}\\d{4}$");
+
+        // 日本手机号
+        REGION_PATTERNS.put("JP", "^0[789]0\\d{8}$");
+
+        // 韩国手机号
+        REGION_PATTERNS.put("KR", "^01(?:0|1|6|7|8|9)\\d{8}$");
+
+        // 英国手机号
+        REGION_PATTERNS.put("UK", "^07\\d{9}$");
     }
 
     @Override

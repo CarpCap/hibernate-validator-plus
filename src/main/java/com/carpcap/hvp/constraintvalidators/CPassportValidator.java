@@ -23,16 +23,20 @@ public class CPassportValidator implements ConstraintValidator<CPassport, CharSe
     private static final Map<String, String> REGION_PATTERNS = new HashMap<>();
 
     static {
-        // 中国护照: 1个大写字母 + 8位数字 (普通护照: E/G开头, 公务: S, 外交: D)
+        // 中国护照
         REGION_PATTERNS.put("CN", "^[A-Z]\\d{8}$");
-        // 美国护照: 旧版9位数字；新版1个大写字母 + 8位数字
-        REGION_PATTERNS.put("US", "^(?:\\d{9}|[A-Z]\\d{8})$");
-        // 日本护照: 2个大写字母 + 7位数字
-        REGION_PATTERNS.put("JP", "^[A-Z]{2}\\d{7}$");
-        // 英国护照: 9位数字
+
+        // 美国护照
+        REGION_PATTERNS.put("US", "^\\d{9}$");
+
+        // 日本护照
+        REGION_PATTERNS.put("JP", "^[A-Z]{1,2}\\d{7}$");
+
+        // 英国护照
         REGION_PATTERNS.put("UK", "^\\d{9}$");
-        // 韩国护照: 1个大写字母 + 8位数字
-        REGION_PATTERNS.put("KR", "^[A-Z]\\d{8}$");
+
+        // 韩国护照
+        REGION_PATTERNS.put("KR", "^(?:[A-Z]\\d{8}|\\d{9})$");
     }
 
     private boolean allowNull;

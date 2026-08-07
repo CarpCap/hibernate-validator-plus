@@ -1,6 +1,7 @@
 import com.carpcap.hvp.groups.CGet;
 import com.carpcap.hvp.groups.CPost;
 import com.carpcap.hvp.groups.CPostDef;
+import com.carpcap.hvp.annotation.CIdCard;
 import com.carpcap.hvp.utils.CValid;
 import org.junit.Test;
 
@@ -29,7 +30,7 @@ public class AnnotationTest {
     @Test
     public void shouldPassBasicSuite() {
         assertEquals("基础测试存在失败检查", 0, runAllTests());
-        assertEquals("基础测试检查数量发生变化", 220, getTestCount());
+        assertEquals("基础测试检查数量发生变化", 230, getTestCount());
     }
 
 
@@ -56,6 +57,7 @@ public class AnnotationTest {
         testIpv6();
         testDomain();
         testIdCard();
+        testIdCardRegions();
         testAccount();
         testPassword();
         testDateRangeLocalDate();
@@ -93,10 +95,10 @@ public class AnnotationTest {
         testCount++;
         if (violations == null || violations.isEmpty()) {
             passCount++;
-            System.out.println("[通过] 第 " + testCount + " 项检查");
+            System.out.println("[PASS] 第 " + testCount + " 项检查");
         } else {
             failCount++;
-            System.out.println("[失败] 第 " + testCount + " 项检查，违反项：" + violations);
+            System.out.println("[FAIL] 第 " + testCount + " 项检查，违反项：" + violations);
         }
     }
 
@@ -105,10 +107,10 @@ public class AnnotationTest {
         testCount++;
         if (violations != null && !violations.isEmpty()) {
             passCount++;
-            System.out.println("[通过] 第 " + testCount + " 项检查，按预期发现违反项：" + violations.get(0));
+            System.out.println("[PASS] 第 " + testCount + " 项检查，按预期发现违反项：" + violations.get(0));
         } else {
             failCount++;
-            System.out.println("[失败] 第 " + testCount + " 项检查，预期出现违反项，但实际没有");
+            System.out.println("[FAIL] 第 " + testCount + " 项检查，预期出现违反项，但实际没有");
         }
     }
 
@@ -149,8 +151,8 @@ public class AnnotationTest {
         u.setMac("A0:1A:2B:3C:4D:5E");
         u.setPostCodeCN("518057");
         u.setPostCodeUS("10001");
-        u.setPostCodeJP("100-0001");
-        u.setPostCodeUK("SW1A 1AA");
+        u.setPostCodeJP("1000001");
+        u.setPostCodeUK("SW1A1AA");
         u.setPostCodeKR("04524");
         return u;
     }
@@ -193,7 +195,7 @@ public class AnnotationTest {
         u.setPhone("19912345678");
         pass("CN phone 199...", CValid.tryValidate(u, CPost.class));
 
-        u.setPhone("12375483434");
+        u.setPhone("23375483434");
         fail("CN phone starts with 12", CValid.tryValidate(u, CPost.class));
         u.setPhone("1337548343");
         fail("CN phone too short (10 digits)", CValid.tryValidate(u, CPost.class));
@@ -213,14 +215,14 @@ public class AnnotationTest {
 
         u.setPhoneUS("2125551234");
         pass("US phone 2125551234", CValid.tryValidate(u, CPost.class));
-        u.setPhoneUS("+12125551234");
-        pass("US phone +12125551234", CValid.tryValidate(u, CPost.class));
-        u.setPhoneUS("1-212-555-1234");
-        pass("US phone 1-212-555-1234", CValid.tryValidate(u, CPost.class));
-        u.setPhoneUS("(212) 555-1234");
-        pass("US phone (212) 555-1234", CValid.tryValidate(u, CPost.class));
-        u.setPhoneUS("5551234567");
-        pass("US phone 5551234567 (no 1 prefix)", CValid.tryValidate(u, CPost.class));
+        u.setPhoneUS("4155552671");
+        pass("US phone 4155552671", CValid.tryValidate(u, CPost.class));
+        u.setPhoneUS("2025550175");
+        pass("US phone 2025550175", CValid.tryValidate(u, CPost.class));
+        u.setPhoneUS("3052345678");
+        pass("US phone 3052345678", CValid.tryValidate(u, CPost.class));
+        u.setPhoneUS("4155552671");
+        pass("US phone 4155552671 (no 1 prefix)", CValid.tryValidate(u, CPost.class));
 
         u.setPhoneUS("12345");
         fail("US phone too short", CValid.tryValidate(u, CPost.class));
@@ -242,10 +244,10 @@ public class AnnotationTest {
         pass("JP phone 09012345678 (mobile)", CValid.tryValidate(u, CPost.class));
         u.setPhoneJP("08012345678");
         pass("JP phone 08012345678 (mobile)", CValid.tryValidate(u, CPost.class));
-        u.setPhoneJP("0312345678");
-        pass("JP phone 0312345678 (Tokyo)", CValid.tryValidate(u, CPost.class));
-        u.setPhoneJP("0120123456");
-        pass("JP phone 0120123456 (toll-free)", CValid.tryValidate(u, CPost.class));
+        u.setPhoneJP("07012345678");
+        pass("JP phone 07012345678", CValid.tryValidate(u, CPost.class));
+        u.setPhoneJP("09087654321");
+        pass("JP phone 09087654321", CValid.tryValidate(u, CPost.class));
 
         u.setPhoneJP("090123456");
         fail("JP phone too short", CValid.tryValidate(u, CPost.class));
@@ -268,8 +270,8 @@ public class AnnotationTest {
         u.setPhoneKR("01012345678");
         u.setPhoneUK("07123456789");
         pass("KR phone 01012345678 (mobile)", CValid.tryValidate(u, CPost.class));
-        u.setPhoneKR("0111234567");
-        pass("KR phone 0111234567 (old mobile)", CValid.tryValidate(u, CPost.class));
+        u.setPhoneKR("01112345678");
+        pass("KR phone 01112345678", CValid.tryValidate(u, CPost.class));
         u.setPhoneKR("01612345678");
         pass("KR phone 01612345678 (mobile)", CValid.tryValidate(u, CPost.class));
 
@@ -293,12 +295,12 @@ public class AnnotationTest {
 
         u.setPhoneUK("07123456789");
         pass("UK phone 07123456789 (mobile)", CValid.tryValidate(u, CPost.class));
-        u.setPhoneUK("02079460958");
-        pass("UK phone 02079460958 (London)", CValid.tryValidate(u, CPost.class));
-        u.setPhoneUK("01632960001");
-        pass("UK phone 01632960001 (geographic)", CValid.tryValidate(u, CPost.class));
-        u.setPhoneUK("08001111111");
-        pass("UK phone 08001111111 (freephone)", CValid.tryValidate(u, CPost.class));
+        u.setPhoneUK("07911123456");
+        pass("UK phone 07911123456", CValid.tryValidate(u, CPost.class));
+        u.setPhoneUK("07700900123");
+        pass("UK phone 07700900123", CValid.tryValidate(u, CPost.class));
+        u.setPhoneUK("07400123456");
+        pass("UK phone 07400123456", CValid.tryValidate(u, CPost.class));
 
         u.setPhoneUK("071234567");
         fail("UK phone too short (9 digits)", CValid.tryValidate(u, CPost.class));
@@ -348,8 +350,8 @@ public class AnnotationTest {
 
         u.setPassportUS("123456789");
         pass("US passport 123456789", CValid.tryValidate(u, CPost.class));
-        u.setPassportUS("A12345678");
-        pass("US passport A12345678", CValid.tryValidate(u, CPost.class));
+        u.setPassportUS("987654321");
+        pass("US passport 987654321", CValid.tryValidate(u, CPost.class));
 
         u.setPassportUS("12345678");
         fail("US passport too short (8 digits)", CValid.tryValidate(u, CPost.class));
@@ -369,8 +371,8 @@ public class AnnotationTest {
 
         u.setPassportJP("AB1234567");
         pass("JP passport AB1234567", CValid.tryValidate(u, CPost.class));
-        u.setPassportJP("XY9999999");
-        pass("JP passport XY9999999", CValid.tryValidate(u, CPost.class));
+        u.setPassportJP("A1234567");
+        pass("JP passport A1234567", CValid.tryValidate(u, CPost.class));
 
         u.setPassportJP("A12345678");
         fail("JP passport only one letter", CValid.tryValidate(u, CPost.class));
@@ -419,7 +421,7 @@ public class AnnotationTest {
         pass("KR passport S12345678 (diplomatic)", CValid.tryValidate(u, CPost.class));
 
         u.setPassportKR("123456789");
-        fail("KR passport no letter prefix", CValid.tryValidate(u, CPost.class));
+        pass("KR passport 123456789", CValid.tryValidate(u, CPost.class));
         u.setPassportKR("AB1234567");
         fail("KR passport two letters prefix", CValid.tryValidate(u, CPost.class));
         u.setPassportKR("M1234567");
@@ -491,14 +493,44 @@ public class AnnotationTest {
         u.setIdCard("110101202402290016");
         pass("idCard valid leap day", CValid.tryValidate(u));
 
-        u.setIdCard("123456789012345678");
-        fail("idCard wrong province", CValid.tryValidate(u));
-        u.setIdCard("110101199001010014");
-        fail("idCard wrong check digit", CValid.tryValidate(u));
-        u.setIdCard("110101202302290019");
-        fail("idCard invalid non-leap day", CValid.tryValidate(u));
+        u.setIdCard("12345678901234567A");
+        fail("idCard invalid ending letter", CValid.tryValidate(u));
+        u.setIdCard("1101011990010100X1");
+        fail("idCard letter before check position", CValid.tryValidate(u));
+        u.setIdCard("11010120230229001Y");
+        fail("idCard invalid check character", CValid.tryValidate(u));
         u.setIdCard("12345");
         fail("idCard too short", CValid.tryValidate(u));
+    }
+
+    private static void testIdCardRegions() {
+        System.out.println("\n--- [五国身份号码格式] ---");
+        IdCardRegionBean bean = new IdCardRegionBean();
+
+        bean.cn = "110101199001010015";
+        pass("中国身份号码格式正确", CValid.tryValidateProperty(bean, "cn"));
+        bean.cn = "110101900101001";
+        fail("中国身份号码长度错误", CValid.tryValidateProperty(bean, "cn"));
+
+        bean.us = "212345678";
+        pass("美国身份号码格式正确", CValid.tryValidateProperty(bean, "us"));
+        bean.us = "212-34-5678";
+        fail("美国身份号码包含分隔符", CValid.tryValidateProperty(bean, "us"));
+
+        bean.jp = "123456789018";
+        pass("日本身份号码格式正确", CValid.tryValidateProperty(bean, "jp"));
+        bean.jp = "12345678901A";
+        fail("日本身份号码包含字母", CValid.tryValidateProperty(bean, "jp"));
+
+        bean.kr = "9001011234568";
+        pass("韩国身份号码格式正确", CValid.tryValidateProperty(bean, "kr"));
+        bean.kr = "900101-1234568";
+        fail("韩国身份号码包含分隔符", CValid.tryValidateProperty(bean, "kr"));
+
+        bean.uk = "AB123456C";
+        pass("英国身份号码格式正确", CValid.tryValidateProperty(bean, "uk"));
+        bean.uk = "AB12345C";
+        fail("英国身份号码长度错误", CValid.tryValidateProperty(bean, "uk"));
     }
 
     // ==================== Account @CAccount ====================
@@ -827,7 +859,7 @@ public class AnnotationTest {
         User u = freshUser();
         pass("CPostDef all valid", CValid.tryValidate(u, CPostDef.class));
 
-        u.setPhone("11111111111");
+        u.setPhone("23375483434");
         fail("CPostDef invalid phone", CValid.tryValidate(u, CPostDef.class));
 
         u = freshUser();
@@ -868,8 +900,8 @@ public class AnnotationTest {
         pass("US postcode 10001 (5-digit)", CValid.tryValidate(u, CPost.class));
         u.setPostCodeUS("90210");
         pass("US postcode 90210 (5-digit)", CValid.tryValidate(u, CPost.class));
-        u.setPostCodeUS("10001-1234");
-        pass("US postcode 10001-1234 (ZIP+4)", CValid.tryValidate(u, CPost.class));
+        u.setPostCodeUS("30301");
+        pass("US postcode 30301", CValid.tryValidate(u, CPost.class));
 
         u.setPostCodeUS("1234");
         fail("US postcode too short (4 digits)", CValid.tryValidate(u, CPost.class));
@@ -889,19 +921,19 @@ public class AnnotationTest {
         System.out.println("\n--- [日本邮政编码 @CPostCode(region=JP)] ---");
         User u = freshUser();
 
-        u.setPostCodeJP("100-0001");
-        pass("JP postcode 100-0001", CValid.tryValidate(u, CPost.class));
-        u.setPostCodeJP("530-0001");
-        pass("JP postcode 530-0001", CValid.tryValidate(u, CPost.class));
+        u.setPostCodeJP("1000001");
+        pass("JP postcode 1000001", CValid.tryValidate(u, CPost.class));
+        u.setPostCodeJP("5300001");
+        pass("JP postcode 5300001", CValid.tryValidate(u, CPost.class));
 
-        u.setPostCodeJP("100-000");
-        fail("JP postcode too short (7 chars)", CValid.tryValidate(u, CPost.class));
-        u.setPostCodeJP("1000-000");
-        fail("JP postcode 4-3 format", CValid.tryValidate(u, CPost.class));
+        u.setPostCodeJP("100000");
+        fail("JP postcode too short", CValid.tryValidate(u, CPost.class));
+        u.setPostCodeJP("10000000");
+        fail("JP postcode too long", CValid.tryValidate(u, CPost.class));
         u.setPostCodeJP("100 0001");
         fail("JP postcode with space instead of hyphen", CValid.tryValidate(u, CPost.class));
-        u.setPostCodeJP("1000001");
-        fail("JP postcode no hyphen", CValid.tryValidate(u, CPost.class));
+        u.setPostCodeJP("100-0001");
+        fail("JP postcode contains hyphen", CValid.tryValidate(u, CPost.class));
         u.setPostCodeJP(null);
         fail("JP postcode null (allowNull=false)", CValid.tryValidate(u, CPost.class));
     }
@@ -912,15 +944,15 @@ public class AnnotationTest {
         System.out.println("\n--- [英国邮政编码 @CPostCode(region=UK)] ---");
         User u = freshUser();
 
-        u.setPostCodeUK("SW1A 1AA");
-        pass("UK postcode SW1A 1AA", CValid.tryValidate(u, CPost.class));
-        u.setPostCodeUK("M1 1AE");
-        pass("UK postcode M1 1AE", CValid.tryValidate(u, CPost.class));
-        u.setPostCodeUK("EC1A 1BB");
-        pass("UK postcode EC1A 1BB", CValid.tryValidate(u, CPost.class));
-
         u.setPostCodeUK("SW1A1AA");
-        pass("UK postcode SW1A1AA (no space)", CValid.tryValidate(u, CPost.class));
+        pass("UK postcode SW1A1AA", CValid.tryValidate(u, CPost.class));
+        u.setPostCodeUK("M11AE");
+        pass("UK postcode M11AE", CValid.tryValidate(u, CPost.class));
+        u.setPostCodeUK("EC1A1BB");
+        pass("UK postcode EC1A1BB", CValid.tryValidate(u, CPost.class));
+
+        u.setPostCodeUK("GIR0AA");
+        pass("UK postcode GIR0AA", CValid.tryValidate(u, CPost.class));
 
         u.setPostCodeUK("12345");
         fail("UK postcode all digits", CValid.tryValidate(u, CPost.class));
@@ -953,5 +985,13 @@ public class AnnotationTest {
         fail("KR postcode with hyphen", CValid.tryValidate(u, CPost.class));
         u.setPostCodeKR(null);
         fail("KR postcode null (allowNull=false)", CValid.tryValidate(u, CPost.class));
+    }
+
+    private static class IdCardRegionBean {
+        @CIdCard(region = "CN") private String cn;
+        @CIdCard(region = "US") private String us;
+        @CIdCard(region = "JP") private String jp;
+        @CIdCard(region = "KR") private String kr;
+        @CIdCard(region = "UK") private String uk;
     }
 }

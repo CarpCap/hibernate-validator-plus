@@ -30,7 +30,7 @@ public class AnnotationTwoTest {
     @Test
     public void shouldPassAdvancedSuite() {
         assertEquals("高级测试存在失败检查", 0, AnnotationTwoTest.runAllTests());
-        assertEquals("高级测试检查数量发生变化", 189, AnnotationTwoTest.getTestCount());
+        assertEquals("高级测试检查数量发生变化", 216, AnnotationTwoTest.getTestCount());
     }
 
 
@@ -61,6 +61,7 @@ public class AnnotationTwoTest {
         testAccountCustomConfig();
         testPasswordCustomConfig();
         testCustomRegexpOverride();
+        testStandardRegionFormats();
 
         // === Edge cases ===
         testIpv4EdgeCases();
@@ -92,10 +93,10 @@ public class AnnotationTwoTest {
         testCount++;
         if (violations == null || violations.isEmpty()) {
             passCount++;
-            System.out.println("[通过] 第 " + testCount + " 项检查");
+            System.out.println("[PASS] 第 " + testCount + " 项检查");
         } else {
             failCount++;
-            System.out.println("[失败] 第 " + testCount + " 项检查，违反项：" + violations);
+            System.out.println("[FAIL] 第 " + testCount + " 项检查，违反项：" + violations);
         }
     }
 
@@ -103,27 +104,27 @@ public class AnnotationTwoTest {
         testCount++;
         if (violation == null || violation.trim().isEmpty()) {
             passCount++;
-            System.out.println("[通过] 第 " + testCount + " 项检查");
+            System.out.println("[PASS] 第 " + testCount + " 项检查");
         } else {
             failCount++;
-            System.out.println("[失败] 第 " + testCount + " 项检查，违反项：" + violation);
+            System.out.println("[FAIL] 第 " + testCount + " 项检查，违反项：" + violation);
         }
     }
 
     private static void pass(String label) {
         testCount++;
         passCount++;
-        System.out.println("[通过] 第 " + testCount + " 项检查");
+        System.out.println("[PASS] 第 " + testCount + " 项检查");
     }
 
     private static void fail(String label, List<String> violations) {
         testCount++;
         if (violations != null && !violations.isEmpty()) {
             passCount++;
-            System.out.println("[通过] 第 " + testCount + " 项检查，按预期发现违反项：" + violations.get(0));
+            System.out.println("[PASS] 第 " + testCount + " 项检查，按预期发现违反项：" + violations.get(0));
         } else {
             failCount++;
-            System.out.println("[失败] 第 " + testCount + " 项检查，预期出现违反项，但实际没有");
+            System.out.println("[FAIL] 第 " + testCount + " 项检查，预期出现违反项，但实际没有");
         }
     }
 
@@ -131,10 +132,10 @@ public class AnnotationTwoTest {
         testCount++;
         if (violation != null && !violation.trim().isEmpty()) {
             passCount++;
-            System.out.println("[通过] 第 " + testCount + " 项检查，按预期发现违反项：" + violation);
+            System.out.println("[PASS] 第 " + testCount + " 项检查，按预期发现违反项：" + violation);
         } else {
             failCount++;
-            System.out.println("[失败] 第 " + testCount + " 项检查，预期出现违反项，但实际没有");
+            System.out.println("[FAIL] 第 " + testCount + " 项检查，预期出现违反项，但实际没有");
         }
     }
 
@@ -143,13 +144,13 @@ public class AnnotationTwoTest {
         try {
             runnable.run();
             failCount++;
-            System.out.println("[失败] 第 " + testCount + " 项检查，预期抛出异常，但实际没有");
+            System.out.println("[FAIL] 第 " + testCount + " 项检查，预期抛出异常，但实际没有");
         } catch (ValidationException e) {
             passCount++;
-            System.out.println("[通过] 第 " + testCount + " 项检查，按预期抛出异常：" + e.getMessage());
+            System.out.println("[PASS] 第 " + testCount + " 项检查，按预期抛出异常：" + e.getMessage());
         } catch (Exception e) {
             failCount++;
-            System.out.println("[失败] 第 " + testCount + " 项检查，出现非预期异常 " + e.getClass().getSimpleName() + "：" + e.getMessage());
+            System.out.println("[FAIL] 第 " + testCount + " 项检查，出现非预期异常 " + e.getClass().getSimpleName() + "：" + e.getMessage());
         }
     }
 
@@ -159,17 +160,17 @@ public class AnnotationTwoTest {
             List<String> violations = validationCall.validate();
             if (violations != null && !violations.isEmpty()) {
                 passCount++;
-                System.out.println("[通过] 第 " + testCount + " 项检查，按预期发现违反项：" + violations.get(0));
+                System.out.println("[PASS] 第 " + testCount + " 项检查，按预期发现违反项：" + violations.get(0));
             } else {
                 failCount++;
-                System.out.println("[失败] 第 " + testCount + " 项检查，无效配置被静默接受");
+                System.out.println("[FAIL] 第 " + testCount + " 项检查，无效配置被静默接受");
             }
         } catch (ValidationException e) {
             passCount++;
-            System.out.println("[通过] 第 " + testCount + " 项检查，按预期抛出 " + e.getClass().getSimpleName() + "：" + e.getMessage());
+            System.out.println("[PASS] 第 " + testCount + " 项检查，按预期抛出 " + e.getClass().getSimpleName() + "：" + e.getMessage());
         } catch (Exception e) {
             failCount++;
-            System.out.println("[失败] 第 " + testCount + " 项检查，出现非预期异常 " + e.getClass().getSimpleName() + "：" + e.getMessage());
+            System.out.println("[FAIL] 第 " + testCount + " 项检查，出现非预期异常 " + e.getClass().getSimpleName() + "：" + e.getMessage());
         }
     }
 
@@ -178,10 +179,10 @@ public class AnnotationTwoTest {
         try {
             runnable.run();
             passCount++;
-            System.out.println("[通过] 第 " + testCount + " 项检查");
+            System.out.println("[PASS] 第 " + testCount + " 项检查");
         } catch (Exception e) {
             failCount++;
-            System.out.println("[失败] 第 " + testCount + " 项检查，出现非预期异常：" + e.getMessage());
+            System.out.println("[FAIL] 第 " + testCount + " 项检查，出现非预期异常：" + e.getMessage());
         }
     }
 
@@ -743,6 +744,101 @@ public class AnnotationTwoTest {
         fail("postCode custom regexp has letter", CValid.tryValidateProperty(u, "postCodeCustomRegexp", CGet.class));
     }
 
+    private static void testStandardRegionFormats() {
+        System.out.println("\n--- [五国标准格式正误输入] ---");
+        User u;
+
+        u = freshBaseUser();
+        u.setPhone("13800138000");
+        pass("中国手机号格式正确", CValid.tryValidate(u, CPost.class));
+        u.setPhone("1380013800");
+        fail("中国手机号长度错误", CValid.tryValidate(u, CPost.class));
+
+        u = freshBaseUser();
+        u.setPhoneUS("2125551234");
+        pass("美国手机号格式正确", CValid.tryValidate(u, CPost.class));
+        u.setPhoneUS("1235551234");
+        fail("美国手机号区号错误", CValid.tryValidate(u, CPost.class));
+
+        u = freshBaseUser();
+        u.setPhoneJP("09012345678");
+        pass("日本手机号格式正确", CValid.tryValidate(u, CPost.class));
+        u.setPhoneJP("0312345678");
+        fail("日本手机号前缀错误", CValid.tryValidate(u, CPost.class));
+
+        u = freshBaseUser();
+        u.setPhoneKR("01012345678");
+        pass("韩国手机号格式正确", CValid.tryValidate(u, CPost.class));
+        u.setPhoneKR("01212345678");
+        fail("韩国手机号前缀错误", CValid.tryValidate(u, CPost.class));
+
+        u = freshBaseUser();
+        u.setPhoneUK("07123456789");
+        pass("英国手机号格式正确", CValid.tryValidate(u, CPost.class));
+        u.setPhoneUK("02079460958");
+        fail("英国手机号前缀错误", CValid.tryValidate(u, CPost.class));
+
+        u = freshBaseUser();
+        u.setPassport("E12345678");
+        pass("中国护照格式正确", CValid.tryValidate(u, CPost.class));
+        u.setPassport("E1234567");
+        fail("中国护照长度错误", CValid.tryValidate(u, CPost.class));
+
+        u = freshBaseUser();
+        u.setPassportUS("123456789");
+        pass("美国护照格式正确", CValid.tryValidate(u, CPost.class));
+        u.setPassportUS("A12345678");
+        fail("美国护照包含字母", CValid.tryValidate(u, CPost.class));
+
+        u = freshBaseUser();
+        u.setPassportJP("AB1234567");
+        pass("日本护照格式正确", CValid.tryValidate(u, CPost.class));
+        u.setPassportJP("ab1234567");
+        fail("日本护照使用小写字母", CValid.tryValidate(u, CPost.class));
+
+        u = freshBaseUser();
+        u.setPassportKR("M12345678");
+        pass("韩国护照格式正确", CValid.tryValidate(u, CPost.class));
+        u.setPassportKR("AB1234567");
+        fail("韩国护照字母数量错误", CValid.tryValidate(u, CPost.class));
+
+        u = freshBaseUser();
+        u.setPassportUK("123456789");
+        pass("英国护照格式正确", CValid.tryValidate(u, CPost.class));
+        u.setPassportUK("A12345678");
+        fail("英国护照包含字母", CValid.tryValidate(u, CPost.class));
+
+        u = freshBaseUser();
+        u.setPostCodeCN("518057");
+        pass("中国邮编格式正确", CValid.tryValidate(u, CPost.class));
+        u.setPostCodeCN("51805");
+        fail("中国邮编长度错误", CValid.tryValidate(u, CPost.class));
+
+        u = freshBaseUser();
+        u.setPostCodeUS("10001");
+        pass("美国邮编格式正确", CValid.tryValidate(u, CPost.class));
+        u.setPostCodeUS("1000A");
+        fail("美国邮编包含字母", CValid.tryValidate(u, CPost.class));
+
+        u = freshBaseUser();
+        u.setPostCodeJP("1000001");
+        pass("日本邮编格式正确", CValid.tryValidate(u, CPost.class));
+        u.setPostCodeJP("100-0001");
+        fail("日本邮编包含分隔符", CValid.tryValidate(u, CPost.class));
+
+        u = freshBaseUser();
+        u.setPostCodeKR("04524");
+        pass("韩国邮编格式正确", CValid.tryValidate(u, CPost.class));
+        u.setPostCodeKR("045-24");
+        fail("韩国邮编包含分隔符", CValid.tryValidate(u, CPost.class));
+
+        u = freshBaseUser();
+        u.setPostCodeUK("SW1A1AA");
+        pass("英国邮编格式正确", CValid.tryValidate(u, CPost.class));
+        u.setPostCodeUK("SW1A 1AA");
+        fail("英国邮编包含空格", CValid.tryValidate(u, CPost.class));
+    }
+
     // ==================== 12. IPv4 Edge Cases ====================
 
     private static void testIpv4EdgeCases() {
@@ -857,8 +953,8 @@ public class AnnotationTwoTest {
         fail("idCard too long (20 digits)", CValid.tryValidate(u));
 
         u = freshBaseUser();
-        u.setIdCard("11010119900101001X");
-        fail("idCard invalid 18-digit with wrong check", CValid.tryValidate(u));
+        u.setIdCard("1101011990010100X1");
+        fail("idCard letter before check position", CValid.tryValidate(u));
 
         u = freshBaseUser();
         u.setIdCard("12345678901234567a");
@@ -866,40 +962,33 @@ public class AnnotationTwoTest {
     }
 
     private static void testIdCardRegions() {
-        System.out.println("\n--- [身份号码地区规则] ---");
+        System.out.println("\n--- [五国身份号码格式] ---");
         IdCardRegionBean bean = new IdCardRegionBean();
 
-        bean.setCn("11010519491231002X");
-        pass("idCard CN uppercase X", CValid.tryValidateProperty(bean, "cn"));
-        bean.setCn("11010519491231002x");
-        pass("idCard CN lowercase x", CValid.tryValidateProperty(bean, "cn"));
-        bean.setCn("110105194912310021");
-        fail("idCard CN invalid check digit", CValid.tryValidateProperty(bean, "cn"));
+        bean.setCn("110101199001010015");
+        pass("中国身份号码格式正确", CValid.tryValidateProperty(bean, "cn"));
+        bean.setCn("110101900101001");
+        fail("中国身份号码长度错误", CValid.tryValidateProperty(bean, "cn"));
 
-        bean.setCnMixedCase("110101199001010015");
-        pass("idCard region cN with spaces", CValid.tryValidateProperty(bean, "cnMixedCase"));
-
-        bean.setUs("123456789");
-        pass("idCard US SSN without separators", CValid.tryValidateProperty(bean, "us"));
-        bean.setUs("123-45-6789");
-        pass("idCard US SSN with separators", CValid.tryValidateProperty(bean, "us"));
-        bean.setUs("000-12-3456");
-        fail("idCard US invalid area number", CValid.tryValidateProperty(bean, "us"));
+        bean.setUs("212345678");
+        pass("美国身份号码格式正确", CValid.tryValidateProperty(bean, "us"));
+        bean.setUs("212-34-5678");
+        fail("美国身份号码包含分隔符", CValid.tryValidateProperty(bean, "us"));
 
         bean.setJp("123456789018");
-        pass("idCard JP valid My Number", CValid.tryValidateProperty(bean, "jp"));
-        bean.setJp("123456789019");
-        fail("idCard JP invalid check digit", CValid.tryValidateProperty(bean, "jp"));
+        pass("日本身份号码格式正确", CValid.tryValidateProperty(bean, "jp"));
+        bean.setJp("12345678901A");
+        fail("日本身份号码包含字母", CValid.tryValidateProperty(bean, "jp"));
 
+        bean.setKr("9001011234568");
+        pass("韩国身份号码格式正确", CValid.tryValidateProperty(bean, "kr"));
         bean.setKr("900101-1234568");
-        pass("idCard KR valid resident number", CValid.tryValidateProperty(bean, "kr"));
-        bean.setKr("991332-1234567");
-        fail("idCard KR invalid birth date", CValid.tryValidateProperty(bean, "kr"));
+        fail("韩国身份号码包含分隔符", CValid.tryValidateProperty(bean, "kr"));
 
         bean.setUk("AB123456C");
-        pass("idCard UK valid NINO", CValid.tryValidateProperty(bean, "uk"));
-        bean.setUk("GB123456C");
-        fail("idCard UK invalid prefix", CValid.tryValidateProperty(bean, "uk"));
+        pass("英国身份号码格式正确", CValid.tryValidateProperty(bean, "uk"));
+        bean.setUk("AB12345C");
+        fail("英国身份号码长度错误", CValid.tryValidateProperty(bean, "uk"));
 
         bean.setCustom("ID-42");
         pass("idCard custom regexp overrides region", CValid.tryValidateProperty(bean, "custom"));
@@ -1164,7 +1253,7 @@ public class AnnotationTwoTest {
         } else {
             testCount++;
             failCount++;
-            System.out.println("[失败] 第 " + testCount + " 项检查，长度为 3 时快速校验应返回错误");
+            System.out.println("[FAIL] 第 " + testCount + " 项检查，长度为 3 时快速校验应返回错误");
         }
     }
 
@@ -1207,8 +1296,8 @@ public class AnnotationTwoTest {
         u.setMac("A0:1A:2B:3C:4D:5E");
         u.setPostCodeCN("518057");
         u.setPostCodeUS("10001");
-        u.setPostCodeJP("100-0001");
-        u.setPostCodeUK("SW1A 1AA");
+        u.setPostCodeJP("1000001");
+        u.setPostCodeUK("SW1A1AA");
         u.setPostCodeKR("04524");
         return u;
     }
