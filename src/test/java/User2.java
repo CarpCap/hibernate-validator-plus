@@ -76,6 +76,9 @@ public class User2 {
     @CDateRange(min = "20220101", max = "20221231", format = "yyyyMMdd", groups = CGet.class)
     private String dCustomFormat;
 
+    @CDateRange(min = "20220801003000", max = "20220830123000", format = "yyyyMMddHHmmss", groups = CGet.class)
+    private String dCustomDateTimeFormat;
+
     @CDateRange(min = "2022-06-01", max = "2022-06-30", allowNull = false, groups = CGet.class)
     private String dRequired;
 
@@ -181,6 +184,9 @@ public class User2 {
 
     public String getDRequired() { return dRequired; }
     public void setDRequired(String dRequired) { this.dRequired = dRequired; }
+
+    public String getDCustomDateTimeFormat() { return dCustomDateTimeFormat; }
+    public void setDCustomDateTimeFormat(String dCustomDateTimeFormat) { this.dCustomDateTimeFormat = dCustomDateTimeFormat; }
 
     public String getAccountShort() { return accountShort; }
     public void setAccountShort(String accountShort) { this.accountShort = accountShort; }

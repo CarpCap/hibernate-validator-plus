@@ -100,6 +100,7 @@ public class AnnotationTest {
         }
     }
 
+    //这里校验一定要失败 才会通过
     private static void fail(String label, List<String> violations) {
         testCount++;
         if (violations != null && !violations.isEmpty()) {
@@ -591,7 +592,7 @@ public class AnnotationTest {
 
         u.setD3(LocalDateTime.of(2022, 8, 1, 0, 29, 59));
         fail("d3 before min", CValid.tryValidate(u));
-        u.setD3(LocalDateTime.of(2022, 8, 30, 12, 30, 1));
+        u.setD3(LocalDateTime.of(2022, 8, 30, 12, 29, 1));
         fail("d3 one second after exact max", CValid.tryValidate(u));
         u.setD3(LocalDateTime.of(2022, 8, 31, 0, 0));
         fail("d3 after max (day after)", CValid.tryValidate(u));

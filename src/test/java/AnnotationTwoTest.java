@@ -30,7 +30,7 @@ public class AnnotationTwoTest {
     @Test
     public void shouldPassAdvancedSuite() {
         assertEquals("高级测试存在失败检查", 0, AnnotationTwoTest.runAllTests());
-        assertEquals("高级测试检查数量发生变化", 187, AnnotationTwoTest.getTestCount());
+        assertEquals("高级测试检查数量发生变化", 189, AnnotationTwoTest.getTestCount());
     }
 
 
@@ -607,6 +607,15 @@ public class AnnotationTwoTest {
         u = freshUser2();
         u.setDCustomFormat("20231231");
         fail("dCustomFormat after max", CValid.tryValidateProperty(u, "dCustomFormat", CGet.class));
+
+        u = freshUser2();
+        u.setDCustomDateTimeFormat("20220830123000");
+        pass("dCustomDateTimeFormat exact max", CValid.tryValidateProperty(u, "dCustomDateTimeFormat", CGet.class));
+
+        u = freshUser2();
+        u.setDCustomDateTimeFormat("20220830123001");
+        fail("dCustomDateTimeFormat one second after max",
+            CValid.tryValidateProperty(u, "dCustomDateTimeFormat", CGet.class));
 
         // --- allowNull = false ---
         u = freshUser2();
