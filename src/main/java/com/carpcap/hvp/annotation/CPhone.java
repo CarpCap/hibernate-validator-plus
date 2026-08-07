@@ -29,9 +29,11 @@ public @interface CPhone {
 
    /**
     * 手机号码所属国家/地区
-     * <p>可选值: CN, US, JP, KR, UK 等，每个 region 对应独立验证策略</p>
+    * <p>可选值: CN, US, JP, KR, UK 等，每个 region 对应独立验证策略</p>
     * <p>当指定 region 时，将使用该地区对应的手机号正则进行验证；</p>
     * <p>当同时指定了 regexp，则 regexp 优先级更高</p>
+    * <p>地区代码不区分大小写并忽略首尾空格；不支持的地区会抛出
+    * {@link javax.validation.ConstraintDeclarationException}</p>
     * @return 地区代码
     */
     String region() default "CN";

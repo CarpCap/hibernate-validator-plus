@@ -1,13 +1,13 @@
 package com.carpcap.hvp.constraintvalidators;
 
 import com.carpcap.hvp.annotation.CPassport;
-import com.carpcap.hvp.utils.CValidNullUtil;
 import com.google.auto.service.AutoService;
-import org.hibernate.validator.internal.engine.constraintvalidation.ConstraintValidatorContextImpl;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
+import javax.validation.ConstraintDeclarationException;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Pattern;
 
@@ -36,10 +36,22 @@ public class CPassportValidator implements ConstraintValidator<CPassport, CharSe
     }
 
     private boolean allowNull;
+    private String pattern;
 
     @Override
     public void initialize(CPassport constraintAnnotation) {
         this.allowNull = constraintAnnotation.allowNull();
+        String regexp = constraintAnnotation.regexp().trim();
+        if (!regexp.isEmpty()) {
+            pattern = regexp;
+            return;
+        }
+
+        String region = constraintAnnotation.region().trim().toUpperCase(Locale.ROOT);
+        pattern = REGION_PATTERNS.get(region);
+        if (pattern == null) {
+            throw new ConstraintDeclarationException("Unsupported @CPassport region: " + constraintAnnotation.region());
+        }
     }
 
     @Override
@@ -47,23 +59,6 @@ public class CPassportValidator implements ConstraintValidator<CPassport, CharSe
         // 统一判空处理
         if (charSequence == null || charSequence.toString().trim().isEmpty()) {
             return allowNull;
-        }
-
-        ConstraintValidatorContextImpl cvc = (ConstraintValidatorContextImpl) context;
-        String regexp = cvc.getConstraintDescriptor().getAttributes().get("regexp").toString();
-        String region = cvc.getConstraintDescriptor().getAttributes().get("region").toString();
-
-        String pattern;
-        if (regexp != null && !regexp.trim().isEmpty()) {
-            pattern = regexp;
-        } else if (region != null && !region.trim().isEmpty()) {
-            pattern = REGION_PATTERNS.get(region);
-        } else {
-            return true;
-        }
-
-        if (pattern == null || pattern.isEmpty()) {
-            return true;
         }
 
         return Pattern.matches(pattern, charSequence.toString().trim());

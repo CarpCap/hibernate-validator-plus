@@ -61,7 +61,9 @@ public class CMoneyValidator implements ConstraintValidator<CMoney, Object> {
 
     @Override
     public boolean isValid(Object value, ConstraintValidatorContext context) {
-        int vn = CValidNullUtil.validNull(value, context);
+        int vn = value instanceof CharSequence
+                ? CValidNullUtil.validNull((CharSequence) value, context)
+                : CValidNullUtil.validNull(value, context);
         if (0 != vn) {
             return vn == 1;
         }
@@ -78,10 +80,7 @@ public class CMoneyValidator implements ConstraintValidator<CMoney, Object> {
         } else if (value instanceof String) {
             // 字符串类型，需要先处理格式
             valueStr = ((String) value).trim();
-            if (valueStr.isEmpty()) {
-                return true;
-            }
-            
+
             try {
                 // 清理格式化的金额字符串
                 String cleanedStr = cleanMoneyString(valueStr);

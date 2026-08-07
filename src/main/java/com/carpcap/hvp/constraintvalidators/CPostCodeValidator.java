@@ -3,11 +3,12 @@ package com.carpcap.hvp.constraintvalidators;
 import com.carpcap.hvp.annotation.CPostCode;
 import com.carpcap.hvp.utils.CValidNullUtil;
 import com.google.auto.service.AutoService;
-import org.hibernate.validator.internal.engine.constraintvalidation.ConstraintValidatorContextImpl;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
+import javax.validation.ConstraintDeclarationException;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Pattern;
 
@@ -21,6 +22,7 @@ import java.util.regex.Pattern;
 public class CPostCodeValidator implements ConstraintValidator<CPostCode, CharSequence> {
 
     private static final Map<String, String> REGION_PATTERNS = new HashMap<>();
+    private String pattern;
 
     static {
         REGION_PATTERNS.put("CN", "^\\d{6}$");
@@ -31,34 +33,27 @@ public class CPostCodeValidator implements ConstraintValidator<CPostCode, CharSe
     }
 
     @Override
+    public void initialize(CPostCode constraintAnnotation) {
+        String regexp = constraintAnnotation.regexp().trim();
+        if (!regexp.isEmpty()) {
+            pattern = regexp;
+            return;
+        }
+
+        String region = constraintAnnotation.region().trim().toUpperCase(Locale.ROOT);
+        pattern = REGION_PATTERNS.get(region);
+        if (pattern == null) {
+            throw new ConstraintDeclarationException("Unsupported @CPostCode region: " + constraintAnnotation.region());
+        }
+    }
+
+    @Override
     public boolean isValid(CharSequence charSequence, ConstraintValidatorContext context) {
         int vn = CValidNullUtil.validNull(charSequence, context);
         if (0 != vn) {
             return vn == 1;
         }
 
-        String value = charSequence.toString().trim();
-        if (value.isEmpty()) {
-            return true;
-        }
-
-        ConstraintValidatorContextImpl cvc = (ConstraintValidatorContextImpl) context;
-        String regexp = cvc.getConstraintDescriptor().getAttributes().get("regexp").toString();
-        String region = cvc.getConstraintDescriptor().getAttributes().get("region").toString();
-
-        String pattern;
-        if (regexp != null && !regexp.trim().isEmpty()) {
-            pattern = regexp;
-        } else if (region != null && !region.trim().isEmpty()) {
-            pattern = REGION_PATTERNS.get(region);
-        } else {
-            return true;
-        }
-
-        if (pattern == null || pattern.isEmpty()) {
-            return true;
-        }
-
-        return Pattern.matches(pattern, value);
+        return Pattern.matches(pattern, charSequence.toString().trim());
     }
 }

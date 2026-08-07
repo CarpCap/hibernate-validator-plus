@@ -217,8 +217,8 @@ hibernate-validator-plus/
 1. **P0（已修复）：自动化测试实际未运行**：已使用 JUnit 4 接入两个套件入口；`mvn test` 当前执行 2 个测试，并校验内部 379 个检查全部通过。
 2. **P0：18 位身份证末位 X 永远无法通过**：`CIdCardValidator` 的基础正则要求 18 位全部为数字，先于校验位逻辑执行；虽然校验位实现支持 `X`，但该分支无法到达。
 3. **P1：CDateRange 的精确 max 时间失效**：所有非空 max 都被无条件调用 `DateUtil.endOfDay()`，例如 max=`2022-08-30 12:30:00` 实际会放宽到当天 23:59:59.999。
-4. **P1：未知 region 被静默放行**：CPhone、CPassport、CPostCode 查不到地区正则时返回 true；region 拼写错误会关闭约束。
-5. **P1：CFile 会把不存在的文件当作 null**：当 `allowNull=true` 时，不存在的路径直接通过；同时未检查 `File.isFile()`，目录也可能进入后缀/大小校验。
+4. **P1（已修复）：未知 region 被静默放行**：地区代码现已忽略大小写和首尾空格；无自定义 regexp 且地区不受支持时抛出 ConstraintDeclarationException。
+5. **P1（已修复）：CFile 会把不存在的文件当作 null**：allowNull 现在仅作用于 null；不存在的路径和目录均校验失败。
 6. **P1：IPv6 校验可能访问 DNS**：`InetAddress.getByName()` 会解析主机名，校验耗时和结果依赖网络/DNS；拥有 AAAA 记录的域名还可能被误判为 IPv6 字面量。
 7. **P2：日期配置错误产生副作用和非约束异常**：日期解析失败会 `printStackTrace()` 并抛出无 cause 的 RuntimeException，不利于服务端日志治理和定位注解配置错误。
 8. **P2：依赖 Hibernate Validator 内部实现**：多个验证器将标准 `ConstraintValidatorContext` 强转为 `ConstraintValidatorContextImpl`，升级 Hibernate Validator 或更换 Bean Validation 实现时可能失败。

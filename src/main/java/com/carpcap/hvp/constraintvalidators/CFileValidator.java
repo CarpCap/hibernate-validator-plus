@@ -2,7 +2,6 @@ package com.carpcap.hvp.constraintvalidators;
 
 
 import com.carpcap.hvp.annotation.CFile;
-import com.carpcap.hvp.utils.CValidNullUtil;
 import com.google.auto.service.AutoService;
 
 import javax.validation.ConstraintValidator;
@@ -30,12 +29,17 @@ public class CFileValidator extends AbstractCFileValidator<File> {
     }
 
     public static int allowNullValid(boolean allowNull, File file) {
-        if (file == null || !file.exists()) {
+        if (file == null) {
             if (allowNull) {
                 return 1;
             } else {
                 return -1;
             }
+        }
+
+        // 路径存在且必须是普通文件，目录不能作为上传文件通过校验。
+        if (!file.exists() || !file.isFile()) {
+            return -1;
         }
 
         //内容并非空值 需要后续的校验
