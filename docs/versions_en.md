@@ -2,10 +2,55 @@
 # 📌 Changelog (English Version)
 
 
-## ☕ Version 1.2.x Series
+## Version 1.3.x Series
 
 ---
-### 🥩1.2.3
+
+### 1.3.0
+
+> **🎉 New Features**
+
+| Annotation | Description |
+|------------|-------------|
+| `@CEmail` | Added email format validation with `allowNull`, domain blacklists/whitelists, and a maximum domain-level limit |
+
+`@CEmail` domain lists are case-insensitive and match both the configured domain and all its subdomains. It includes messages in all 17 i18n bundles and reports distinct errors for invalid format, blacklist, whitelist, and domain-level failures.
+
+> **🔄 Enhancements**
+
+| Feature | Update Notes |
+|---------|--------------|
+| `@CIdCard` | Added CN/US/JP/KR/UK regional rules and custom `regexp` support; the CN rule now accepts only the 18-digit format, including a final `X/x` |
+| Regional validation | `region` values for `@CPhone`, `@CPassport`, `@CPostCode`, and `@CIdCard` are now case-insensitive and trimmed; regional formats are aligned with the test matrix |
+| Configuration validation | Without a custom regular expression, an unsupported `region` now throws `ConstraintDeclarationException` instead of being silently accepted |
+
+> **🐞 Bug Fixes**
+
+| Feature | Fix |
+|---------|-----|
+| `@CIpv6` | Replaced hostname/DNS resolution with pure IPv6 literal parsing, removing network dependency and hostname false positives |
+| `@CDateRange` | Fixed precise `max` times being extended to the end of the day; only date-only upper bounds are now expanded |
+| `@CFile` | Fixed missing files being treated as empty values; nonexistent paths and directories are now rejected |
+| `@CMoney` | Fixed blank strings not following the configured `allowNull` behavior |
+| `@CIdCard` | Fixed Chinese 18-digit ID numbers ending in `X/x` being rejected |
+| Regional formats | Fixed and refined CN/US/JP/KR/UK rules for phone numbers, passports, postcodes, and ID numbers |
+
+> **🛠 Build and Tests**
+
+* 🧪 Added JUnit 4 automation so `mvn test` runs the basic, advanced, regional matrix, IPv6, and email validation suites
+* ✅ The basic and advanced suites cover 446 internal checks, with another 120 regional-format scenarios in the matrix
+* 📌 Pinned `maven-compiler-plugin` to version 3.13.0 for reproducible builds
+
+> **⚠️ Compatibility Note**
+
+* `@CIdCard(region = "CN")` no longer accepts legacy 15-digit Chinese ID numbers and validates only the 18-digit format
+
+---
+
+## Version 1.2.x Series
+
+---
+### 1.2.3
 
 > **🔄 Update**
 
@@ -14,7 +59,7 @@
 | `CValid` | Added getter and setter methods for the default `validator` and fail-fast `fastValidator`, allowing custom `Validator` instances to be injected in Spring Boot environments |
 
 ---
-### 🥩1.2.2
+### 1.2.2
 
 
 > **🎉 New Feature**
@@ -38,7 +83,7 @@
 
 ---
 
-### 🥩1.2.1
+### 1.2.1
 
 > **🔄Update content**
 
@@ -50,7 +95,7 @@
 ---
 
 
-### 🍕1.2.0
+### 1.2.0
 
 
 > **🆕 New Feature**
@@ -72,11 +117,11 @@
 
 
 
-## 🎯 Version 1.1.x Series
+## Version 1.1.x Series
 
 ---
 
-### 🚀 1.1.4
+### 1.1.4
 
 > **New Features**
 
@@ -85,7 +130,7 @@
 
 ---
 
-### 🌍 1.1.3
+### 1.1.3
 
 > **Internationalization**
 
@@ -93,7 +138,7 @@
 
 ---
 
-### 📦 1.1.2
+### 1.1.2
 
 > **Dependency Upgrades**
 
@@ -102,7 +147,7 @@
 
 ---
 
-### 🛠 1.1.1
+### 1.1.1
 
 > **Bug Fixes**
 
@@ -110,7 +155,7 @@
 
 ---
 
-### ⚠️ 1.1.0 (Not Recommended)
+### 1.1.0 (Not Recommended)
 
 > ❌ **Contains group inheritance bug — not recommended**
 
@@ -119,11 +164,11 @@
 
 ---
 
-## 📘 Version 1.0.x Series
+## Version 1.0.x Series
 
 ---
 
-### 🧩 1.0.1
+### 1.0.1
 
 > **Enhancements**
 
@@ -132,7 +177,7 @@
 
 ---
 
-### 🏁 1.0.0
+### 1.0.0
 
 > **Initial Release**
 
