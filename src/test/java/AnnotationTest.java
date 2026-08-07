@@ -139,7 +139,7 @@ public class AnnotationTest {
         u.setPassport("E12345678");
         u.setPassportUS("123456789");
         u.setPassportJP("AB1234567");
-        u.setPassportUK("A12345678");
+        u.setPassportUK("123456789");
         u.setPassportKR("M12345678");
         u.setUrl("http://127.0.0.1:2333");
         u.setBankCard("4111111111111111");
@@ -348,15 +348,15 @@ public class AnnotationTest {
 
         u.setPassportUS("123456789");
         pass("US passport 123456789", CValid.tryValidate(u, CPost.class));
-        u.setPassportUS("000000000");
-        pass("US passport 000000000", CValid.tryValidate(u, CPost.class));
+        u.setPassportUS("A12345678");
+        pass("US passport A12345678", CValid.tryValidate(u, CPost.class));
 
         u.setPassportUS("12345678");
         fail("US passport too short (8 digits)", CValid.tryValidate(u, CPost.class));
         u.setPassportUS("1234567890");
         fail("US passport too long (10 digits)", CValid.tryValidate(u, CPost.class));
-        u.setPassportUS("A12345678");
-        fail("US passport has letter", CValid.tryValidate(u, CPost.class));
+        u.setPassportUS("AB1234567");
+        fail("US passport has two-letter prefix", CValid.tryValidate(u, CPost.class));
         u.setPassportUS(null);
         fail("US passport null (allowNull=false)", CValid.tryValidate(u, CPost.class));
     }
@@ -390,19 +390,19 @@ public class AnnotationTest {
         System.out.println("\n--- [英国护照 @CPassport(region=UK)] ---");
         User u = freshUser();
 
-        u.setPassportUK("A12345678");
-        pass("UK passport A12345678", CValid.tryValidate(u, CPost.class));
-        u.setPassportUK("Z99999999");
-        pass("UK passport Z99999999", CValid.tryValidate(u, CPost.class));
-
         u.setPassportUK("123456789");
-        fail("UK passport no letter prefix", CValid.tryValidate(u, CPost.class));
+        pass("UK passport 123456789", CValid.tryValidate(u, CPost.class));
+        u.setPassportUK("987654321");
+        pass("UK passport 987654321", CValid.tryValidate(u, CPost.class));
+
+        u.setPassportUK("A12345678");
+        fail("UK passport has letter prefix", CValid.tryValidate(u, CPost.class));
         u.setPassportUK("AB1234567");
         fail("UK passport two letters prefix", CValid.tryValidate(u, CPost.class));
-        u.setPassportUK("A1234567");
-        fail("UK passport too short (8 chars)", CValid.tryValidate(u, CPost.class));
-        u.setPassportUK("A123456789");
-        fail("UK passport too long (10 chars)", CValid.tryValidate(u, CPost.class));
+        u.setPassportUK("12345678");
+        fail("UK passport too short (8 digits)", CValid.tryValidate(u, CPost.class));
+        u.setPassportUK("1234567890");
+        fail("UK passport too long (10 digits)", CValid.tryValidate(u, CPost.class));
         u.setPassportUK(null);
         fail("UK passport null (allowNull=false)", CValid.tryValidate(u, CPost.class));
     }

@@ -23,12 +23,13 @@ public class CPostCodeValidator implements ConstraintValidator<CPostCode, CharSe
 
     private static final Map<String, String> REGION_PATTERNS = new HashMap<>();
     private String pattern;
+    private String region;
 
     static {
         REGION_PATTERNS.put("CN", "^\\d{6}$");
         REGION_PATTERNS.put("US", "^\\d{5}(-\\d{4})?$");
         REGION_PATTERNS.put("JP", "^\\d{3}-\\d{4}$");
-        REGION_PATTERNS.put("UK", "^[A-Za-z]{1,2}\\d{1,2}[A-Za-z]?\\s?\\d[A-Za-z]{2}$");
+        REGION_PATTERNS.put("UK", "^(?i:GIR\\s?0AA|[A-Z]{1,2}\\d{1,2}[A-Z]?\\s?\\d[A-Z]{2})$");
         REGION_PATTERNS.put("KR", "^\\d{5}$");
     }
 
@@ -37,10 +38,11 @@ public class CPostCodeValidator implements ConstraintValidator<CPostCode, CharSe
         String regexp = constraintAnnotation.regexp().trim();
         if (!regexp.isEmpty()) {
             pattern = regexp;
+            region = null;
             return;
         }
 
-        String region = constraintAnnotation.region().trim().toUpperCase(Locale.ROOT);
+        region = constraintAnnotation.region().trim().toUpperCase(Locale.ROOT);
         pattern = REGION_PATTERNS.get(region);
         if (pattern == null) {
             throw new ConstraintDeclarationException("Unsupported @CPostCode region: " + constraintAnnotation.region());
@@ -54,6 +56,24 @@ public class CPostCodeValidator implements ConstraintValidator<CPostCode, CharSe
             return vn == 1;
         }
 
-        return Pattern.matches(pattern, charSequence.toString().trim());
+        String value = charSequence.toString().trim();
+        if (!Pattern.matches(pattern, value)) {
+            return false;
+        }
+
+        if ("CN".equals(region)) {
+            return !"000000".equals(value);
+        }
+        if ("US".equals(region)) {
+            return !value.startsWith("00000");
+        }
+        if ("JP".equals(region)) {
+            return !"000-0000".equals(value);
+        }
+        if ("KR".equals(region)) {
+            int code = Integer.parseInt(value);
+            return code >= 1000 && code <= 63644;
+        }
+        return true;
     }
 }

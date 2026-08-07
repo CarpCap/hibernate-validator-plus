@@ -1197,7 +1197,7 @@ public class AnnotationTwoTest {
         u.setPassport("E12345678");
         u.setPassportUS("123456789");
         u.setPassportJP("AB1234567");
-        u.setPassportUK("A12345678");
+        u.setPassportUK("123456789");
         u.setPassportKR("M12345678");
         u.setUrl("http://127.0.0.1:2333");
         u.setBankCard("4111111111111111");

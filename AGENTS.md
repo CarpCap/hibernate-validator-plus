@@ -223,7 +223,7 @@ hibernate-validator-plus/
 7. **P2：日期配置错误产生副作用和非约束异常**：日期解析失败会 `printStackTrace()` 并抛出无 cause 的 RuntimeException，不利于服务端日志治理和定位注解配置错误。
 8. **P2：依赖 Hibernate Validator 内部实现**：多个验证器将标准 `ConstraintValidatorContext` 强转为 `ConstraintValidatorContextImpl`，升级 Hibernate Validator 或更换 Bean Validation 实现时可能失败。
 9. **P2：构建插件版本不完整**：`maven-compiler-plugin` 未固定版本，Maven 每次构建都会警告，构建结果可能随 Maven 环境变化。
-10. **P1：部分 region 规则与现实格式不一致**：新增的 120 条地区规则测试显示，手机号对 US 号段、JP/KR/UK 常用分隔格式支持不足；US 新版和 UK 护照格式错误；邮编只检查字符形状，未排除多个未分配区间。`CIdCard` 的 30 条地区场景当前全部通过。
+10. **P1：部分 region 规则与现实格式不一致**：新增的 120 条地区规则测试显示，手机号对 US 号段、JP/KR/UK 常用分隔格式支持不足。US 新版和 UK 护照格式、五国邮编现实规则已修复；`CIdCard` 的 30 条地区场景当前全部通过。
 
 ## 建议路线
 
