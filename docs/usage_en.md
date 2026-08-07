@@ -2,13 +2,13 @@
 
 > An enhanced validation framework based on Hibernate Validator 6.2.5, supporting group validation, Spring MVC automatic validation, and a manual validation utility class.
 
-## 1. Add the Latest Dependency (version 1.2.2 as an example)
+## 1. Add the Latest Dependency (version 1.2.3 as an example)
 
 ```xml
 <dependency>
     <groupId>com.carpcap</groupId>
     <artifactId>hibernate-validator-plus</artifactId>
-    <version>1.2.2</version>
+    <version>1.2.3</version>
 </dependency>
 ```
 
