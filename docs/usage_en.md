@@ -2,7 +2,7 @@
 
 > An enhanced validation framework based on Hibernate Validator 6.2.5, supporting group validation, Spring MVC automatic validation, and a manual validation utility class.
 
-## 1. Add the Latest Dependency (version 1.2.3 as an example)
+## 1. Add the Latest Dependency (version 1.3.0 as an example)
 
 ```xml
 <dependency>
@@ -239,6 +239,7 @@ public class ValidatorConfig {
 ## 5. Quick Start Summary
 
 1. Add the dependency `hibernate-validator-plus`
-2. Annotate entity fields with `@CAccount`, `@CPhone`, etc., and specify groups via `groups`
-3. Manual validation: call `CValid.validate / tryValidate / tryFastValidate`
-4. Automatic validation: use `@Validated(XXXDef.class) @RequestBody` on Controller method parameters
+2. Add Custom Validator Configuration `ValidatorConfig`
+3. Annotate entity fields with `@CAccount`, `@CPhone`, etc., and specify groups via `groups`
+4. Manual validation: call `CValid.validate / tryValidate / tryFastValidate`
+5. Automatic validation: use `@Validated(XXXDef.class) @RequestBody` on Controller method parameters
