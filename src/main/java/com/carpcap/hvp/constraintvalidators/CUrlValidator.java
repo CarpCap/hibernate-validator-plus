@@ -1,6 +1,5 @@
 package com.carpcap.hvp.constraintvalidators;
 
-import cn.hutool.core.lang.Validator;
 import com.carpcap.hvp.annotation.CUrl;
 import com.carpcap.hvp.utils.CValidNullUtil;
 import com.google.auto.service.AutoService;
