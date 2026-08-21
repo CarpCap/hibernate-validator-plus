@@ -4,6 +4,14 @@
 
 ## Version 1.3.x Series
 
+
+---
+
+### 1.3.1
+
+No longer dependency on hutool.
+
+
 ---
 
 ### 1.3.0

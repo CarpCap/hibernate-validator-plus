@@ -62,7 +62,6 @@ public @interface CDateRange {
 
     /**
      * 日期格式
-     * 如果==null或“”，则使用hutool项目DateUtil.class自动操作解析。
      * yyyyMM需要手动设置。
      * 请注意：format参数只会影响校验，并不会影响接收参数，序列化相关的内容。
      * @return 日期格式字符串，为空时自动解析
