@@ -2,7 +2,7 @@
 
 # Hibernate Validator Plus 
 
-![Java Version](https://img.shields.io/badge/Java-8%20%7C%2011%2B-orange?logo=openjdk)
+![Java Version](https://img.shields.io/badge/Java-8%2B%20%7C%2011%2B-orange?logo=openjdk)
 ![Hibernate Validator Version](https://img.shields.io/badge/validator-6.2.x%20%7C%208.x-green?logo=hibernate)
 ![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)
 
