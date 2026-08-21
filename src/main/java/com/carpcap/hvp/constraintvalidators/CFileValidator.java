@@ -4,8 +4,8 @@ package com.carpcap.hvp.constraintvalidators;
 import com.carpcap.hvp.annotation.CFile;
 import com.google.auto.service.AutoService;
 
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
+import jakarta.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidatorContext;
 import java.io.File;
 
 /**

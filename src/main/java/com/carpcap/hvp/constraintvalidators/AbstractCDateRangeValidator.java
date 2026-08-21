@@ -4,7 +4,7 @@ import cn.hutool.core.date.DateException;
 import cn.hutool.core.date.DateUtil;
 import com.carpcap.hvp.annotation.CDateRange;
 
-import javax.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidator;
 import java.util.Date;
 import java.util.regex.Pattern;
 

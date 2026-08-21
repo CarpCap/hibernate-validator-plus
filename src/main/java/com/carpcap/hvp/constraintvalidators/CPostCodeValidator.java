@@ -4,9 +4,9 @@ import com.carpcap.hvp.annotation.CPostCode;
 import com.carpcap.hvp.utils.CValidNullUtil;
 import com.google.auto.service.AutoService;
 
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
-import javax.validation.ConstraintDeclarationException;
+import jakarta.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidatorContext;
+import jakarta.validation.ConstraintDeclarationException;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;

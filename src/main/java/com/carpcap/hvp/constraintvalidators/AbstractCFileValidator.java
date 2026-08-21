@@ -3,7 +3,7 @@ package com.carpcap.hvp.constraintvalidators;
 
 import com.carpcap.hvp.annotation.CFile;
 
-import javax.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidator;
 
 /**
  * 抽象类 文件验证器

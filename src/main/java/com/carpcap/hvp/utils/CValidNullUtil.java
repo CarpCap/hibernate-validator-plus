@@ -2,7 +2,7 @@ package com.carpcap.hvp.utils;
 
 import org.hibernate.validator.internal.engine.constraintvalidation.ConstraintValidatorContextImpl;
 
-import javax.validation.ConstraintValidatorContext;
+import jakarta.validation.ConstraintValidatorContext;
 import java.io.File;
 
 /**

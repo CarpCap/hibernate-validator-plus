@@ -3,7 +3,7 @@ import com.carpcap.hvp.annotation.CAccount;
 import com.carpcap.hvp.groups.*;
 import com.carpcap.hvp.utils.CValid;
 
-import javax.validation.ValidationException;
+import jakarta.validation.ValidationException;
 import java.io.File;
 import java.math.BigDecimal;
 import java.time.Instant;

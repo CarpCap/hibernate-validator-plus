@@ -1,7 +1,7 @@
 package com.carpcap.hvp.groups;
 
 
-import javax.validation.groups.Default;
+import jakarta.validation.groups.Default;
 
 /**
  * Get jakarta bean validation group.

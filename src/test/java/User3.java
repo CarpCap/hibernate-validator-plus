@@ -4,7 +4,7 @@ import com.carpcap.hvp.annotation.CPhone;
 import com.carpcap.hvp.groups.CGet;
 import com.carpcap.hvp.groups.CPost;
 
-import javax.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotBlank;
 
 /**
  * @author CarpCap

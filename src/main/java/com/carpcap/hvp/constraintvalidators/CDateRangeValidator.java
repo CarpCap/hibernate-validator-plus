@@ -5,8 +5,8 @@ import com.carpcap.hvp.utils.CValidNullUtil;
 import com.google.auto.service.AutoService;
 import org.hibernate.validator.internal.engine.constraintvalidation.ConstraintValidatorContextImpl;
 
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
+import jakarta.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidatorContext;
 import java.util.Date;
 import java.util.Map;
 

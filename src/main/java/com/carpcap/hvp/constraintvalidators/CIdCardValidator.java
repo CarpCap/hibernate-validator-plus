@@ -3,9 +3,9 @@ package com.carpcap.hvp.constraintvalidators;
 import com.carpcap.hvp.annotation.CIdCard;
 import com.google.auto.service.AutoService;
 
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
-import javax.validation.ConstraintDeclarationException;
+import jakarta.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidatorContext;
+import jakarta.validation.ConstraintDeclarationException;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;

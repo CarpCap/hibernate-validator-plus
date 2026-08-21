@@ -25,10 +25,10 @@ Hibernate Validator Plus 是基于 **Hibernate Validator** 的增强校验框架
 
 ## 版本说明
 
-| 版本系列 | JDK | Validation API | Hibernate Validator | 适用项目 |
-|---------|-----|----------------|---------------------|----------|
+| 版本系列 | JDK     | Validation API | Hibernate Validator | 适用项目 |
+|---------|---------|----------------|---------------------|----------|
 | [2.x](https://github.com/CarpCap/hibernate-validator-plus/tree/2.x) | JDK 11+ | `jakarta.validation` | 8.x | Spring Boot 3、Jakarta EE 10 或使用 `jakarta.validation` 的项目 |
-| [1.x](https://github.com/CarpCap/hibernate-validator-plus/tree/1.x) | JDK 8 | `javax.validation` | 6.2.x | Spring Boot 2 或使用 `javax.validation` 的项目 |
+| [1.x](https://github.com/CarpCap/hibernate-validator-plus/tree/1.x) | JDK 8+  | `javax.validation` | 6.2.x | Spring Boot 2 或使用 `javax.validation` 的项目 |
 
 ---
 

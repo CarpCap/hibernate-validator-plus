@@ -27,10 +27,10 @@ Hibernate Validator Plus extends **Hibernate Validator** with practical annotati
 
 ## Version Policy
 
-| Version line | JDK | Validation API | Hibernate Validator | Recommended for |
-|--------------|-----|----------------|---------------------|-----------------|
+| Version line | JDK     | Validation API | Hibernate Validator | Recommended for |
+|--------------|---------|----------------|---------------------|-----------------|
 | [2.x](https://github.com/CarpCap/hibernate-validator-plus/tree/2.x) | JDK 11+ | `jakarta.validation` | 8.x | Spring Boot 3, Jakarta EE 10, or projects using `jakarta.validation` |
-| [1.x](https://github.com/CarpCap/hibernate-validator-plus/tree/1.x) | JDK 8 | `javax.validation` | 6.2.x | Spring Boot 2 or projects using `javax.validation` |
+| [1.x](https://github.com/CarpCap/hibernate-validator-plus/tree/1.x) | JDK 8+  | `javax.validation` | 6.2.x | Spring Boot 2 or projects using `javax.validation` |
 
 ---
 

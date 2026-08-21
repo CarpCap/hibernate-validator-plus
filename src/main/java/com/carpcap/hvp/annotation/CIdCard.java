@@ -1,7 +1,7 @@
 package com.carpcap.hvp.annotation;
 
-import javax.validation.Constraint;
-import javax.validation.Payload;
+import jakarta.validation.Constraint;
+import jakarta.validation.Payload;
 import java.lang.annotation.Documented;
 import java.lang.annotation.Repeatable;
 import java.lang.annotation.Retention;
@@ -34,7 +34,7 @@ public @interface CIdCard {
     /**
      * 身份号码所属国家/地区
      * <p>支持 CN、US、JP、KR、UK，不区分大小写并忽略首尾空格。</p>
-     * <p>不支持的地区会抛出 {@link javax.validation.ConstraintDeclarationException}。</p>
+     * <p>不支持的地区会抛出 {@link jakarta.validation.ConstraintDeclarationException}。</p>
      * @return 地区代码
      */
     String region() default "CN";
