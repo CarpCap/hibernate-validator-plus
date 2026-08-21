@@ -1,11 +1,14 @@
 package com.carpcap.hvp.constraintvalidators;
 
-import cn.hutool.core.date.DateException;
 import cn.hutool.core.date.DateUtil;
 import com.carpcap.hvp.annotation.CDateRange;
 
 import jakarta.validation.ConstraintValidator;
+import java.text.ParseException;
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 import java.util.regex.Pattern;
 
 /**
@@ -18,6 +21,15 @@ public abstract class AbstractCDateRangeValidator<T> implements ConstraintValida
     private static final Pattern AUTO_TIME_PATTERN = Pattern.compile(
             "(?i)(?:\\d{1,2}:\\d{2}|T\\d{1,2}|\\b(?:AM|PM)\\b|[时分秒])");
     private static final Pattern COMPACT_DATE_TIME_PATTERN = Pattern.compile("^\\d{9,17}$");
+    private static final String[] DEFAULT_DATE_FORMATS = {
+            "yyyy-MM-dd'T'HH:mm:ss.SSSX",
+            "yyyy-MM-dd'T'HH:mm:ss.SSS",
+            "EEE, dd MMM yyyy HH:mm:ss zzz",
+            "yyyy-MM-dd HH:mm:ss",
+            "yyyy-MM-dd'T'HH:mm:ssX",
+            "yyyy-MM-dd'T'HH:mm:ss",
+            "yyyy-MM-dd"
+    };
 
     public Date stringToDate(String str, String format) {
         try {
@@ -25,20 +37,49 @@ public abstract class AbstractCDateRangeValidator<T> implements ConstraintValida
             if (str != null && !str.trim().isEmpty()) {
                 if (format != null && !format.trim().isEmpty()) {
                     //规则不为空 则使用规则来进行解析
-                    result = DateUtil.parse(str, format);
+                    result = dateParse(str, format);
                 } else {
                     //如果为空 则使用自动解析
-                    result = DateUtil.parse(str);
+                    result = dateParse(str, null);
                 }
             }
 
 //            System.out.println("hvp dateRange stringToDate：str[" + str + "], format[" + format + "] , result[" + result + "]");
             return result;
-        } catch (DateException e) {
-            e.printStackTrace();
-            throw new RuntimeException("String to Date format error ");
+        } catch (ParseException e) {
+            throw new RuntimeException("String to Date format error", e);
         }
 
+    }
+
+    /**
+     * 使用指定格式或内置格式解析日期。
+     */
+    public Date dateParse(String value, String format) throws ParseException {
+        if (format != null && !format.trim().isEmpty()) {
+            Date date = parseExact(value, format, Locale.getDefault());
+            if (date != null) {
+                return date;
+            }
+            throw new ParseException("Unparseable date: " + value, 0);
+        }
+
+        for (String defaultFormat : DEFAULT_DATE_FORMATS) {
+            Locale locale = defaultFormat.startsWith("EEE") ? Locale.ENGLISH : Locale.getDefault();
+            Date date = parseExact(value, defaultFormat, locale);
+            if (date != null) {
+                return date;
+            }
+        }
+        throw new ParseException("Unparseable date: " + value, 0);
+    }
+
+    private Date parseExact(String value, String format, Locale locale) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat(format, locale);
+        dateFormat.setLenient(false);
+        ParsePosition position = new ParsePosition(0);
+        Date date = dateFormat.parse(value, position);
+        return date != null && position.getIndex() == value.length() ? date : null;
     }
 
     public boolean isValid(Date value, String max, String min, String format) {
