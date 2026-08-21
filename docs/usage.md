@@ -2,7 +2,7 @@
 
 > 基于 Hibernate Validator 6.2.5 的增强校验框架，支持分组校验、Spring MVC 自动校验与手动校验工具类。
 
-## 1. 引入最新依赖，这里以1.2.3版本为例
+## 1. 引入最新依赖，这里以1.3.0版本为例
 
 ```xml
 <dependency>
@@ -156,7 +156,7 @@ public class UserController {
 
 ### 4.2 全局异常处理
 
-自动校验失败会抛出 `MethodArgumentNotValidException`，建议配置全局异常处理器统一返回错误信息：
+自动校验失败会抛出 `MethodArgumentNotValidException`，建议配置全局异常处理器统一返回错误信息，这里返回String 可以根据需求返回统一格式：
 
 ```java
 import org.springframework.validation.BindException;
@@ -195,7 +195,7 @@ public class GlobalExceptionHandler {
 
 ### 4.3 自定义校验器配置
 
-在 Spring Boot 中，可以通过配置类将 Spring 管理的 `Validator` 注入 `CValid`：
+在 Spring Boot 中，可以通过配置类将 Spring 管理的 `Validator` 注入 `CValid`，推荐，可以让手动校验直接使用spring bean的实例：
 
 ```java
 import com.carpcap.hvp.utils.CValid;
@@ -241,6 +241,7 @@ public class ValidatorConfig {
 ## 5. 快速上手总结
 
 1. 引入依赖 `hibernate-validator-plus`
-2. 在实体字段上使用 `@CAccount`、`@CPhone` 等注解，并通过 `groups` 指定分组
-3. 手动校验：调用 `CValid.validate / tryValidate / tryFastValidate`
-4. 自动校验：Controller 方法参数上使用 `@Validated(XXXDef.class) @RequestBody`
+2. 自定义校验器配置`ValidatorConfig`
+3. 在实体字段上使用 `@CAccount`、`@CPhone` 等注解，并通过 `groups` 指定分组
+4. 手动校验：调用 `CValid.validate / tryValidate / tryFastValidate`
+5. 自动校验：Controller 方法参数上使用 `@Validated(XXXDef.class) @RequestBody`
