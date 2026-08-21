@@ -22,13 +22,26 @@ public abstract class AbstractCDateRangeValidator<T> implements ConstraintValida
             "(?i)(?:\\d{1,2}:\\d{2}|T\\d{1,2}|\\b(?:AM|PM)\\b|[时分秒])");
     private static final Pattern COMPACT_DATE_TIME_PATTERN = Pattern.compile("^\\d{9,17}$");
     private static final String[] DEFAULT_DATE_FORMATS = {
+            "yyyyMMddHHmmssSSS",
+            "yyyyMMddHHmmss",
+            "yyyy-MM-dd'T'HH:mm:ss.SSSXXX",
             "yyyy-MM-dd'T'HH:mm:ss.SSSX",
             "yyyy-MM-dd'T'HH:mm:ss.SSS",
-            "EEE, dd MMM yyyy HH:mm:ss zzz",
-            "yyyy-MM-dd HH:mm:ss",
+            "yyyy-MM-dd'T'HH:mm:ssXXX",
             "yyyy-MM-dd'T'HH:mm:ssX",
             "yyyy-MM-dd'T'HH:mm:ss",
-            "yyyy-MM-dd"
+            "EEE, dd MMM yyyy HH:mm:ss zzz",
+            "yyyy-MM-dd HH:mm:ss.SSS",
+            "yyyy-MM-dd HH:mm:ss",
+            "yyyy-MM-dd HH:mm",
+            "yyyy/MM/dd HH:mm:ss.SSS",
+            "yyyy/MM/dd HH:mm:ss",
+            "yyyy/MM/dd HH:mm",
+            "yyyy年MM月dd日 HH时mm分ss秒",
+            "yyyy-MM-dd",
+            "yyyy/MM/dd",
+            "yyyy年MM月dd日",
+            "yyyyMMdd"
     };
 
     public Date stringToDate(String str, String format) {
@@ -56,6 +69,7 @@ public abstract class AbstractCDateRangeValidator<T> implements ConstraintValida
      * 使用指定格式或内置格式解析日期。
      */
     public Date dateParse(String value, String format) throws ParseException {
+        //指定格式处理
         if (format != null && !format.trim().isEmpty()) {
             Date date = parseExact(value, format, Locale.getDefault());
             if (date != null) {
@@ -64,9 +78,12 @@ public abstract class AbstractCDateRangeValidator<T> implements ConstraintValida
             throw new ParseException("Unparseable date: " + value, 0);
         }
 
+        //无指定格式 遍历处理
         for (String defaultFormat : DEFAULT_DATE_FORMATS) {
+            //EEE开头 美国地区
             Locale locale = defaultFormat.startsWith("EEE") ? Locale.ENGLISH : Locale.getDefault();
             Date date = parseExact(value, defaultFormat, locale);
+            //处理成功
             if (date != null) {
                 return date;
             }

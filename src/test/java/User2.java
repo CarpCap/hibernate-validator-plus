@@ -73,7 +73,7 @@ public class User2 {
     private String macOmitZero;
 
     // ===== DateRange custom format =====
-    @CDateRange(min = "20220101", max = "20221231", format = "yyyyMMdd", groups = CGet.class)
+    @CDateRange(min = "20220101", max = "20221231", groups = CGet.class)
     private String dCustomFormat;
 
     @CDateRange(min = "20220801003000", max = "20220830123000", format = "yyyyMMddHHmmss", groups = CGet.class)
