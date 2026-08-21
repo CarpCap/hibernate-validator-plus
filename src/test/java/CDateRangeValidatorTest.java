@@ -188,6 +188,7 @@ public class CDateRangeValidatorTest {
     public void shouldRejectMalformedValuesAndConfiguration() {
         assertThrows(RuntimeException.class,
                 () -> validateValue("dateOnly", "2022-02-30"));
+
         assertThrows(RuntimeException.class,
                 () -> validateValue("dateOnly", "2022-06-01abc"));
         assertThrows(RuntimeException.class,
