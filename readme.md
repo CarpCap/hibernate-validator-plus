@@ -1,7 +1,7 @@
 # Hibernate Validator Plus 
 
-![Java Version](https://img.shields.io/badge/Java-%3E%3D8-orange?logo=openjdk)
-![Hibernate Validator Version](https://img.shields.io/badge/validator-6.2.5.Final-green?logo=hibernate)
+![Java Version](https://img.shields.io/badge/Java-8%20%7C%2011%2B-orange?logo=openjdk)
+![Hibernate Validator Version](https://img.shields.io/badge/validator-6.2.x%20%7C%208.x-green?logo=hibernate)
 ![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)
 
 🌍 选择语言/Select Language:
@@ -21,12 +21,48 @@ Hibernate Validator Plus 是基于 **Hibernate Validator** 的增强框架，提
 - 与 Hibernate Validator 原生框架保持完全兼容，可直接沿用其所有内置校验功能。
 - 依赖更少，架构更轻量，不强制依赖其他框架（如spring）。
 - 支持 Spring MVC、Spring Boot 项目直接引入，可自动校验，提供工具类手动调用。
-- 支持 jdk8 或 jdk8以上版本
+- 同时维护 JDK 8 和 JDK 11+ 两个版本系列，详见下方版本说明
+
+## 版本说明
+
+如果项目使用 Spring Boot 3、Jakarta EE 10 或 `jakarta.validation`，请选择 2.x；
+
+如果项目使用 Spring Boot 2 或 `javax.validation`，请选择 1.x。
+
+
+| 版本系列 | JDK | Validation API | Hibernate Validator | 分支 |
+|---------|-----|----------------|--------------------|------|
+| [2.x](https://github.com/CarpCap/hibernate-validator-plus/tree/2.x) | JDK 11+ | `jakarta.validation` | 8.x | `2.x`、`main` |
+| [1.x](https://github.com/CarpCap/hibernate-validator-plus/tree/1.x) | JDK 8 | `javax.validation` | 6.2.x | `1.x` |
+
+
+
+### Maven 依赖
+
+```xml
+<!-- JDK 8 / javax.validation -->
+<dependency>
+    <groupId>com.carpcap</groupId>
+    <artifactId>hibernate-validator-plus</artifactId>
+    <version>1.3.1</version>
+</dependency>
+```
+
+```xml
+<!-- JDK 11+ / jakarta.validation（2.x 发布后使用） -->
+<dependency>
+    <groupId>com.carpcap</groupId>
+    <artifactId>hibernate-validator-plus</artifactId>
+    <version>2.0.0</version>
+</dependency>
+```
+
+1.x 和 2.x 都是持续维护的版本系列，均可增加新功能、修复缺陷并发布新版本。1.x 的新增内容必须保持 JDK 8 与 `javax.validation` 兼容，2.x 的新增内容则基于 JDK 11+ 与 `jakarta.validation`。`main` 与 `2.x` 保持同步，作为仓库默认展示和 2.x 稳定开发入口。两个版本的详细变更记录请查看[更新日志](docs/versions.md)。
 
 
 ## 📃 技术文档
 
-- [使用教程](docs/usage.md)
+- [2.x 使用教程（JDK 11+ / jakarta.validation）](docs/usage.md)
 
 - [更新日志](docs/versions.md)
 

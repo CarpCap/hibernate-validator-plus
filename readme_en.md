@@ -2,8 +2,8 @@
 
 # Hibernate Validator Plus 
 
-![Java Version](https://img.shields.io/badge/Java-%3E%3D8-orange?logo=openjdk)
-![Hibernate Validator Version](https://img.shields.io/badge/validator-6.2.5.Final-green?logo=hibernate)
+![Java Version](https://img.shields.io/badge/Java-8%20%7C%2011%2B-orange?logo=openjdk)
+![Hibernate Validator Version](https://img.shields.io/badge/validator-6.2.x%20%7C%208.x-green?logo=hibernate)
 ![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)
 
 🌍 选择语言/Select Language:
@@ -27,14 +27,50 @@ Hibernate Validator Plus is an enhanced validation framework based on **Hibernat
 - It remains fully compatible with the Hibernate Validator native framework and can directly use all its built-in validation functions.
 - There are fewer dependencies, the architecture is more lightweight, and there is no forced dependence on other frameworks (such as spring).
 - Supports the direct introduction of Spring MVC and Spring Boot projects, can automatically verify, and provides manual calling of tool classes.
-- Support jdk8 or jdk8 or above version
+- JDK 8 and JDK 11+ are maintained as separate version lines; see the version policy below
+
+## Version Policy
+
+Use 2.x for Spring Boot 3, Jakarta EE 10, or projects using `jakarta.validation`; 
+
+use 1.x for Spring Boot 2 or projects using `javax.validation`. 
+
+
+
+| Version line | JDK | Validation API | Hibernate Validator | Branch |
+|--------------|-----|----------------|--------------------|--------|
+| [2.x](https://github.com/CarpCap/hibernate-validator-plus/tree/2.x) | JDK 11+ | `jakarta.validation` | 8.x | `2.x`, `main` |
+| [1.x](https://github.com/CarpCap/hibernate-validator-plus/tree/1.x) | JDK 8 | `javax.validation` | 6.2.x | `1.x` |
+
+
+### Maven dependencies
+
+```xml
+<!-- JDK 8 / javax.validation -->
+<dependency>
+    <groupId>com.carpcap</groupId>
+    <artifactId>hibernate-validator-plus</artifactId>
+    <version>1.3.1</version>
+</dependency>
+```
+
+```xml
+<!-- JDK 11+ / jakarta.validation (available after the 2.x release) -->
+<dependency>
+    <groupId>com.carpcap</groupId>
+    <artifactId>hibernate-validator-plus</artifactId>
+    <version>2.0.0</version>
+</dependency>
+```
+
+Both 1.x and 2.x are actively maintained version lines and may receive new features, bug fixes, and releases. New features in 1.x must remain compatible with JDK 8 and `javax.validation`; 2.x is based on JDK 11+ and `jakarta.validation`. `main` stays synchronized with `2.x` and serves as the default repository view and stable 2.x development entry. See the [changelog](docs/versions_en.md) for details.
 
 
 
 
 ## 📃 Docs
 
-- [Usage Guide](docs/usage.md)
+- [2.x Usage Guide (JDK 11+ / jakarta.validation)](docs/usage_en.md)
 
 - [Change Log](docs/versions_en.md)
 

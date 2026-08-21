@@ -1,14 +1,15 @@
 ﻿# Hibernate Validator Plus 使用文档
 
-> 基于 Hibernate Validator 6.2.5 的增强校验框架，支持分组校验、Spring MVC 自动校验与手动校验工具类。
+> 2.x 使用说明：基于 Hibernate Validator 8.x，要求 JDK 11+，使用 `jakarta.validation` API。
+> `2.0.0` 当前处于开发阶段，以下依赖将在正式发布到 Maven Central 后可用。
 
-## 1. 引入最新依赖，这里以1.3.0版本为例
+## 1. 引入 2.x 依赖
 
 ```xml
 <dependency>
     <groupId>com.carpcap</groupId>
     <artifactId>hibernate-validator-plus</artifactId>
-    <version>1.3.0</version>
+    <version>2.0.0</version>
 </dependency>
 ```
 
@@ -55,7 +56,7 @@ public class User {
 
 ### 2.3 使用 Def 分组
 
-`*Def` 接口继承了对应的业务分组和 `javax.validation.groups.Default`，例如：
+`*Def` 接口继承了对应的业务分组和 `jakarta.validation.groups.Default`，例如：
 
 ```java
 public interface CPostDef extends CPost, Default {
@@ -164,7 +165,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import javax.validation.ConstraintViolationException;
+import jakarta.validation.ConstraintViolationException;
 import java.util.stream.Collectors;
 
 @RestControllerAdvice

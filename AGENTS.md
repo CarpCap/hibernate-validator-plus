@@ -10,14 +10,23 @@
 
 ## 项目概述
 
-Hibernate Validator Plus（简称 HVP）是基于 **Hibernate Validator 6.2.5.Final** 的增强校验框架，提供更丰富、实用的校验注解、分组校验机制以及统一的校验工具类。项目由作者 **CarpCap** 开发，采用 Apache License 2.0 开源协议。
+Hibernate Validator Plus（简称 HVP）是基于 **Hibernate Validator** 的增强校验框架，提供更丰富、实用的校验注解、分组校验机制以及统一的校验工具类。项目由作者 **CarpCap** 开发，采用 Apache License 2.0 开源协议。项目同时维护 1.x 和 2.x 两个大版本。
 
-- **Maven 坐标**: `com.carpcap:hibernate-validator-plus:1.2.3`
-- **JDK 版本**: >= JDK 8
-- **核心依赖**: hibernate-validator 6.2.5.Final, hutool-core 5.8.41, jakarta.el 3.0.4
+- **Maven 坐标**: `com.carpcap:hibernate-validator-plus`；1.x 当前版本为 `1.3.1`，2.x 首个目标版本为 `2.0.0`
+- **1.x 版本线**: JDK 8 + `javax.validation` + Hibernate Validator 6.2.x，位于 `1.x` 分支
+- **2.x 版本线**: JDK 11+ + `jakarta.validation` + Hibernate Validator 8.x，位于 `2.x` 分支，并与 `main` 保持同步
+- **核心公共依赖**: hutool-core 5.8.41；具体版本线依赖以对应分支 `pom.xml` 为准
 - **自动注册**: 使用 Google Auto Service (`@AutoService`) 自动注册 ConstraintValidator 实现
 - **不强制依赖 Spring**: 可独立使用，也可与 Spring MVC / Spring Boot 集成
 - **示例项目**: https://github.com/carpcap/hibernate-validator-plus-demo
+
+### 分支与文档规则
+
+- `1.x` 和 `2.x` 都是持续维护的开发线，均可增加新功能、修复缺陷并发布新版本。
+- `main` 与 `2.x` 保持同步；`main` 是默认展示和 2.x 稳定开发入口，`2.x` 是明确的版本线分支。
+- 1.x 新功能必须保持 JDK 8 与 `javax.validation` 兼容；2.x 新功能必须保持 JDK 11+ 与 `jakarta.validation` 兼容。
+- 根目录 README 同时说明两个大版本；`docs/versions*.md` 和 `docs/usage*.md` 只记录当前 2.x 的版本与使用方式。
+- 1.x 的使用说明以 `1.x` 分支中的文档和 `pom.xml` 为准，不能将 2.x 的 `jakarta.validation` 示例复制到 1.x 项目。
 
 ---
 
@@ -129,7 +138,7 @@ hibernate-validator-plus/
 | CPut | CPutDef | CPut + Default | PUT 请求 |
 | CPatch | CPatchDef | CPatch + Default | PATCH 请求 |
 
-每个 `*Def` 接口都继承自对应的业务接口 + `javax.validation.groups.Default`，使得使用该分组时既验证业务组内的约束，也验证未指定分组的约束。
+每个 `*Def` 接口都继承自对应的业务接口 + `Default`，使得使用该分组时既验证业务组内的约束，也验证未指定分组的约束。1.x 使用 `javax.validation.groups.Default`，2.x 使用 `jakarta.validation.groups.Default`。
 
 ---
 
@@ -170,6 +179,13 @@ hibernate-validator-plus/
 
 ## 版本历史
 
+### 2.0.x 系列
+- **2.0.0（开发中）**: 最低支持 JDK 11，迁移到 `jakarta.validation` 与 Hibernate Validator 8.x
+
+### 1.3.x 系列
+- **1.3.1**: 当前 1.x 版本，继续支持 JDK 8 与 `javax.validation`
+- **1.3.0**: 新增 @CEmail，并完成 IPv6、地区规则、日期范围与文件校验等质量修复
+
 ### 1.2.x 系列
 - **1.2.3**: 当前版本；CValid 的普通/快速 Validator 增加 get/set 方法，支持注入自定义实例
 - **1.2.2**: 新增 @CPassport、@CPostCode；@CPhone 增加多地区支持；@CDateRange 增加 Instant/ZonedDateTime
@@ -191,7 +207,7 @@ hibernate-validator-plus/
 
 ## 构建与发布
 
-- **Maven 构建**: 编译目标 Java 1.8，源码编码 UTF-8
+- **Maven 构建**: 1.x 编译目标 Java 8；2.x 编译目标 Java 11；源码编码 UTF-8
 - **发布到 Maven Central**: 通过 Sonatype Central Publishing Plugin 发布，自动打包源码 + Javadoc + GPG 签名
 - **Maven 测试现状**: 使用 JUnit 4 接入两个套件入口；`mvn test` 实际执行 2 个测试，内部覆盖 379 个检查
 - **手工测试入口**: 仍可分别运行 `AnnotationTest`、`AnnotationTwoTest`、`AnnotationTest3` 的 main 方法；前两组当前合计 379 个计数用例
