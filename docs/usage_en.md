@@ -1,6 +1,17 @@
 ﻿# Hibernate Validator Plus Usage Documentation
 
-> 2.x usage guide: based on Hibernate Validator 8.x, requires JDK 11+, and uses the `jakarta.validation` API.
+[Project Home](../readme_en.md) · [中文](usage.md) · [Changelog](versions_en.md)
+
+> This guide applies only to 2.x: it requires JDK 11+, is based on Hibernate Validator 8.x, and uses the `jakarta.validation` API.
+
+## Contents
+
+- [1. Add the 2.x Dependency](#1-add-the-2x-dependency)
+- [2. Group Validation](#2-group-validation-groups)
+- [3. CValid Utility Class](#3-cvalid-utility-class)
+- [4. Spring MVC Automatic Validation](#4-spring-mvc-automatic-validation)
+- [5. Quick Start Summary](#5-quick-start-summary)
+
 ## 1. Add the 2.x Dependency
 
 ```xml

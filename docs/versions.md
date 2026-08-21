@@ -1,8 +1,10 @@
-﻿# 📌 版本说明（Changelog）
+﻿# 版本日志
+
+[返回项目首页](../readme.md) · [使用教程](usage.md) · [English](versions_en.md)
 
 ## 2.0.x 系列
 
-### 2.0.0（开发中）
+### 2.0.0
 
 - 最低运行版本调整为 JDK 11，并兼容更高版本 JDK。
 - 使用 `jakarta.validation` API。

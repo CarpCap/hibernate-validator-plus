@@ -1,6 +1,17 @@
 ﻿# Hibernate Validator Plus 使用文档
 
-> 2.x 使用说明：基于 Hibernate Validator 8.x，要求 JDK 11+，使用 `jakarta.validation` API。
+[返回项目首页](../readme.md) · [English](usage_en.md) · [版本日志](versions.md)
+
+> 本文档仅适用于 2.x：要求 JDK 11+，基于 Hibernate Validator 8.x，并使用 `jakarta.validation` API。
+
+## 文档导航
+
+- [1. 引入 2.x 依赖](#1-引入-2x-依赖)
+- [2. 分组校验](#2-分组校验groups)
+- [3. CValid 工具类](#3-cvalid-工具类)
+- [4. Spring MVC 自动校验](#4-spring-mvc-自动校验)
+- [5. 快速上手总结](#5-快速上手总结)
+
 ## 1. 引入 2.x 依赖
 
 ```xml
