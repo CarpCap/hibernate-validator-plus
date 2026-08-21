@@ -2,7 +2,7 @@ import com.carpcap.hvp.annotation.*;
 import com.carpcap.hvp.groups.CGet;
 import com.carpcap.hvp.groups.CPost;
 
-import javax.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotBlank;
 import java.io.File;
 import java.math.BigDecimal;
 import java.time.LocalDate;

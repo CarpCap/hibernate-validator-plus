@@ -1,37 +1,46 @@
 # Hibernate Validator Plus 
 
-![Java Version](https://img.shields.io/badge/Java-%3E%3D8-orange?logo=openjdk)
-![Hibernate Validator Version](https://img.shields.io/badge/validator-6.2.5.Final-green?logo=hibernate)
+![Java Version](https://img.shields.io/badge/Java-8%20%7C%2011%2B-orange?logo=openjdk)
+![Hibernate Validator Version](https://img.shields.io/badge/validator-6.2.x%20%7C%208.x-green?logo=hibernate)
 ![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)
 
-🌍 选择语言/Select Language:
+**语言：** [中文](readme.md) · [English](readme_en.md)
 
-- [中文](readme.md)
-- [English](readme_en.md)
+Hibernate Validator Plus 是基于 **Hibernate Validator** 的增强校验框架，为 Java 对象和请求参数提供常用校验注解、分组机制及统一校验工具。
 
+---
 
+## 核心能力
 
-Hibernate Validator Plus 是基于 **Hibernate Validator** 的增强框架，提供了更丰富、实用的校验注解、分组校验机制以及统一的校验工具类，让 Java 对象与请求参数验证更加简洁、高效。
-
-📦 **特性：**
 - 内置常用校验注解（账号、密码、身份证、IPv4 等）
 - 内置多种数据分组校验方案
-- 国际化i18n，支持中文、英语、日语、汉语、俄语、法语、西班牙语等..
-- 内置允许为空判断
+- 提供国际化消息，覆盖中文、英语、日语、俄语、法语和西班牙语等语言
+- 所有扩展注解统一支持空值策略
 - 与 Hibernate Validator 原生框架保持完全兼容，可直接沿用其所有内置校验功能。
-- 依赖更少，架构更轻量，不强制依赖其他框架（如spring）。
+- 依赖精简，不强制依赖 Spring 等应用框架。
 - 支持 Spring MVC、Spring Boot 项目直接引入，可自动校验，提供工具类手动调用。
-- 支持 jdk8 或 jdk8以上版本
+- 同时维护 JDK 8 和 JDK 11+ 两个版本系列，详见下方版本说明
 
+---
 
-## 📃 技术文档
+## 版本说明
 
-- [使用教程](docs/usage.md)
+| 版本系列 | JDK     | Validation API | Hibernate Validator | 适用项目 |
+|---------|---------|----------------|---------------------|----------|
+| [2.x](https://github.com/CarpCap/hibernate-validator-plus/tree/2.x) | JDK 11+ | `jakarta.validation` | 8.x | Spring Boot 3、Jakarta EE 10 或使用 `jakarta.validation` 的项目 |
+| [1.x](https://github.com/CarpCap/hibernate-validator-plus/tree/1.x) | JDK 8+  | `javax.validation` | 6.2.x | Spring Boot 2 或使用 `javax.validation` 的项目 |
 
+---
+
+## 技术文档
+
+- [2.x 使用教程（JDK 11+ / jakarta.validation）](docs/usage.md)
+- [1.x 使用教程（JDK 8 / javax.validation）](https://github.com/CarpCap/hibernate-validator-plus/blob/1.x/docs/usage.md)
 - [更新日志](docs/versions.md)
 
+---
 
-## 📘 注解说明
+## 注解说明
 
 目录位置：[`annotation`](src/main/java/com/carpcap/hvp/annotation)
 
@@ -55,7 +64,9 @@ Hibernate Validator Plus 是基于 **Hibernate Validator** 的增强框架，提
 | `@CMacAddress`  | Mac地址验证    | MAC地址格式验证                                      |
 
 
-## 📂 分组（Groups）
+---
+
+## 分组（Groups）
 
 目录位置：[`groups`](src/main/java/com/carpcap/hvp/groups)
 
@@ -67,9 +78,9 @@ Hibernate Validator Plus 是基于 **Hibernate Validator** 的增强框架，提
 | `@CQueryDef`  | 查询 + 默认校验 |
 | 更多请看源码......  | ......    |
 
+---
 
-
-## 🔧 CValid 工具类
+## CValid 工具类
 
 `CValid` 提供普通校验(全量校验)、快速校验（fail-fast）、属性校验、分组校验等多种能力。
 
@@ -86,17 +97,10 @@ Spring boot 环境下建议替换掉CValid内置的validator与fastValidator, �
 | `tryValidateProperty(Object object, String propertyName, Class<?>... groups)`        | 全量校验 | 不抛异常 | List<String> |
 | `tryFastValidateProperty(Object object, String propertyName, Class<?>... groups)`   | 快速校验 ⚡ | 不抛异常 | String       |
 
+---
 
-
-
-
-
-
-## 📜 协议（License）
+## 开源协议
 
 本项目基于 Apache License 2.0 开源协议发布。
 
-协议全文请参考项目根目录中的：
-LICENSE 文件
-或查看官方协议文档：
-https://www.apache.org/licenses/LICENSE-2.0
+协议全文请查看项目根目录中的 [LICENSE](LICENSE)，或访问 [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0)。

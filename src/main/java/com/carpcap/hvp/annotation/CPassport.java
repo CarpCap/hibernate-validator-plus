@@ -1,7 +1,7 @@
 package com.carpcap.hvp.annotation;
 
-import javax.validation.Constraint;
-import javax.validation.Payload;
+import jakarta.validation.Constraint;
+import jakarta.validation.Payload;
 import java.lang.annotation.Documented;
 import java.lang.annotation.Repeatable;
 import java.lang.annotation.Retention;
@@ -33,7 +33,7 @@ public @interface CPassport {
      * <p>当指定 region 时，将使用该地区对应的护照号正则进行验证；</p>
      * <p>当同时指定了 regexp，则 regexp 优先级更高</p>
      * <p>地区代码不区分大小写并忽略首尾空格；不支持的地区会抛出
-     * {@link javax.validation.ConstraintDeclarationException}</p>
+     * {@link jakarta.validation.ConstraintDeclarationException}</p>
      * @return 地区代码
      */
     String region() default "CN";

@@ -1,14 +1,24 @@
 ﻿# Hibernate Validator Plus Usage Documentation
 
-> An enhanced validation framework based on Hibernate Validator 6.2.5, supporting group validation, Spring MVC automatic validation, and a manual validation utility class.
+[Project Home](../readme_en.md) · [中文](usage.md) · [Changelog](versions_en.md)
 
-## 1. Add the Latest Dependency (version 1.3.0 as an example)
+> This guide applies only to 2.x: it requires JDK 11+, is based on Hibernate Validator 8.x, and uses the `jakarta.validation` API.
+
+## Contents
+
+- [1. Add the 2.x Dependency](#1-add-the-2x-dependency)
+- [2. Group Validation](#2-group-validation-groups)
+- [3. CValid Utility Class](#3-cvalid-utility-class)
+- [4. Spring MVC Automatic Validation](#4-spring-mvc-automatic-validation)
+- [5. Quick Start Summary](#5-quick-start-summary)
+
+## 1. Add the 2.x Dependency
 
 ```xml
 <dependency>
     <groupId>com.carpcap</groupId>
     <artifactId>hibernate-validator-plus</artifactId>
-    <version>1.3.0</version>
+    <version>2.0.0</version>
 </dependency>
 ```
 
@@ -54,7 +64,7 @@ public class User {
 
 ### 2.3 Using Def Groups
 
-A `*Def` interface extends its corresponding business group and `javax.validation.groups.Default`, for example:
+A `*Def` interface extends its corresponding business group and `jakarta.validation.groups.Default`, for example:
 
 ```java
 public interface CPostDef extends CPost, Default {
@@ -162,7 +172,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import javax.validation.ConstraintViolationException;
+import jakarta.validation.ConstraintViolationException;
 import java.util.stream.Collectors;
 
 @RestControllerAdvice

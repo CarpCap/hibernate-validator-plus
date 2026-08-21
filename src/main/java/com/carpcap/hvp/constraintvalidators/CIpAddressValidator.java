@@ -4,7 +4,7 @@ package com.carpcap.hvp.constraintvalidators;
 import com.carpcap.hvp.annotation.CIpv4;
 import com.google.auto.service.AutoService;
 
-import javax.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidator;
 
 /**
  *

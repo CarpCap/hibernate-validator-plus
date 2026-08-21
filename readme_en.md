@@ -2,45 +2,47 @@
 
 # Hibernate Validator Plus 
 
-![Java Version](https://img.shields.io/badge/Java-%3E%3D8-orange?logo=openjdk)
-![Hibernate Validator Version](https://img.shields.io/badge/validator-6.2.5.Final-green?logo=hibernate)
+![Java Version](https://img.shields.io/badge/Java-8%20%7C%2011%2B-orange?logo=openjdk)
+![Hibernate Validator Version](https://img.shields.io/badge/validator-6.2.x%20%7C%208.x-green?logo=hibernate)
 ![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)
 
-🌍 选择语言/Select Language:
+**Language:** [中文](readme.md) · [English](readme_en.md)
 
-- [中文](readme.md)
-- [English](readme_en.md)
+Hibernate Validator Plus extends **Hibernate Validator** with practical annotations, validation groups, and unified utilities for Java objects and request parameters.
 
+---
 
+## Core Capabilities
 
-
-
-Hibernate Validator Plus is an enhanced validation framework based on **Hibernate Validator**, providing rich validation annotations, flexible group validations, and unified validation utilities.
-
-
-
-📦 **Features:**
 - Built-in commonly used validation annotations (account, password, ID card, IPv4, etc.)
 - Multiple built-in validation group schemes
-- International i18n, supports Chinese, English, Japanese, Chinese, Russian, French, Spanish, etc..
-- Built-in allowable null judgment
-- It remains fully compatible with the Hibernate Validator native framework and can directly use all its built-in validation functions.
-- There are fewer dependencies, the architecture is more lightweight, and there is no forced dependence on other frameworks (such as spring).
-- Supports the direct introduction of Spring MVC and Spring Boot projects, can automatically verify, and provides manual calling of tool classes.
-- Support jdk8 or jdk8 or above version
+- Internationalized messages for Chinese, English, Japanese, Russian, French, Spanish, and more
+- A consistent null-value policy across all extension annotations
+- Full compatibility with Hibernate Validator's built-in constraints
+- A lightweight dependency footprint with no mandatory Spring dependency
+- Direct integration with Spring MVC and Spring Boot, plus utilities for manual validation
+- JDK 8 and JDK 11+ are maintained as separate version lines; see the version policy below
 
+---
 
+## Version Policy
 
+| Version line | JDK     | Validation API | Hibernate Validator | Recommended for |
+|--------------|---------|----------------|---------------------|-----------------|
+| [2.x](https://github.com/CarpCap/hibernate-validator-plus/tree/2.x) | JDK 11+ | `jakarta.validation` | 8.x | Spring Boot 3, Jakarta EE 10, or projects using `jakarta.validation` |
+| [1.x](https://github.com/CarpCap/hibernate-validator-plus/tree/1.x) | JDK 8+  | `javax.validation` | 6.2.x | Spring Boot 2 or projects using `javax.validation` |
 
-## 📃 Docs
+---
 
-- [Usage Guide](docs/usage.md)
+## Documentation
 
+- [2.x Usage Guide (JDK 11+ / jakarta.validation)](docs/usage_en.md)
+- [1.x Usage Guide (JDK 8 / javax.validation)](https://github.com/CarpCap/hibernate-validator-plus/blob/1.x/docs/usage_en.md)
 - [Change Log](docs/versions_en.md)
 
+---
 
-
-## 📘 Annotation Overview
+## Annotation Overview
 
 Location: [`annotation`](src/main/java/com/carpcap/hvp/annotation)
 
@@ -64,7 +66,9 @@ Location: [`annotation`](src/main/java/com/carpcap/hvp/annotation)
 | `@CMacAddress`   | Mac Address Validation | Mac Address Validation                                                                                                     |
 
 
-## 📂 Validation Groups
+---
+
+## Validation Groups
 
 Location: [`groups`](src/main/java/com/carpcap/hvp/groups)
 
@@ -76,7 +80,9 @@ Location: [`groups`](src/main/java/com/carpcap/hvp/groups)
 | `@CQueryDef`    | Query + default checks    |
 | ...             | More extensions supported |
 
-## 🔧 CValid Utility Class
+---
+
+## CValid Utility Class
 
 `CValid` provides multiple validation capabilities, including standard validation(Full Check), fast-fail validation, property-level validation, and group-based validation.
 
@@ -93,9 +99,9 @@ Exception Class：ValidationException
 | `tryValidateProperty(Object object, String propertyName, Class<?>... groups)` | Full Check      | No Exception     | List<String>   |
 | `tryFastValidateProperty(Object object, String propertyName, Class<?>... groups)`                                                   | Fast-Fail ⚡     | No Exception     | String         |
 
+---
 
-
-## 📜 License
+## License
 
 This project is released under the **Apache License 2.0**.
 

@@ -3,8 +3,8 @@ package com.carpcap.hvp.constraintvalidators;
 import com.carpcap.hvp.utils.CValidNullUtil;
 import org.hibernate.validator.internal.engine.constraintvalidation.ConstraintValidatorContextImpl;
 
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
+import jakarta.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidatorContext;
 import java.lang.annotation.Annotation;
 import java.util.regex.Pattern;
 

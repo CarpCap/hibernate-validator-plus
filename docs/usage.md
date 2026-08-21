@@ -1,14 +1,24 @@
 ﻿# Hibernate Validator Plus 使用文档
 
-> 基于 Hibernate Validator 6.2.5 的增强校验框架，支持分组校验、Spring MVC 自动校验与手动校验工具类。
+[返回项目首页](../readme.md) · [English](usage_en.md) · [版本日志](versions.md)
 
-## 1. 引入最新依赖，这里以1.3.0版本为例
+> 本文档仅适用于 2.x：要求 JDK 11+，基于 Hibernate Validator 8.x，并使用 `jakarta.validation` API。
+
+## 文档导航
+
+- [1. 引入 2.x 依赖](#1-引入-2x-依赖)
+- [2. 分组校验](#2-分组校验groups)
+- [3. CValid 工具类](#3-cvalid-工具类)
+- [4. Spring MVC 自动校验](#4-spring-mvc-自动校验)
+- [5. 快速上手总结](#5-快速上手总结)
+
+## 1. 引入 2.x 依赖
 
 ```xml
 <dependency>
     <groupId>com.carpcap</groupId>
     <artifactId>hibernate-validator-plus</artifactId>
-    <version>1.3.0</version>
+    <version>2.0.0</version>
 </dependency>
 ```
 
@@ -55,7 +65,7 @@ public class User {
 
 ### 2.3 使用 Def 分组
 
-`*Def` 接口继承了对应的业务分组和 `javax.validation.groups.Default`，例如：
+`*Def` 接口继承了对应的业务分组和 `jakarta.validation.groups.Default`，例如：
 
 ```java
 public interface CPostDef extends CPost, Default {
@@ -164,7 +174,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import javax.validation.ConstraintViolationException;
+import jakarta.validation.ConstraintViolationException;
 import java.util.stream.Collectors;
 
 @RestControllerAdvice

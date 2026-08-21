@@ -1,6 +1,6 @@
 package com.carpcap.hvp.groups;
 
-import javax.validation.groups.Default;
+import jakarta.validation.groups.Default;
 
 /**
  * @author CarpCap

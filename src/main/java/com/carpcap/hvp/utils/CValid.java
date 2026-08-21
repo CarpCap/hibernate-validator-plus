@@ -1,6 +1,6 @@
 package com.carpcap.hvp.utils;
 
-import javax.validation.*;
+import jakarta.validation.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
