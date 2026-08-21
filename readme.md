@@ -8,6 +8,8 @@
 
 Hibernate Validator Plus 是基于 **Hibernate Validator** 的增强校验框架，为 Java 对象和请求参数提供常用校验注解、分组机制及统一校验工具。
 
+---
+
 ## 核心能力
 
 - 内置常用校验注解（账号、密码、身份证、IPv4 等）
@@ -19,6 +21,8 @@ Hibernate Validator Plus 是基于 **Hibernate Validator** 的增强校验框架
 - 支持 Spring MVC、Spring Boot 项目直接引入，可自动校验，提供工具类手动调用。
 - 同时维护 JDK 8 和 JDK 11+ 两个版本系列，详见下方版本说明
 
+---
+
 ## 版本说明
 
 | 版本系列 | JDK | Validation API | Hibernate Validator | 适用项目 |
@@ -26,14 +30,15 @@ Hibernate Validator Plus 是基于 **Hibernate Validator** 的增强校验框架
 | [2.x](https://github.com/CarpCap/hibernate-validator-plus/tree/2.x) | JDK 11+ | `jakarta.validation` | 8.x | Spring Boot 3、Jakarta EE 10 或使用 `jakarta.validation` 的项目 |
 | [1.x](https://github.com/CarpCap/hibernate-validator-plus/tree/1.x) | JDK 8 | `javax.validation` | 6.2.x | Spring Boot 2 或使用 `javax.validation` 的项目 |
 
+---
+
 ## 技术文档
 
 - [2.x 使用教程（JDK 11+ / jakarta.validation）](docs/usage.md)
-
 - [1.x 使用教程（JDK 8 / javax.validation）](https://github.com/CarpCap/hibernate-validator-plus/blob/1.x/docs/usage.md)
-
 - [更新日志](docs/versions.md)
 
+---
 
 ## 注解说明
 
@@ -59,6 +64,8 @@ Hibernate Validator Plus 是基于 **Hibernate Validator** 的增强校验框架
 | `@CMacAddress`  | Mac地址验证    | MAC地址格式验证                                      |
 
 
+---
+
 ## 分组（Groups）
 
 目录位置：[`groups`](src/main/java/com/carpcap/hvp/groups)
@@ -71,7 +78,7 @@ Hibernate Validator Plus 是基于 **Hibernate Validator** 的增强校验框架
 | `@CQueryDef`  | 查询 + 默认校验 |
 | 更多请看源码......  | ......    |
 
-
+---
 
 ## CValid 工具类
 
@@ -90,11 +97,7 @@ Spring boot 环境下建议替换掉CValid内置的validator与fastValidator, �
 | `tryValidateProperty(Object object, String propertyName, Class<?>... groups)`        | 全量校验 | 不抛异常 | List<String> |
 | `tryFastValidateProperty(Object object, String propertyName, Class<?>... groups)`   | 快速校验 ⚡ | 不抛异常 | String       |
 
-
-
-
-
-
+---
 
 ## 开源协议
 

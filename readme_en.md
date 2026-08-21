@@ -10,6 +10,8 @@
 
 Hibernate Validator Plus extends **Hibernate Validator** with practical annotations, validation groups, and unified utilities for Java objects and request parameters.
 
+---
+
 ## Core Capabilities
 
 - Built-in commonly used validation annotations (account, password, ID card, IPv4, etc.)
@@ -21,6 +23,8 @@ Hibernate Validator Plus extends **Hibernate Validator** with practical annotati
 - Direct integration with Spring MVC and Spring Boot, plus utilities for manual validation
 - JDK 8 and JDK 11+ are maintained as separate version lines; see the version policy below
 
+---
+
 ## Version Policy
 
 | Version line | JDK | Validation API | Hibernate Validator | Recommended for |
@@ -28,15 +32,15 @@ Hibernate Validator Plus extends **Hibernate Validator** with practical annotati
 | [2.x](https://github.com/CarpCap/hibernate-validator-plus/tree/2.x) | JDK 11+ | `jakarta.validation` | 8.x | Spring Boot 3, Jakarta EE 10, or projects using `jakarta.validation` |
 | [1.x](https://github.com/CarpCap/hibernate-validator-plus/tree/1.x) | JDK 8 | `javax.validation` | 6.2.x | Spring Boot 2 or projects using `javax.validation` |
 
+---
+
 ## Documentation
 
 - [2.x Usage Guide (JDK 11+ / jakarta.validation)](docs/usage_en.md)
-
 - [1.x Usage Guide (JDK 8 / javax.validation)](https://github.com/CarpCap/hibernate-validator-plus/blob/1.x/docs/usage_en.md)
-
 - [Change Log](docs/versions_en.md)
 
-
+---
 
 ## Annotation Overview
 
@@ -62,6 +66,8 @@ Location: [`annotation`](src/main/java/com/carpcap/hvp/annotation)
 | `@CMacAddress`   | Mac Address Validation | Mac Address Validation                                                                                                     |
 
 
+---
+
 ## Validation Groups
 
 Location: [`groups`](src/main/java/com/carpcap/hvp/groups)
@@ -73,6 +79,8 @@ Location: [`groups`](src/main/java/com/carpcap/hvp/groups)
 | `@CQuery`       | Query operation           |
 | `@CQueryDef`    | Query + default checks    |
 | ...             | More extensions supported |
+
+---
 
 ## CValid Utility Class
 
@@ -91,7 +99,7 @@ Exception Class：ValidationException
 | `tryValidateProperty(Object object, String propertyName, Class<?>... groups)` | Full Check      | No Exception     | List<String>   |
 | `tryFastValidateProperty(Object object, String propertyName, Class<?>... groups)`                                                   | Fast-Fail ⚡     | No Exception     | String         |
 
-
+---
 
 ## License
 
