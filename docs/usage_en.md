@@ -1,8 +1,6 @@
 ﻿# Hibernate Validator Plus Usage Documentation
 
 > 2.x usage guide: based on Hibernate Validator 8.x, requires JDK 11+, and uses the `jakarta.validation` API.
-> `2.0.0` is currently in development. The dependency below will be available after its release to Maven Central.
-
 ## 1. Add the 2.x Dependency
 
 ```xml
