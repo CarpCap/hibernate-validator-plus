@@ -21,7 +21,7 @@ Hibernate Validator Plus extends **Hibernate Validator** with practical annotati
 - Full compatibility with Hibernate Validator's built-in constraints
 - A lightweight dependency footprint with no mandatory Spring dependency
 - Direct integration with Spring MVC and Spring Boot, plus utilities for manual validation
-- JDK 8 and JDK 11+ are maintained as separate version lines; see the version policy below
+- JDK 8+ and JDK 11+ are maintained as separate version lines; see the version policy below
 
 ---
 
@@ -37,7 +37,7 @@ Hibernate Validator Plus extends **Hibernate Validator** with practical annotati
 ## Documentation
 
 - [2.x Usage Guide (JDK 11+ / jakarta.validation)](docs/usage_en.md)
-- [1.x Usage Guide (JDK 8 / javax.validation)](https://github.com/CarpCap/hibernate-validator-plus/blob/1.x/docs/usage_en.md)
+- [1.x Usage Guide (JDK 8+ / javax.validation)](https://github.com/CarpCap/hibernate-validator-plus/blob/1.x/docs/usage_en.md)
 - [Change Log](docs/versions_en.md)
 
 ---

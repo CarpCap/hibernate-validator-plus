@@ -19,7 +19,7 @@ Hibernate Validator Plus 是基于 **Hibernate Validator** 的增强校验框架
 - 与 Hibernate Validator 原生框架保持完全兼容，可直接沿用其所有内置校验功能。
 - 依赖精简，不强制依赖 Spring 等应用框架。
 - 支持 Spring MVC、Spring Boot 项目直接引入，可自动校验，提供工具类手动调用。
-- 同时维护 JDK 8 和 JDK 11+ 两个版本系列，详见下方版本说明
+- 同时维护 JDK 8+ 和 JDK 11+ 两个版本系列，详见下方版本说明
 
 ---
 
@@ -35,7 +35,7 @@ Hibernate Validator Plus 是基于 **Hibernate Validator** 的增强校验框架
 ## 技术文档
 
 - [2.x 使用教程（JDK 11+ / jakarta.validation）](docs/usage.md)
-- [1.x 使用教程（JDK 8 / javax.validation）](https://github.com/CarpCap/hibernate-validator-plus/blob/1.x/docs/usage.md)
+- [1.x 使用教程（JDK 8+ / javax.validation）](https://github.com/CarpCap/hibernate-validator-plus/blob/1.x/docs/usage.md)
 - [更新日志](docs/versions.md)
 
 ---
