@@ -16,7 +16,7 @@ Hibernate Validator Plus（简称 HVP）是基于 **Hibernate Validator** 的增
 |------|------|
 | Maven 坐标 | `com.carpcap:hibernate-validator-plus` |
 | 1.x 版本线 | `1.3.1`；JDK 8 + `javax.validation` + Hibernate Validator 6.2.x；`1.x` 分支 |
-| 2.x 版本线 | `2.0.0`；JDK 11+ + `jakarta.validation` + Hibernate Validator 8.x；`2.x` 与 `main` 同步 |
+| 2.x 版本线 | `2.0.1`；JDK 11+ + `jakarta.validation` + Hibernate Validator 8.x；`2.x` 与 `main` 同步 |
 | 公共依赖 | hutool-core 5.8.41；具体依赖以对应分支 `pom.xml` 为准 |
 | 验证器注册 | Google Auto Service（`@AutoService`）自动注册 `ConstraintValidator` 实现 |
 | 框架集成 | 不强制依赖 Spring；支持独立使用及 Spring MVC / Spring Boot 集成 |
@@ -59,7 +59,7 @@ hibernate-validator-plus/
 ├── src/
 │   ├── main/
 │   │   ├── java/com/carpcap/hvp/
-│   │   │   ├── annotation/               # 校验注解定义（16 个）
+│   │   │   ├── annotation/               # 校验注解定义（19 个）
 │   │   │   ├── constraintvalidators/     # 验证器源码（25 个：22 个具体实现 + 3 个抽象基类）
 │   │   │   ├── groups/                   # 校验分组接口 (16个)
 │   │   │   └── utils/                    # 工具类 (2个)
@@ -91,13 +91,16 @@ hibernate-validator-plus/
 | @CPhone | 手机号验证 | region 参数支持 CN/US/JP/KR 等多国号码 |
 | @CIpv4 | IPv4 地址验证 | 标准 IPv4 正则 |
 | @CIpv6 | IPv6 地址验证 | 通过 InetAddress 原生解析 |
-| @CDomain | 域名格式验证 | 支持中文域名 |
+| @CDomain | 域名格式验证 | 支持中文域名，level 控制层级，allowTld 控制是否允许顶级域名 |
+| @CEmail | 邮箱格式验证 | 支持域名黑白名单、最大子域层级及 allowTld |
 | @CPlateNumber | 中国车牌号验证 | 支持新能源/普通车牌 |
 | @CFile | 文件验证 | fileNameSuffix（后缀限制）, fileSize（大小，默认 1MB） |
 | @CUrl | URL 验证 | protocols（协议白名单）, allowLocalhost, allowIp |
 | @CBankCard | 银行卡号验证 | Luhn 算法校验, allowedPrefixes/forbiddenPrefixes |
 | @CMoney | 金额格式验证 | min/max, 整数/小数位数, 货币符号, 千分位 |
 | @CDateRange | 日期范围验证 | min/max 日期, format, 支持 String/Date/LocalDate/LocalDateTime/Instant/ZonedDateTime |
+| @CStrAllow | 字符串白名单验证 | value 定义允许的字符串集合 |
+| @CStrDeny | 字符串黑名单验证 | value 定义禁止的字符串集合 |
 | @CMacAddress | MAC 地址验证 | allowLowercase, allowEui64, allowOmittingLeadingZero |
 | @CPassport | 护照号验证 | region/regexp，内置 CN/US/JP/UK/KR |
 | @CPostCode | 邮政编码格式验证 | region/regexp，内置 CN/US/JP/UK/KR |
@@ -193,7 +196,8 @@ hibernate-validator-plus/
 ## 版本历史
 
 ### 2.0.x 系列
-- **2.0.0（开发中）**: 最低支持 JDK 11，迁移到 `jakarta.validation` 与 Hibernate Validator 8.x
+- **2.0.1**: 新增 `@CStrAllow`、`@CStrDeny`；`@CDomain`、`@CEmail` 增加 `allowTld`；`@CDateRange` 支持自动识别日期格式；完善 17 个 i18n 资源包。
+- **2.0.0**: 最低支持 JDK 11，迁移到 `jakarta.validation` 与 Hibernate Validator 8.x
 
 ### 1.3.x 系列
 - **1.3.1**: 当前 1.x 版本，继续支持 JDK 8 与 `javax.validation`
@@ -242,8 +246,17 @@ hibernate-validator-plus/
 
 
 
-### 下一项功能：@CDomain
+### 后续功能候选
 
-增加level，去掉regexp。
-主要功能还是校验输入是否为域名，level控制最大域名长度 -1：不限制；0：允许 com；1：允许 outlook.com；2：允许 eeo.outlook.com也允许outlook.com。
+以下注解与现有校验能力互补，可作为后续小版本功能候选：
+
+| 候选注解 | 建议功能 | 优先级 |
+|---|---|---|
+| `@CJson` | 校验字符串是否为合法 JSON，可配置对象/数组根节点 | 高 |
+| `@CRegex` | 独立的正则校验注解，统一 `allowNull`、消息和重复标注能力 | 高 |
+| `@CContains` | 字符串必须包含指定文本、前缀或后缀，支持大小写策略 | 中 |
+| `@CFileMime` | 文件扩展名之外，校验 MIME 类型或文件头魔数 | 中 |
+| `@CDate` | 单日期格式、最小值、最大值校验，补充 `@CDateRange` | 中 |
+| `@CListSize` | 集合、数组、Map 的元素数量范围校验 | 中 |
+| `@CNumberRange` | 统一数字、字符串数字和 BigDecimal 的数值区间校验 | 中 |
 

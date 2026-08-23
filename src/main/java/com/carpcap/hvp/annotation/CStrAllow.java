@@ -18,6 +18,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Repeatable(CStrAllow.List.class)
 public @interface CStrAllow {
     String message() default "{com.carpcap.hvp.annotation.CStrAllow.message}";
+    //允许值
     String[] value();
     boolean allowNull() default true;
     Class<?>[] groups() default {};

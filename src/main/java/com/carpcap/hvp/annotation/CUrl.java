@@ -39,13 +39,13 @@ public @interface CUrl {
     String[] protocols() default {"http", "https"};
 
     /**
-     * 是否允许使用localhost or 127.0.0.1，默认为false
+     * 是否允许使用localhost or 127.0.0.1
      * @return true允许localhost/IP，false不允许
      */
     boolean allowLocalhost() default true;
 
     /**
-     * 是否允许使用IP地址，默认为false
+     * 是否允许使用IP地址
      * @return true允许IP地址，false不允许
      */
     boolean allowIp() default true;

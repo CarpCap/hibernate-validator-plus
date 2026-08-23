@@ -23,6 +23,7 @@ public class CDomainValidatorTest {
         bean.thirdLevel = "eeo.outlook.com";
         bean.required = "ok.com";
         assertTrue(CValid.tryValidate(bean).isEmpty());
+
         bean.tldOnly = "outlook.com";
         assertFalse(CValid.tryValidateProperty(bean, "tldOnly").isEmpty());
         bean.secondLevel = "eeo.outlook.com";
