@@ -65,9 +65,9 @@ public @interface CEmail {
      * 允许的最大域名层级，按域名中的点号数量计算，默认不限制。
      * <p>
      * -1：不限制；
-     * 0：允许 com；
-     * 1：允许 outlook.com；
-     * 2：允许 eeo.outlook.com也允许outlook.com。
+     * 0：允许顶级域名 com，但需要allowTld=true；
+     * 1：允许1级域名 outlook.com；
+     * 2：允许2级域名 eeo.outlook.com 也允许outlook.com。
      * 设置上限后，也允许低于该层级的域名.
      *
      * @return 最大子域层级
