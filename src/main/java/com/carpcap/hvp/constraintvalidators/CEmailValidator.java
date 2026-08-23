@@ -26,6 +26,7 @@ public class CEmailValidator implements ConstraintValidator<CEmail, CharSequence
     private static final String BLACKLIST_MESSAGE = "{com.carpcap.hvp.annotation.CEmail.blacklist.message}";
     private static final String WHITELIST_MESSAGE = "{com.carpcap.hvp.annotation.CEmail.whitelist.message}";
     private static final String LEVEL_MESSAGE = "{com.carpcap.hvp.annotation.CEmail.level.message}";
+    private static final String TLD_MESSAGE = "{com.carpcap.hvp.annotation.CEmail.tld.message}";
     private static final Pattern LOCAL_PART_PATTERN = Pattern.compile(
         "^[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+)*$"
     );
@@ -35,11 +36,13 @@ public class CEmailValidator implements ConstraintValidator<CEmail, CharSequence
     private Set<String> domains;
     private int level;
     private boolean useDefaultMessage;
+    private boolean allowTld;
 
     @Override
     public void initialize(CEmail annotation) {
         this.listMode = annotation.listMode();
         this.level = annotation.level();
+        this.allowTld = annotation.allowTld();
         this.useDefaultMessage = DEFAULT_MESSAGE.equals(annotation.message());
         if (level < -1) {
             throw new ConstraintDeclarationException("CEmail.level 不能小于 -1");
@@ -77,6 +80,9 @@ public class CEmailValidator implements ConstraintValidator<CEmail, CharSequence
         String domain = normalizeDomain(email.substring(atIndex + 1));
         if (!isValidLocalPart(localPart) || domain == null || !isValidDomain(domain)) {
             return false;
+        }
+        if (!allowTld && domain.indexOf('.') < 0) {
+            return invalid(context, TLD_MESSAGE);
         }
         if (localPart.length() + 1 + domain.length() > 254) {
             return false;

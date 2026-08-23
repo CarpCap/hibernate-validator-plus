@@ -8,7 +8,7 @@ import static org.junit.Assert.assertTrue;
 public class CDomainValidatorTest {
     private static class Bean {
         @CDomain(level = -1) String unlimited;
-        @CDomain(level = 0) String tldOnly;
+        @CDomain(level = 0, allowTld = true) String tldOnly;
         @CDomain(level = 1) String secondLevel;
         @CDomain(level = 2) String thirdLevel;
         @CDomain(allowNull = false) String required;
@@ -44,5 +44,12 @@ public class CDomainValidatorTest {
         assertTrue(CValid.tryValidateProperty(bean, "unlimited").isEmpty());
         bean.required = null;
         assertFalse(CValid.tryValidateProperty(bean, "required").isEmpty());
+    }
+
+    @Test
+    public void rejectsTldByDefault() {
+        Bean bean = new Bean();
+        bean.unlimited = "com";
+        assertFalse(CValid.tryValidateProperty(bean, "unlimited").isEmpty());
     }
 }
