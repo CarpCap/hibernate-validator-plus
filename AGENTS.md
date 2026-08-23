@@ -239,34 +239,15 @@ hibernate-validator-plus/
 
 ---
 
-## 已知问题（2026-08-07）
 
-按修复优先级排列：
+### 下一项功能：@CEmail
+关于域名黑白名单要支持通配符，比如*google.com  *.google.com google.*;
 
-1. **P0（已修复）：自动化测试实际未运行**：已使用 JUnit 4 接入自动测试；基础与高级套件覆盖内部 446 个检查，地区格式矩阵另覆盖 120 个场景。
-2. **P0（已修复）：18 位身份证末位 X 永远无法通过**：CN 身份号码正则现已允许末位 `X/x`，仅执行格式校验。
-3. **P1（已修复）：CDateRange 的精确 max 时间失效**：仅纯日期上限会补全到当天结束；包含时间精度的 max 保持原始解析结果。
-4. **P1（已修复）：未知 region 被静默放行**：地区代码现已忽略大小写和首尾空格；无自定义 regexp 且地区不受支持时抛出 ConstraintDeclarationException。
-5. **P1（已修复）：CFile 会把不存在的文件当作 null**：allowNull 现在仅作用于 null；不存在的路径和目录均校验失败。
-6. **P1：IPv6 校验可能访问 DNS**：`InetAddress.getByName()` 会解析主机名，校验耗时和结果依赖网络/DNS；拥有 AAAA 记录的域名还可能被误判为 IPv6 字面量。
-7. **P2：日期配置错误产生副作用和非约束异常**：日期解析失败会 `printStackTrace()` 并抛出无 cause 的 RuntimeException，不利于服务端日志治理和定位注解配置错误。
-8. **P2：依赖 Hibernate Validator 内部实现**：多个验证器将标准 `ConstraintValidatorContext` 强转为 `ConstraintValidatorContextImpl`，升级 Hibernate Validator 或更换 Bean Validation 实现时可能失败。
-9. **P2：构建插件版本不完整**：`maven-compiler-plugin` 未固定版本，Maven 每次构建都会警告，构建结果可能随 Maven 环境变化。
-10. **已修复：region 规则与现实格式不一致**：120 条地区格式测试已覆盖并通过手机号、护照、邮编和身份号码的 CN/US/JP/KR/UK 场景。
+---
 
-## 建议路线
 
-### 下一版本：1.2.4 质量修复
+### 下一项功能：@CDomain
 
-暂缓增加注解，先将上述未修复的 P0/P1 问题处理完毕。当前已通过 JUnit 4 最小接入解决零测试问题，后续可再将 main 测试迁移为 JUnit 5 参数化测试。其余最低验收范围包括 IPv6 主机名。
+增加listMode、level、domains，去掉regexp。
+主要功能还是校验输入是否为域名，level控制最大域名长度 -1：不限制；0：允许 com；1：允许 outlook.com；2：允许 eeo.outlook.com也允许outlook.com。
 
-### 下一项功能：@CEnumValue
-
-质量修复后，优先新增通用的枚举值约束，而不是继续增加单一国家格式注解。建议支持：
-
-- 校验 Enum、String 和 Number 类型；
-- 通过 `enumClass` 指定枚举，通过 `property` 指定取 `name`、`code` 等字段/无参方法；
-- `ignoreCase`、`allowNull`、groups、payload 和 `@Repeatable`；
-- 初始化阶段缓存允许值，避免每次校验反射扫描；配置错误应抛 `ConstraintDeclarationException`。
-
-该功能适用于状态、类型、渠道、业务代码等高频 API 入参，复用范围明显高于新增一种格式正则。
