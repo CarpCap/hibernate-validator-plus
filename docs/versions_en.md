@@ -10,6 +10,7 @@
 - Added `@CStrAllow` and `@CStrDeny` for string whitelist and blacklist validation.
 - Added the `allowTld` attribute to `@CDomain` and `@CEmail`; top-level domains with a single label are disallowed by default.
 - Added automatic date-format detection to `@CDateRange`.
+- Added `@CJson` for JSON syntax validation with optional object or array root-type restrictions.
 
 ---
 

@@ -9,6 +9,7 @@
 - 新增 `@CStrAllow` 和 `@CStrDeny`，分别用于字符串值白名单和黑名单校验。
 - `@CDomain` 和 `@CEmail` 新增 `allowTld` 属性，默认不允许只有一个标签的顶级域名。
 - `@CDateRange` 增加日期格式自动识别功能。
+- 新增 `@CJson`，支持 JSON 语法校验及对象、数组根节点限制。
 
 ---
 
