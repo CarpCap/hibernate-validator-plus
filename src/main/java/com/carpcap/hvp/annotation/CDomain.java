@@ -35,6 +35,9 @@ public @interface CDomain {
      */
     int level() default -1;
 
+    /** 是否允许只有一个标签的顶级域名，例如 com，默认不允许。 */
+    boolean allowTld() default false;
+
     /**
      * 是否允许null值
      * @return true允许null，false不允许null

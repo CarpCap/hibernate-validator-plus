@@ -74,6 +74,9 @@ public @interface CEmail {
      */
     int level() default -1;
 
+    /** 是否允许邮箱域名为只有一个标签的顶级域名，例如 user@com，默认不允许。 */
+    boolean allowTld() default false;
+
     /**
      * 指定约束所属的校验分组。
      *

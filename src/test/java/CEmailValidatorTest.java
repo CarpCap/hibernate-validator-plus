@@ -126,7 +126,7 @@ public class CEmailValidatorTest {
     }
 
     private static class EmailBean {
-        @CEmail
+        @CEmail(allowTld = true)
         private String email;
 
         @CEmail(allowNull = false)
@@ -138,7 +138,7 @@ public class CEmailValidatorTest {
         @CEmail(listMode = CEmail.ListMode.WHITELIST, domains = "example.com")
         private String whitelistEmail;
 
-        @CEmail(level = 2)
+        @CEmail(level = 2, allowTld = true)
         private String levelEmail;
 
         @CEmail(listMode = CEmail.ListMode.BLACKLIST, domains = "gmail.com", message = "自定义邮箱提示")
