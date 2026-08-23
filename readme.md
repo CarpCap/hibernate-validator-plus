@@ -62,6 +62,8 @@ Hibernate Validator Plus 是基于 **Hibernate Validator** 的增强校验框架
 | `@CUrl`         | URL      验证 | URL格式 验证                                       |
 | `@CMoney`       | 金额     验证  | 金额验证<br/> 支持验证数字、字符串或BigDecimal类型的金额格式         |
 | `@CMacAddress`  | Mac地址验证    | MAC地址格式验证                                      |
+| `@CStrAllow`    | 字符串白名单验证 | 字符串值必须位于指定的允许列表中                         |
+| `@CStrDeny`     | 字符串黑名单验证 | 字符串值不得位于指定的禁止列表中                         |
 
 
 ---

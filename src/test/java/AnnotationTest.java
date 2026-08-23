@@ -2,6 +2,8 @@ import com.carpcap.hvp.groups.CGet;
 import com.carpcap.hvp.groups.CPost;
 import com.carpcap.hvp.groups.CPostDef;
 import com.carpcap.hvp.annotation.CIdCard;
+import com.carpcap.hvp.annotation.CStrAllow;
+import com.carpcap.hvp.annotation.CStrDeny;
 import com.carpcap.hvp.utils.CValid;
 import org.junit.Test;
 
@@ -30,7 +32,7 @@ public class AnnotationTest {
     @Test
     public void shouldPassBasicSuite() {
         assertEquals("基础测试存在失败检查", 0, runAllTests());
-        assertEquals("基础测试检查数量发生变化", 230, getTestCount());
+        assertEquals("基础测试检查数量发生变化", 241, getTestCount());
     }
 
 
@@ -72,6 +74,7 @@ public class AnnotationTest {
         testBankCard();
         testMoney();
         testMacAddress();
+        testStringInAndOut();
         testPostCodeCN();
         testPostCodeUS();
         testPostCodeJP();
@@ -851,6 +854,38 @@ public class AnnotationTest {
         fail("mac null (allowNull=false)", CValid.tryValidate(u, CGet.class));
     }
 
+    // ==================== String whitelist/blacklist ====================
+
+    private static void testStringInAndOut() {
+        System.out.println("\n--- [字符串白名单/黑名单 @CStrAllow/@CStrDeny] ---");
+        StrInOutBean bean = new StrInOutBean();
+
+        bean.status = "draft";
+        pass("CStrAllow allows draft", CValid.tryValidateProperty(bean, "status"));
+        bean.status = "published";
+        pass("CStrAllow allows published", CValid.tryValidateProperty(bean, "status"));
+        bean.status = "deleted";
+        fail("CStrAllow rejects value outside whitelist", CValid.tryValidateProperty(bean, "status"));
+        bean.status = null;
+        fail("CStrAllow rejects null when allowNull=false", CValid.tryValidateProperty(bean, "status"));
+        bean.status = "";
+        fail("CStrAllow rejects empty when allowNull=false", CValid.tryValidateProperty(bean, "status"));
+
+        bean.role = "user";
+        pass("CStrDeny allows value outside blacklist", CValid.tryValidateProperty(bean, "role"));
+        bean.role = "admin";
+        fail("CStrDeny rejects admin", CValid.tryValidateProperty(bean, "role"));
+        bean.role = "root";
+        fail("CStrDeny rejects root", CValid.tryValidateProperty(bean, "role"));
+        bean.role = null;
+        fail("CStrDeny rejects null when allowNull=false", CValid.tryValidateProperty(bean, "role"));
+
+        bean.optional = null;
+        pass("CStrAllow allows null by default", CValid.tryValidateProperty(bean, "optional"));
+        bean.optional = " ";
+        pass("CStrAllow allows blank by default", CValid.tryValidateProperty(bean, "optional"));
+    }
+
     // ==================== Group Inheritance CPostDef ====================
 
     private static void testGroupInheritance() {
@@ -985,6 +1020,17 @@ public class AnnotationTest {
         fail("KR postcode with hyphen", CValid.tryValidate(u, CPost.class));
         u.setPostCodeKR(null);
         fail("KR postcode null (allowNull=false)", CValid.tryValidate(u, CPost.class));
+    }
+
+    private static class StrInOutBean {
+        @CStrAllow(value = {"draft", "published"}, allowNull = false)
+        private String status;
+
+        @CStrDeny(value = {"admin", "root"}, allowNull = false)
+        private String role;
+
+        @CStrAllow(value = {"A", "B"})
+        private String optional;
     }
 
     private static class IdCardRegionBean {
