@@ -7,6 +7,7 @@
 - 新增或修改代码时，仅在必要位置添加简洁、明确的注释。
 - 禁止批量删除文件或目录；禁止使用 `del /s`、`rd /s`、`rmdir /s`、`Remove-Item -Recurse`、`rm -rf`。
 - 如需删除文件，只能一次删除一个已确认的明确路径；如需批量删除，停止操作并请用户手动处理。
+- 生成i18n文件时要考虑编码问题，参考每个文件现有的编码
 
 ## 项目概述
 
@@ -59,7 +60,7 @@ hibernate-validator-plus/
 ├── src/
 │   ├── main/
 │   │   ├── java/com/carpcap/hvp/
-│   │   │   ├── annotation/               # 校验注解定义（19 个）
+│   │   │   ├── annotation/               # 校验注解定义（20 个）
 │   │   │   ├── constraintvalidators/     # 验证器源码（25 个：22 个具体实现 + 3 个抽象基类）
 │   │   │   ├── groups/                   # 校验分组接口 (16个)
 │   │   │   └── utils/                    # 工具类 (2个)
@@ -101,6 +102,7 @@ hibernate-validator-plus/
 | @CDateRange | 日期范围验证 | min/max 日期, format, 支持 String/Date/LocalDate/LocalDateTime/Instant/ZonedDateTime |
 | @CStrAllow | 字符串白名单验证 | value 定义允许的字符串集合 |
 | @CStrDeny | 字符串黑名单验证 | value 定义禁止的字符串集合 |
+| @CJson | JSON 格式验证 | 校验字符串 JSON 语法，可限制对象或数组根节点 |
 | @CMacAddress | MAC 地址验证 | allowLowercase, allowEui64, allowOmittingLeadingZero |
 | @CPassport | 护照号验证 | region/regexp，内置 CN/US/JP/UK/KR |
 | @CPostCode | 邮政编码格式验证 | region/regexp，内置 CN/US/JP/UK/KR |
