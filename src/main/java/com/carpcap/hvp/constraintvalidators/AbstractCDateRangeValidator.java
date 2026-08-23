@@ -22,27 +22,47 @@ public abstract class AbstractCDateRangeValidator<T> implements ConstraintValida
             "(?i)(?:\\d{1,2}:\\d{2}|T\\d{1,2}|\\b(?:AM|PM)\\b|[时分秒])");
     private static final Pattern COMPACT_DATE_TIME_PATTERN = Pattern.compile("^\\d{9,17}$");
     private static final String[] DEFAULT_DATE_FORMATS = {
-            "yyyyMMddHHmmssSSS",
-            "yyyyMMddHHmmss",
-            "yyyy-MM-dd'T'HH:mm:ss.SSSXXX",
-            "yyyy-MM-dd'T'HH:mm:ss.SSSX",
-            "yyyy-MM-dd'T'HH:mm:ss.SSS",
-            "yyyy-MM-dd'T'HH:mm:ssXXX",
-            "yyyy-MM-dd'T'HH:mm:ssX",
-            "yyyy-MM-dd'T'HH:mm:ss",
-            "EEE, dd MMM yyyy HH:mm:ss zzz",
+            // yyyy-MM-dd
             "yyyy-MM-dd HH:mm:ss.SSS",
             "yyyy-MM-dd HH:mm:ss",
             "yyyy-MM-dd HH:mm",
+            "yyyy-MM-dd",
+
+            // yyyy/MM/dd
             "yyyy/MM/dd HH:mm:ss.SSS",
             "yyyy/MM/dd HH:mm:ss",
             "yyyy/MM/dd HH:mm",
+            "yyyy/MM/dd",
+
+            // ISO 8601
+            "yyyy-MM-dd'T'HH:mm:ss.SSSXXX",
+            "yyyy-MM-dd'T'HH:mm:ss.SSSXX",
+            "yyyy-MM-dd'T'HH:mm:ss.SSSX",
+            "yyyy-MM-dd'T'HH:mm:ssXXX",
+            "yyyy-MM-dd'T'HH:mm:ssXX",
+            "yyyy-MM-dd'T'HH:mm:ssX",
+            "yyyy-MM-dd'T'HH:mm:ss.SSS",
+            "yyyy-MM-dd'T'HH:mm:ss",
+            "yyyy-MM-dd'T'HH:mmXXX",
+            "yyyy-MM-dd'T'HH:mmXX",
+            "yyyy-MM-dd'T'HH:mmX",
+            "yyyy-MM-dd'T'HH:mm",
+
+            // RFC 1123
+            "EEE, dd MMM yyyy HH:mm:ss zzz",
+
+            // 紧凑格式
+            "yyyyMMddHHmmssSSS",
+            "yyyyMMddHHmmss",
+            "yyyyMMdd",
+            "yyyyMM",
+
+            // 中文日期时间
             "yyyy年MM月dd日 HH时mm分ss秒",
             "yyyy年MM月dd日 HH:mm:ss",
-            "yyyy-MM-dd",
-            "yyyy/MM/dd",
-            "yyyy年MM月dd日",
-            "yyyyMMdd"
+
+            // 中文日期
+            "yyyy年MM月dd日"
     };
 
     public Date stringToDate(String str, String format) {
