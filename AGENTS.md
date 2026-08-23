@@ -211,14 +211,10 @@ hibernate-validator-plus/
 ---
 
 
-### 下一项功能：@CEmail
-关于域名黑白名单要支持通配符，比如*google.com  *.google.com google.*;
-
----
 
 
 ### 下一项功能：@CDomain
 
-增加listMode、level、domains，去掉regexp。
+增加level，去掉regexp。
 主要功能还是校验输入是否为域名，level控制最大域名长度 -1：不限制；0：允许 com；1：允许 outlook.com；2：允许 eeo.outlook.com也允许outlook.com。
 
