@@ -475,7 +475,7 @@ public class AnnotationTest {
         pass("domain www.google.com", CValid.tryValidate(u, CPost.class));
 
         u.setDomain("example");
-        fail("domain no TLD", CValid.tryValidate(u, CPost.class));
+        pass("domain TLD", CValid.tryValidate(u, CPost.class));
     }
 
     // ==================== ID Card @CIdCard ====================

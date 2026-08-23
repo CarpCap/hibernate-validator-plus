@@ -22,7 +22,18 @@ public @interface CDomain {
 
     String message() default "{com.carpcap.hvp.annotation.CDomain.message}";
 
-    String regexp() default "^(?:[a-zA-Z0-9\\u4e00-\\u9fa5]+(?:-[a-zA-Z0-9\\u4e00-\\u9fa5]+)*\\.)+[a-zA-Z\\u4e00-\\u9fa5]{2,}$";
+    /**
+     * 允许的最大域名层级，按域名中的点号数量计算，默认不限制。
+     * <p>
+     * -1：不限制；
+     * 0：不允许 com；
+     * 1：允许 outlook.com；
+     * 2：允许 eeo.outlook.com也允许outlook.com。
+     * 设置上限后，也允许低于该层级的域名.
+     *
+     * @return 最大子域层级
+     */
+    int level() default -1;
 
     /**
      * 是否允许null值
