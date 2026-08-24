@@ -4,16 +4,19 @@
 
 [Project Home](../readme_en.md) · [Usage Guide](usage_en.md) · [中文](versions.md)
 
-## Version 2.0.x Series
+## Version 2.4.x Series
 
-### 2.0.1
+### 2.4.0
 
+- To keep the minor versions synchronized with the 1.x branch, v2.4.0 provides the same features as v1.4.0.
 - Added `@CStrAllow` and `@CStrDeny` for string whitelist and blacklist validation.
 - Added the `allowTld` attribute to `@CDomain` and `@CEmail`; top-level domains with a single label are disallowed by default.
 - Added automatic date-format detection to `@CDateRange`.
-- Added `@CJson` for JSON syntax validation with optional object or array root-type restrictions.
+- Added `@CJson` for JSON syntax validation with object and array root-type restrictions.
 
 ---
+
+## Version 2.0.x Series
 
 ### 2.0.0
 
