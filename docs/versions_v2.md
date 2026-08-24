@@ -1,6 +1,6 @@
 ﻿# 版本日志
 
-[返回项目首页](../readme.md) · [使用教程](usage.md) · [English](versions_en.md)
+[返回项目首页](../readme.md) · [使用教程](usage.md) · [English](versions_v2_en.md)
 
 ## 2.4.x 系列
 

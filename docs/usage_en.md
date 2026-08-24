@@ -1,6 +1,6 @@
 ﻿# Hibernate Validator Plus Usage Documentation
 
-[Project Home](../readme_en.md) · [中文](usage.md) · [Changelog](versions_en.md)
+[Project Home](../readme_en.md) · [中文](usage.md) · [Changelog](versions_v2_en.md)
 
 > This guide applies only to 2.x: it requires JDK 11+, is based on Hibernate Validator 8.x, and uses the `jakarta.validation` API.
 

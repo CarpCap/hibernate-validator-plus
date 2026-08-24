@@ -2,7 +2,7 @@
 # Changelog
 
 
-[Project Home](../readme_en.md) · [Usage Guide](usage_en.md) · [中文](versions.md)
+[Project Home](../readme_en.md) · [Usage Guide](usage_en.md) · [中文](versions_v2.md)
 
 ## Version 2.4.x Series
 
