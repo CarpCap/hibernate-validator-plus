@@ -1,6 +1,6 @@
 ﻿# Hibernate Validator Plus 使用文档
 
-[返回项目首页](../readme.md) · [English](usage_en.md) · [版本日志](versions.md)
+[返回项目首页](../readme.md) · [English](usage_en.md) · [版本日志](versions_v2.md)
 
 > 本文档仅适用于 2.x：要求 JDK 11+，基于 Hibernate Validator 8.x，并使用 `jakarta.validation` API。
 
