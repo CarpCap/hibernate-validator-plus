@@ -13,11 +13,11 @@ import jakarta.validation.ConstraintValidatorContext;
  */
 @AutoService(ConstraintValidator.class)
 public class CJsonValidator implements ConstraintValidator<CJson, String> {
-    private CJson.RootType rootType;
+    private CJson.Type type;
 
     @Override
     public void initialize(CJson annotation) {
-        rootType = annotation.rootType();
+        type = annotation.type();
     }
 
     @Override
@@ -27,8 +27,10 @@ public class CJsonValidator implements ConstraintValidator<CJson, String> {
         Parser parser = new Parser(value);
         char first = parser.peekNonWhitespace();
         if (first == '\0') return false;
-        if (rootType == CJson.RootType.OBJECT && first != '{') return false;
-        if (rootType == CJson.RootType.ARRAY && first != '[') return false;
+        if (type == CJson.Type.STRUCT && first != '{' && first != '[') return false;
+        if (type == CJson.Type.VALUE && (first == '{' || first == '[')) return false;
+        if (type == CJson.Type.OBJECT && first != '{') return false;
+        if (type == CJson.Type.ARRAY && first != '[') return false;
         return parser.parseValue() && parser.isEnd();
     }
 

@@ -65,7 +65,7 @@ Location: [`annotation`](src/main/java/com/carpcap/hvp/annotation)
 | `@CMoney`        | Money     Validation   | Amount format verification<br/> Supports verification of amount formats of numbers, strings or BigDecimal types            |
 | `@CStrAllow`     | String whitelist      | String value must be in the configured allowed list                                                                      |
 | `@CStrDeny`      | String blacklist      | String value must not be in the configured forbidden list                                                                |
-| `@CJson`         | JSON validation       | Validates JSON strings and can restrict the root node to an object or array                                             |
+| `@CJson`         | JSON validation       | Validates JSON strings; accepts objects or arrays by default and can restrict the root to an object, array, or primitive |
 | `@CMacAddress`   | Mac Address Validation | Mac Address Validation                                                                                                     |
 
 
