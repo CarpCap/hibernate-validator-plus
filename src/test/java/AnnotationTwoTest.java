@@ -1030,8 +1030,8 @@ public class AnnotationTwoTest {
 
         // Invalid
         u = freshBaseUser();
-        u.setDomain("example");
-        fail("domain no TLD", CValid.tryValidate(u, CPost.class));
+        u.setDomain("com");
+        fail("domain TLD rejected by default", CValid.tryValidate(u, CPost.class));
 
         u = freshBaseUser();
         u.setDomain("192.168.1.1");

@@ -63,6 +63,9 @@ Location: [`annotation`](src/main/java/com/carpcap/hvp/annotation)
 | `@CBankCard`     | BankCard Validation    | Bank card number verification uses the Luhn algorithm by default, and you can specify the interception card number prefix. |
 | `@CUrl`          | URL      Validation    | URL format verification                                                                                                    |
 | `@CMoney`        | Money     Validation   | Amount format verification<br/> Supports verification of amount formats of numbers, strings or BigDecimal types            |
+| `@CStrAllow`     | String whitelist      | String value must be in the configured allowed list                                                                      |
+| `@CStrDeny`      | String blacklist      | String value must not be in the configured forbidden list                                                                |
+| `@CJson`         | JSON validation       | Validates JSON strings; accepts objects or arrays by default and can restrict the root to an object, array, or primitive |
 | `@CMacAddress`   | Mac Address Validation | Mac Address Validation                                                                                                     |
 
 

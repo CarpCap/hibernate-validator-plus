@@ -22,7 +22,21 @@ public @interface CDomain {
 
     String message() default "{com.carpcap.hvp.annotation.CDomain.message}";
 
-    String regexp() default "^(?:[a-zA-Z0-9\\u4e00-\\u9fa5]+(?:-[a-zA-Z0-9\\u4e00-\\u9fa5]+)*\\.)+[a-zA-Z\\u4e00-\\u9fa5]{2,}$";
+    /**
+     * 允许的最大域名层级，按域名中的点号数量计算，默认不限制。
+     * <p>
+     * -1：不限制；
+     * 0：允许顶级域名 com，但需要allowTld=true；
+     * 1：允许1级域名 outlook.com；
+     * 2：允许2级域名 eeo.outlook.com 也允许outlook.com。
+     * 设置上限后，也允许低于该层级的域名.
+     *
+     * @return 最大子域层级
+     */
+    int level() default -1;
+
+    /** 是否允许只有一个标签的顶级域名，例如 com，默认不允许。 */
+    boolean allowTld() default false;
 
     /**
      * 是否允许null值

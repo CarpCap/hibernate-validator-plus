@@ -7,19 +7,20 @@
 - 新增或修改代码时，仅在必要位置添加简洁、明确的注释。
 - 禁止批量删除文件或目录；禁止使用 `del /s`、`rd /s`、`rmdir /s`、`Remove-Item -Recurse`、`rm -rf`。
 - 如需删除文件，只能一次删除一个已确认的明确路径；如需批量删除，停止操作并请用户手动处理。
+- 生成i18n文件时要考虑编码问题，参考每个文件现有的编码
 
 ## 项目概述
 
 Hibernate Validator Plus（简称 HVP）是基于 **Hibernate Validator** 的增强校验框架，提供更丰富、实用的校验注解、分组校验机制以及统一的校验工具类。项目由作者 **CarpCap** 开发，采用 Apache License 2.0 开源协议。项目同时维护 1.x 和 2.x 两个大版本。
 
-| 项目 | 说明 |
-|------|------|
-| Maven 坐标 | `com.carpcap:hibernate-validator-plus` |
-| 1.x 版本线 | `1.3.1`；JDK 8 + `javax.validation` + Hibernate Validator 6.2.x；`1.x` 分支 |
-| 2.x 版本线 | `2.0.0`；JDK 11+ + `jakarta.validation` + Hibernate Validator 8.x；`2.x` 与 `main` 同步 |
-| 公共依赖 | hutool-core 5.8.41；具体依赖以对应分支 `pom.xml` 为准 |
-| 验证器注册 | Google Auto Service（`@AutoService`）自动注册 `ConstraintValidator` 实现 |
-| 框架集成 | 不强制依赖 Spring；支持独立使用及 Spring MVC / Spring Boot 集成 |
+| 项目 | 说明                                                                                        |
+|------|-------------------------------------------------------------------------------------------|
+| Maven 坐标 | `com.carpcap:hibernate-validator-plus`                                                    |
+| 1.x 版本线 | `1.4.0`；JDK 8 + `javax.validation` + Hibernate Validator 6.2.x；`1.x` 分支                   |
+| 2.x 版本线 | `2.4.0`；JDK 11+ + `jakarta.validation` + Hibernate Validator 8.x；`2.x` 与 `main` 同步        |
+| 公共依赖 | hutool-core 5.8.41；具体依赖以对应分支 `pom.xml` 为准                                                 |
+| 验证器注册 | Google Auto Service（`@AutoService`）自动注册 `ConstraintValidator` 实现                          |
+| 框架集成 | 不强制依赖 Spring；支持独立使用及 Spring MVC / Spring Boot 集成                                          |
 | 示例项目 | [hibernate-validator-plus-demo](https://github.com/carpcap/hibernate-validator-plus-demo) |
 
 ### 知识库导航
@@ -59,7 +60,7 @@ hibernate-validator-plus/
 ├── src/
 │   ├── main/
 │   │   ├── java/com/carpcap/hvp/
-│   │   │   ├── annotation/               # 校验注解定义（16 个）
+│   │   │   ├── annotation/               # 校验注解定义（20 个）
 │   │   │   ├── constraintvalidators/     # 验证器源码（25 个：22 个具体实现 + 3 个抽象基类）
 │   │   │   ├── groups/                   # 校验分组接口 (16个)
 │   │   │   └── utils/                    # 工具类 (2个)
@@ -91,13 +92,17 @@ hibernate-validator-plus/
 | @CPhone | 手机号验证 | region 参数支持 CN/US/JP/KR 等多国号码 |
 | @CIpv4 | IPv4 地址验证 | 标准 IPv4 正则 |
 | @CIpv6 | IPv6 地址验证 | 通过 InetAddress 原生解析 |
-| @CDomain | 域名格式验证 | 支持中文域名 |
+| @CDomain | 域名格式验证 | 支持中文域名，level 控制层级，allowTld 控制是否允许顶级域名 |
+| @CEmail | 邮箱格式验证 | 支持域名黑白名单、最大子域层级及 allowTld |
 | @CPlateNumber | 中国车牌号验证 | 支持新能源/普通车牌 |
 | @CFile | 文件验证 | fileNameSuffix（后缀限制）, fileSize（大小，默认 1MB） |
 | @CUrl | URL 验证 | protocols（协议白名单）, allowLocalhost, allowIp |
 | @CBankCard | 银行卡号验证 | Luhn 算法校验, allowedPrefixes/forbiddenPrefixes |
 | @CMoney | 金额格式验证 | min/max, 整数/小数位数, 货币符号, 千分位 |
 | @CDateRange | 日期范围验证 | min/max 日期, format, 支持 String/Date/LocalDate/LocalDateTime/Instant/ZonedDateTime |
+| @CStrAllow | 字符串白名单验证 | value 定义允许的字符串集合 |
+| @CStrDeny | 字符串黑名单验证 | value 定义禁止的字符串集合 |
+| @CJson | JSON 格式验证 | 校验字符串 JSON 语法，可限制对象或数组根节点 |
 | @CMacAddress | MAC 地址验证 | allowLowercase, allowEui64, allowOmittingLeadingZero |
 | @CPassport | 护照号验证 | region/regexp，内置 CN/US/JP/UK/KR |
 | @CPostCode | 邮政编码格式验证 | region/regexp，内置 CN/US/JP/UK/KR |
@@ -192,8 +197,12 @@ hibernate-validator-plus/
 
 ## 版本历史
 
+### 2.4.x 系列
+- **2.4.0**: 新增 `@CStrAllow`、`@CStrDeny`；`@CDomain`、`@CEmail` 增加 `allowTld`；`@CDateRange` 支持自动识别日期格式；完善 17 个 i18n 资源包。
+
+
 ### 2.0.x 系列
-- **2.0.0（开发中）**: 最低支持 JDK 11，迁移到 `jakarta.validation` 与 Hibernate Validator 8.x
+- **2.0.0**: 最低支持 JDK 11，迁移到 `jakarta.validation` 与 Hibernate Validator 8.x
 
 ### 1.3.x 系列
 - **1.3.1**: 当前 1.x 版本，继续支持 JDK 8 与 `javax.validation`
@@ -239,34 +248,20 @@ hibernate-validator-plus/
 
 ---
 
-## 已知问题（2026-08-07）
 
-按修复优先级排列：
 
-1. **P0（已修复）：自动化测试实际未运行**：已使用 JUnit 4 接入自动测试；基础与高级套件覆盖内部 446 个检查，地区格式矩阵另覆盖 120 个场景。
-2. **P0（已修复）：18 位身份证末位 X 永远无法通过**：CN 身份号码正则现已允许末位 `X/x`，仅执行格式校验。
-3. **P1（已修复）：CDateRange 的精确 max 时间失效**：仅纯日期上限会补全到当天结束；包含时间精度的 max 保持原始解析结果。
-4. **P1（已修复）：未知 region 被静默放行**：地区代码现已忽略大小写和首尾空格；无自定义 regexp 且地区不受支持时抛出 ConstraintDeclarationException。
-5. **P1（已修复）：CFile 会把不存在的文件当作 null**：allowNull 现在仅作用于 null；不存在的路径和目录均校验失败。
-6. **P1：IPv6 校验可能访问 DNS**：`InetAddress.getByName()` 会解析主机名，校验耗时和结果依赖网络/DNS；拥有 AAAA 记录的域名还可能被误判为 IPv6 字面量。
-7. **P2：日期配置错误产生副作用和非约束异常**：日期解析失败会 `printStackTrace()` 并抛出无 cause 的 RuntimeException，不利于服务端日志治理和定位注解配置错误。
-8. **P2：依赖 Hibernate Validator 内部实现**：多个验证器将标准 `ConstraintValidatorContext` 强转为 `ConstraintValidatorContextImpl`，升级 Hibernate Validator 或更换 Bean Validation 实现时可能失败。
-9. **P2：构建插件版本不完整**：`maven-compiler-plugin` 未固定版本，Maven 每次构建都会警告，构建结果可能随 Maven 环境变化。
-10. **已修复：region 规则与现实格式不一致**：120 条地区格式测试已覆盖并通过手机号、护照、邮编和身份号码的 CN/US/JP/KR/UK 场景。
 
-## 建议路线
+### 后续功能候选
 
-### 下一版本：1.2.4 质量修复
+以下注解与现有校验能力互补，可作为后续小版本功能候选：
 
-暂缓增加注解，先将上述未修复的 P0/P1 问题处理完毕。当前已通过 JUnit 4 最小接入解决零测试问题，后续可再将 main 测试迁移为 JUnit 5 参数化测试。其余最低验收范围包括 IPv6 主机名。
+| 候选注解 | 建议功能 | 优先级 |
+|---|---|---|
+| `@CJson` | 校验字符串是否为合法 JSON，可配置对象/数组根节点 | 高 |
+| `@CRegex` | 独立的正则校验注解，统一 `allowNull`、消息和重复标注能力 | 高 |
+| `@CContains` | 字符串必须包含指定文本、前缀或后缀，支持大小写策略 | 中 |
+| `@CFileMime` | 文件扩展名之外，校验 MIME 类型或文件头魔数 | 中 |
+| `@CDate` | 单日期格式、最小值、最大值校验，补充 `@CDateRange` | 中 |
+| `@CListSize` | 集合、数组、Map 的元素数量范围校验 | 中 |
+| `@CNumberRange` | 统一数字、字符串数字和 BigDecimal 的数值区间校验 | 中 |
 
-### 下一项功能：@CEnumValue
-
-质量修复后，优先新增通用的枚举值约束，而不是继续增加单一国家格式注解。建议支持：
-
-- 校验 Enum、String 和 Number 类型；
-- 通过 `enumClass` 指定枚举，通过 `property` 指定取 `name`、`code` 等字段/无参方法；
-- `ignoreCase`、`allowNull`、groups、payload 和 `@Repeatable`；
-- 初始化阶段缓存允许值，避免每次校验反射扫描；配置错误应抛 `ConstraintDeclarationException`。
-
-该功能适用于状态、类型、渠道、业务代码等高频 API 入参，复用范围明显高于新增一种格式正则。
