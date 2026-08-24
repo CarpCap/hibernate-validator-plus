@@ -5,7 +5,7 @@
 ## Version 1.3.x Series
 
 
-### 1.3.2
+### 1.4.0
 
 - Added `@CStrAllow` and `@CStrDeny` for string whitelist and blacklist validation.
 - Added the `allowTld` attribute to `@CDomain` and `@CEmail`; top-level domains with a single label are disallowed by default.

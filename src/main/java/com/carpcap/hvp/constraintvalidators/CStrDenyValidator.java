@@ -3,9 +3,9 @@ package com.carpcap.hvp.constraintvalidators;
 import com.carpcap.hvp.annotation.CStrDeny;
 import com.carpcap.hvp.utils.CValidNullUtil;
 import com.google.auto.service.AutoService;
-import jakarta.validation.ConstraintDeclarationException;
-import jakarta.validation.ConstraintValidator;
-import jakarta.validation.ConstraintValidatorContext;
+import javax.validation.ConstraintDeclarationException;
+import javax.validation.ConstraintValidator;
+import javax.validation.ConstraintValidatorContext;
 
 import java.util.Arrays;
 import java.util.Collections;

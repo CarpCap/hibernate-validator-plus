@@ -3,8 +3,8 @@ package com.carpcap.hvp.constraintvalidators;
 import com.carpcap.hvp.annotation.CJson;
 import com.carpcap.hvp.utils.CValidNullUtil;
 import com.google.auto.service.AutoService;
-import jakarta.validation.ConstraintValidator;
-import jakarta.validation.ConstraintValidatorContext;
+import javax.validation.ConstraintValidator;
+import javax.validation.ConstraintValidatorContext;
 
 /**
  * 校验字符串是否符合 JSON 语法及配置的根节点类型。

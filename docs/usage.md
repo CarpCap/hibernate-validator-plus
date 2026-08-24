@@ -2,13 +2,13 @@
 
 > 基于 Hibernate Validator 6.2.5 的增强校验框架，支持分组校验、Spring MVC 自动校验与手动校验工具类。
 
-## 1. 引入最新依赖，这里以1.3.1版本为例
+## 1. 引入最新依赖
 
 ```xml
 <dependency>
     <groupId>com.carpcap</groupId>
     <artifactId>hibernate-validator-plus</artifactId>
-    <version>1.3.1</version>
+    <version>1.4.0</version>
 </dependency>
 ```
 

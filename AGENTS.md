@@ -13,14 +13,14 @@
 
 Hibernate Validator Plus（简称 HVP）是基于 **Hibernate Validator** 的增强校验框架，提供更丰富、实用的校验注解、分组校验机制以及统一的校验工具类。项目由作者 **CarpCap** 开发，采用 Apache License 2.0 开源协议。项目同时维护 1.x 和 2.x 两个大版本。
 
-| 项目 | 说明 |
-|------|------|
-| Maven 坐标 | `com.carpcap:hibernate-validator-plus` |
-| 1.x 版本线 | `1.3.1`；JDK 8 + `javax.validation` + Hibernate Validator 6.2.x；`1.x` 分支 |
-| 2.x 版本线 | `2.0.1`；JDK 11+ + `jakarta.validation` + Hibernate Validator 8.x；`2.x` 与 `main` 同步 |
-| 公共依赖 | hutool-core 5.8.41；具体依赖以对应分支 `pom.xml` 为准 |
-| 验证器注册 | Google Auto Service（`@AutoService`）自动注册 `ConstraintValidator` 实现 |
-| 框架集成 | 不强制依赖 Spring；支持独立使用及 Spring MVC / Spring Boot 集成 |
+| 项目 | 说明                                                                                        |
+|------|-------------------------------------------------------------------------------------------|
+| Maven 坐标 | `com.carpcap:hibernate-validator-plus`                                                    |
+| 1.x 版本线 | `1.4.0`；JDK 8 + `javax.validation` + Hibernate Validator 6.2.x；`1.x` 分支                   |
+| 2.x 版本线 | `2.4.0`；JDK 11+ + `jakarta.validation` + Hibernate Validator 8.x；`2.x` 与 `main` 同步        |
+| 公共依赖 | hutool-core 5.8.41；具体依赖以对应分支 `pom.xml` 为准                                                 |
+| 验证器注册 | Google Auto Service（`@AutoService`）自动注册 `ConstraintValidator` 实现                          |
+| 框架集成 | 不强制依赖 Spring；支持独立使用及 Spring MVC / Spring Boot 集成                                          |
 | 示例项目 | [hibernate-validator-plus-demo](https://github.com/carpcap/hibernate-validator-plus-demo) |
 
 ### 知识库导航
@@ -197,8 +197,11 @@ hibernate-validator-plus/
 
 ## 版本历史
 
+### 2.4.x 系列
+- **2.4.0**: 新增 `@CStrAllow`、`@CStrDeny`；`@CDomain`、`@CEmail` 增加 `allowTld`；`@CDateRange` 支持自动识别日期格式；完善 17 个 i18n 资源包。
+
+
 ### 2.0.x 系列
-- **2.0.1**: 新增 `@CStrAllow`、`@CStrDeny`；`@CDomain`、`@CEmail` 增加 `allowTld`；`@CDateRange` 支持自动识别日期格式；完善 17 个 i18n 资源包。
 - **2.0.0**: 最低支持 JDK 11，迁移到 `jakarta.validation` 与 Hibernate Validator 8.x
 
 ### 1.3.x 系列
