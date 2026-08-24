@@ -13,7 +13,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 /**
  * JSON 字符串格式验证注解。
  * <p>
- * 支持校验任意 JSON 值，也可以限定根节点必须为对象或数组。
+ * 默认仅允许对象或数组，也可以限定为对象、数组或基础值。
  *
  * @author CarpCap
  */
@@ -39,11 +39,11 @@ public @interface CJson {
     boolean allowNull() default true;
 
     /**
-     * JSON 根节点类型，默认允许任意合法 JSON 值。
+     * JSON 根节点类型，默认仅允许对象或数组。
      *
      * @return 根节点类型
      */
-    RootType rootType() default RootType.ANY;
+    Type type() default Type.STRUCT;
 
     /**
      * 指定约束所属的校验分组。
@@ -60,9 +60,13 @@ public @interface CJson {
     Class<? extends Payload>[] payload() default {};
 
     /** JSON 根节点类型。 */
-    enum RootType {
+    enum Type {
         /** 允许对象、数组及字符串、数字、布尔值和 null。 */
         ANY,
+        /** 根节点必须为 JSON 对象或数组。 */
+        STRUCT,
+        /** 根节点必须为字符串、数字、布尔值或 null。 */
+        VALUE,
         /** 根节点必须为 JSON 对象。 */
         OBJECT,
         /** 根节点必须为 JSON 数组。 */

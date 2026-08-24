@@ -9,9 +9,9 @@ import static org.junit.Assert.assertTrue;
 public class CJsonValidatorTest {
     private static class Bean {
         @CJson String any;
-        @CJson(rootType = CJson.RootType.OBJECT) String object;
-        @CJson(rootType = CJson.RootType.ARRAY) String array;
-        @CJson(allowNull = false) String required;
+        @CJson(type = CJson.Type.OBJECT) String object;
+        @CJson(type = CJson.Type.ARRAY) String array;
+        @CJson(allowNull = false,type = CJson.Type.ANY) String required;
     }
 
     @Test

@@ -55,7 +55,7 @@ Hibernate Validator Plus 是基于 **Hibernate Validator** 的增强框架，提
 | `@CMacAddress`  | Mac地址验证    | MAC地址格式验证                                      |
 | `@CStrAllow`    | 字符串白名单验证 | 字符串值必须位于指定的允许列表中                         |
 | `@CStrDeny`     | 字符串黑名单验证 | 字符串值不得位于指定的禁止列表中                         |
-| `@CJson`        | JSON 格式验证    | 校验 JSON 字符串，可限制对象或数组根节点                 |
+| `@CJson`        | JSON 格式验证    | 校验 JSON 字符串，默认仅允许对象或数组，可限制为对象、数组或基础值 |
 
 
 ## 📂 分组（Groups）
