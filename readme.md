@@ -54,18 +54,18 @@ Hibernate Validator Plus 是基于 **Hibernate Validator** 的增强校验框架
 | `@CPassport`    | 护照号验证      | 默认：中国护照格式；支持 region 参数切换 CN/US/JP/UK/KR        |
 | `@CPostCode`    | 邮编格式验证     | 默认：中国邮编；支持 region 参数切换 CN/US/JP/UK/KR          |
 | `@CEmail`       | 邮箱格式验证     | 支持域名黑白名单及最大子域层级限制.                             |
-| `@CFile`        | 文件验证       | 默认：最大 1 MB；可指定后缀 `fileNameSuffix`              |
 | `@CPlateNumber` | 车牌号验证      | 默认：中国车牌                                        |
-| `@CIpv4`        | Ipv4 验证    | 合法 IPv4 地址格式                                   |
-| `@CIpv6`        | IPv6 验证    | 合法 IPv6 地址格式                                   |
-| `@CDateRange`   | 日期范围验证     | `min` 最小日期、`max` 最大日期，推荐格式：yyyy-MM-dd HH:mm:ss |
+| `@CFile`        | 文件验证       | 默认：最大 1 MB；可指定后缀 `fileNameSuffix`              |
 | `@CBankCard`    | 银行卡号 验证    | 银行卡号验证，默认使用Luhn算法，可以指定拦截卡号前缀.                  |
-| `@CUrl`         | URL      验证 | URL格式 验证                                       |
 | `@CMoney`       | 金额     验证  | 金额验证<br/> 支持验证数字、字符串或BigDecimal类型的金额格式         |
-| `@CMacAddress`  | Mac地址验证    | MAC地址格式验证                                      |
+| `@CDateRange`   | 日期范围验证     | `min` 最小日期、`max` 最大日期，推荐格式：yyyy-MM-dd HH:mm:ss |
 | `@CStrAllow`    | 字符串白名单验证 | 字符串值必须位于指定的允许列表中                         |
 | `@CStrDeny`     | 字符串黑名单验证 | 字符串值不得位于指定的禁止列表中                         |
 | `@CJson`        | JSON 格式验证    | 校验 JSON 字符串，默认仅允许对象或数组，可限制为对象、数组或基础值 |
+| `@CIpv4`        | Ipv4 验证    | 合法 IPv4 地址格式                                   |
+| `@CIpv6`        | IPv6 验证    | 合法 IPv6 地址格式                                   |
+| `@CUrl`         | URL      验证 | URL格式 验证                                       |
+| `@CMacAddress`  | Mac地址验证    | MAC地址格式验证                                      |
 
 
 ---
