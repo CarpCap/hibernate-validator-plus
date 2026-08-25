@@ -270,100 +270,192 @@ public class GlobalExceptionHandler {
 
 ---
 
-## 6. 注解使用说明
+## 6. Annotation 注解使用
 
 所有 HVP 注解均支持 `message`、`groups`、`payload` 和 `allowNull`，并支持重复标注。`allowNull = false` 表示 `null` 不通过；以下示例仅列出关键属性。
 
-### 6.1 账号和字符串
+每个注解都支持 `message`、`groups`、`payload` 和 `allowNull`，并且可以重复标注。下面的顺序与 [readme.md](../readme.md) 中的注解列表一致。
+
+### 6.1 `@CAccount` 账号格式验证
+
+默认要求字母开头、长度 5–16，并只允许字母、数字和下划线。`min`、`max` 控制长度，`regexp` 可覆盖默认正则。
 
 ```java
-import com.carpcap.hvp.annotation.CAccount;
-import com.carpcap.hvp.annotation.CPassword;
-import com.carpcap.hvp.annotation.CStrAllow;
-import com.carpcap.hvp.annotation.CStrDeny;
-
-public class AccountForm {
-    @CAccount(min = 6, max = 20, allowNull = false) private String account;
-    @CPassword(min = 8, regexp = "^(?=.*[A-Za-z])(?=.*\\d).+$") private String password;
-    @CStrAllow({"DRAFT", "PUBLISHED"}) private String status;
-    @CStrDeny({"root", "admin"}) private String nickname;
-}
+@CAccount(min = 6, max = 20, allowNull = false)
+private String account;
 ```
 
-`CAccount` 和 `CPassword` 可通过 `regexp` 覆盖默认规则；`CStrAllow` 与 `CStrDeny` 的 `value` 是必填字符串集合。
+### 6.2 `@CPassword` 密码强度验证
 
-### 6.2 身份和地区格式
+默认长度为 6–18，且至少包含一个字母和一个数字。可使用 `min`、`max` 和 `regexp` 调整规则。
 
 ```java
-import com.carpcap.hvp.annotation.CIdCard;
-import com.carpcap.hvp.annotation.CPassport;
-import com.carpcap.hvp.annotation.CPhone;
-import com.carpcap.hvp.annotation.CPostCode;
-
-public class IdentityForm {
-    @CIdCard(region = "CN", allowNull = false) private String idCard;
-    @CPassport(region = "US") private String passport;
-    @CPhone(region = "JP") private String phone;
-    @CPostCode(region = "UK") private String postCode;
-}
+@CPassword(min = 8, max = 32, allowNull = false)
+private String password;
 ```
 
-上述注解支持 `CN`、`US`、`JP`、`KR`、`UK`；`regexp`（`CPhone`、`CIdCard`、`CPassport`、`CPostCode` 支持）优先于 `region`。
+### 6.3 `@CIdCard` 身份号码验证
 
-### 6.3 网络、域名和地址
+默认使用中国身份证规则；`region` 支持 `CN`、`US`、`JP`、`KR`、`UK`，设置 `regexp` 后优先使用自定义规则。
 
 ```java
-import com.carpcap.hvp.annotation.CDomain;
-import com.carpcap.hvp.annotation.CEmail;
-import com.carpcap.hvp.annotation.CIpv4;
-import com.carpcap.hvp.annotation.CIpv6;
-import com.carpcap.hvp.annotation.CMacAddress;
-import com.carpcap.hvp.annotation.CUrl;
-
-public class NetworkForm {
-    @CIpv4(allowNull = false) private String ipv4;
-    @CIpv6 private String ipv6;
-    @CDomain(level = 2) private String domain;
-    @CEmail(listMode = CEmail.ListMode.BLACKLIST, domains = {"example.com"}) private String email;
-    @CUrl(protocols = {"https"}, allowLocalhost = false, allowIp = false) private String callbackUrl;
-    @CMacAddress(allowEui64 = true, allowLowercase = false) private String macAddress;
-}
+@CIdCard(region = "CN", allowNull = false)
+private String idCard;
 ```
 
-`CDomain` 和 `CEmail` 默认不允许只有一个标签的顶级域名；需要时设置 `allowTld = true`。`CEmail.domains` 会匹配指定域名及其子域名。
+### 6.4 `@CPhone` 手机号验证
 
-### 6.4 日期、金额和银行卡
+默认验证中国手机号，可通过 `region` 切换 `CN`、`US`、`JP`、`KR`、`UK`，也可用 `regexp` 自定义。
 
 ```java
-import com.carpcap.hvp.annotation.CBankCard;
-import com.carpcap.hvp.annotation.CDateRange;
-import com.carpcap.hvp.annotation.CMoney;
-import java.math.BigDecimal;
-import java.time.LocalDate;
-
-public class PaymentForm {
-    @CDateRange(min = "2026-01-01", max = "2026-12-31") private LocalDate payDate;
-    @CMoney(min = 0.01, max = 999999.99, decimalPlaces = 2, allowCurrencySymbol = false)
-    private BigDecimal amount;
-    @CBankCard(allowedPrefixes = {"62"}, allowSpaces = true) private String bankCard;
-}
+@CPhone(region = "CN", allowNull = false)
+private String phone;
 ```
 
-`CDateRange` 支持 `String`、`Date`、`LocalDate`、`LocalDateTime`、`Instant` 和 `ZonedDateTime`；`format` 为空时自动解析。`CBankCard` 默认执行 Luhn 校验；`CMoney` 支持数字、字符串与 `BigDecimal`。
+### 6.5 `@CPassport` 护照号验证
 
-### 6.5 文件、车牌和 JSON
+默认使用中国护照规则，`region` 支持 `CN`、`US`、`JP`、`UK`、`KR`；`regexp` 优先于地区规则。
 
 ```java
-import com.carpcap.hvp.annotation.CFile;
-import com.carpcap.hvp.annotation.CJson;
-import com.carpcap.hvp.annotation.CPlateNumber;
-import java.io.File;
-
-public class ResourceForm {
-    @CFile(fileNameSuffix = {"png", "jpg"}, fileSize = 2 * 1024 * 1024L) private File image;
-    @CPlateNumber private String plateNumber;
-    @CJson(type = CJson.Type.OBJECT, allowNull = false) private String metadata;
-}
+@CPassport(region = "US")
+private String passport;
 ```
 
-`CFile` 对 `File` 校验后缀和大小，对 `String` 仅校验文件名后缀；`fileSize` 单位为字节。`CJson` 默认 `STRUCT`，只接受对象或数组；可使用 `OBJECT`、`ARRAY`、`VALUE` 或 `ANY` 限制根节点类型。
+### 6.6 `@CPostCode` 邮编格式验证
+
+默认使用中国邮编规则，支持 `CN`、`US`、`JP`、`UK`、`KR`，也可以使用 `regexp` 覆盖地区规则。
+
+```java
+@CPostCode(region = "UK")
+private String postCode;
+```
+
+### 6.7 `@CEmail` 邮箱格式验证
+
+`listMode` 可设置 `WHITELIST` 或 `BLACKLIST`，`domains` 配置域名名单，`level` 限制域名层级，`allowTld` 控制是否允许单标签顶级域名。
+
+```java
+@CEmail(listMode = CEmail.ListMode.WHITELIST,
+        domains = {"example.com", "example.org"},
+        level = 2,
+        allowNull = false)
+private String email;
+```
+
+### 6.8 `@CPlateNumber` 车牌号验证
+
+默认验证中国普通和新能源车牌；需要特殊格式时可通过 `regexp` 自定义。
+
+```java
+@CPlateNumber(allowNull = false)
+private String plateNumber;
+```
+
+### 6.9 `@CFile` 文件验证
+
+支持 `File` 和文件名 `String`。`fileNameSuffix` 限制后缀，`fileSize` 限制文件大小，单位为字节。
+
+```java
+@CFile(fileNameSuffix = {"png", "jpg"}, fileSize = 2 * 1024 * 1024L)
+private File image;
+```
+
+### 6.10 `@CBankCard` 银行卡号验证
+
+默认使用 Luhn 算法，长度范围为 13–19；可控制空格、连字符、允许前缀和禁止前缀。
+
+```java
+@CBankCard(allowedPrefixes = {"62"}, allowSpaces = true, allowHyphens = false)
+private String bankCard;
+```
+
+### 6.11 `@CMoney` 金额格式验证
+
+支持数字、字符串和 `BigDecimal`。`min`、`max` 控制金额范围，`decimalPlaces` 控制小数位数，也可配置货币符号和千分位分隔符。
+
+```java
+@CMoney(min = 0.01, max = 999999.99, decimalPlaces = 2,
+        allowCurrencySymbol = false)
+private BigDecimal amount;
+```
+
+### 6.12 `@CDateRange` 日期范围验证
+
+支持 `String`、`Date`、`LocalDate`、`LocalDateTime`、`Instant` 和 `ZonedDateTime`。`min`、`max` 为边界日期，`format` 为空时自动解析。
+
+```java
+@CDateRange(min = "2026-01-01", max = "2026-12-31")
+private LocalDate payDate;
+```
+
+### 6.13 `@CStrAllow` 字符串白名单验证
+
+`value` 定义允许的字符串集合，实际值必须包含在集合中。
+
+```java
+@CStrAllow({"DRAFT", "PUBLISHED"}, allowNull = false)
+private String status;
+```
+
+### 6.14 `@CStrDeny` 字符串黑名单验证
+
+`value` 定义禁止的字符串集合，实际值不能出现在集合中。
+
+```java
+@CStrDeny({"root", "admin"}, allowNull = false)
+private String nickname;
+```
+
+### 6.15 `@CJson` JSON 格式验证
+
+默认 `type = STRUCT`，只允许 JSON 对象或数组；可使用 `OBJECT`、`ARRAY`、`VALUE` 或 `ANY` 限制根节点类型。
+
+```java
+@CJson(type = CJson.Type.OBJECT, allowNull = false)
+private String metadata;
+```
+
+### 6.16 `@CIpv4` IPv4 地址验证
+
+验证标准 IPv4 地址格式，可通过 `regexp` 自定义匹配规则。
+
+```java
+@CIpv4(allowNull = false)
+private String ipv4;
+```
+
+### 6.17 `@CIpv6` IPv6 地址验证
+
+使用地址解析校验纯 IPv6 地址，不兼容 IPv4 映射地址。
+
+```java
+@CIpv6(allowNull = false)
+private String ipv6;
+```
+
+### 6.18 `@CUrl` URL 格式验证
+
+`protocols` 设置允许的协议，`allowLocalhost` 控制是否允许 localhost，`allowIp` 控制是否允许 IP 地址。
+
+```java
+@CUrl(protocols = {"https"}, allowLocalhost = false, allowIp = false)
+private String callbackUrl;
+```
+
+### 6.19 `@CMacAddress` MAC 地址验证
+
+支持冒号、连字符和无分隔符格式；`allowLowercase`、`allowEui64` 和 `allowOmittingLeadingZero` 控制格式兼容范围。
+
+```java
+@CMacAddress(allowLowercase = false, allowEui64 = true)
+private String macAddress;
+```
+
+### 6.20 `@CDomain` 域名格式验证
+
+`level` 限制域名层级，`allowTld` 控制是否允许只有一个标签的顶级域名；默认不允许顶级域名，且不限制层级。
+
+```java
+@CDomain(level = 2, allowTld = false, allowNull = false)
+private String domain;
+```
