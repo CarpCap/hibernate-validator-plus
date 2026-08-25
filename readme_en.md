@@ -36,8 +36,7 @@ Hibernate Validator Plus extends **Hibernate Validator** with practical annotati
 
 ## Documentation
 
-- [2.x Usage Guide (JDK 11+ / jakarta.validation)](docs/usage_en.md)
-- [1.x Usage Guide (JDK 8 / javax.validation)](https://github.com/CarpCap/hibernate-validator-plus/blob/1.x/docs/usage_en.md)
+- [Usage Guide](docs/usage_en.md)
 - [2.x Change Log](docs/versions_v2_en.md)
 - [1.x Change Log](docs/versions_v1_en.md)
 
