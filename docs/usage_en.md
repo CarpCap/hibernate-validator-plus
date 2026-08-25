@@ -1,18 +1,20 @@
-﻿# Hibernate Validator Plus Usage Documentation
+# Hibernate Validator Plus Usage Documentation
 
 [Project Home](../readme_en.md) · [中文](usage.md) · [Changelog](versions_v2_en.md)
 
-> This guide applies only to 2.x: it requires JDK 11+, is based on Hibernate Validator 8.x, and uses the `jakarta.validation` API.
+> This guide uses `jakarta.validation.*` as an example. If you are using the 1.x version, use `javax.validation.*` instead.
 
 ## Contents
 
-- [1. Add the 2.x Dependency](#1-add-the-2x-dependency)
-- [2. Group Validation](#2-group-validation-groups)
-- [3. CValid Utility Class](#3-cvalid-utility-class)
-- [4. Spring MVC Automatic Validation](#4-spring-mvc-automatic-validation)
-- [5. Quick Start Summary](#5-quick-start-summary)
+- [1. Add Dependencies](#1-add-dependencies)
+- [2. Group Validation](#2-group-validation)
+- [3. Manual Validation with CValid](#3-manual-validation-with-cvalid)
+- [4. Spring Validator Configuration (Recommended/Optional)](#4-spring-validator-configuration-recommendedoptional)
+- [5. Spring MVC Automatic Validation](#5-spring-mvc-automatic-validation)
 
-## 1. Add the 2.x Dependency
+## 1. Add Dependencies
+
+### JDK 11+
 
 ```xml
 <dependency>
@@ -22,13 +24,27 @@
 </dependency>
 ```
 
+2.x uses `jakarta.validation.*` and is intended for projects such as Spring Boot 3 and Jakarta EE 10.
+
+### JDK 8+
+
+```xml
+<dependency>
+    <groupId>com.carpcap</groupId>
+    <artifactId>hibernate-validator-plus</artifactId>
+    <version>1.4.0</version>
+</dependency>
+```
+
+1.x uses `javax.validation.*` and is intended for Spring Boot 2 and JDK 8+ projects.
+
 ---
 
-## 2. Group Validation (Groups)
+## 2. Group Validation
 
-### 2.1 Built-in Groups
+### 2.1 Group Overview
 
-The framework provides 8 built-in business groups in the `com.carpcap.hvp.groups` package. Each group has a base interface and a `*Def` interface:
+The framework provides eight built-in business groups in `com.carpcap.hvp.groups`. Each group has a base interface and a corresponding `*Def` interface for distinguishing business scenarios:
 
 | Base Group | Def Group | Scenario |
 |----------|----------|------|
@@ -41,48 +57,49 @@ The framework provides 8 built-in business groups in the `com.carpcap.hvp.groups
 | `CPut` | `CPutDef` | PUT request |
 | `CPatch` | `CPatchDef` | PATCH request |
 
-### 2.2 Annotating Groups on Entity Properties
+### 2.2 Using Groups
 
-Use the `groups` attribute to specify which group a constraint belongs to. Constraints without a group (default `Default`) are validated in all scenarios:
+Use the `groups` attribute to specify which group a constraint belongs to. Constraints without an explicit group (the default `Default` group) are validated in every scenario:
 
 ```java
 public class User {
-
-    // Default group: validated in all scenarios
+    // Default group: validated in every scenario
     @CAccount
     private String account;
 
-    // Only applies to the CPost group
+    // Applies only to the CPost group
     @NotBlank(groups = CPost.class)
     private String name;
 
-    // Only applies to the CGet group, and null is not allowed
+    // Applies only to the CGet group; null is not allowed
     @CPhone(region = "CN", groups = CGet.class, allowNull = false)
     private String phone;
 }
 ```
 
-### 2.3 Using Def Groups
+### 2.3 Group Def
 
-A `*Def` interface extends its corresponding business group and `jakarta.validation.groups.Default`, for example:
+Each `*Def` interface extends its corresponding business group and `jakarta.validation.groups.Default`, for example:
 
 ```java
 public interface CPostDef extends CPost, Default {
 }
 ```
 
-When validating with `CPostDef`, **both the constraints of the CPost group and the constraints without an explicit group (Default) are validated**.
+When validating with `CPostDef`, **both the constraints in the CPost group and the constraints without an explicit group (Default) are validated**.
 
 ---
 
-## 3. CValid Utility Class
+## 3. Manual Validation with CValid
 
-`com.carpcap.hvp.utils.CValid` provides manual validation methods and holds two Validator instances internally:
+`com.carpcap.hvp.utils.CValid` provides manual validation methods and internally holds two Validator instances:
 
-- `validator`: full validation, collects all violations
-- `fastValidator`: fail-fast validation (returns immediately on the first error)
+- `validator`: full validation, collecting all violation messages
+- `fastValidator`: fail-fast validation, returning immediately after the first error
 
-### 3.1 Method Overview
+### 3.1 CValid Method Overview
+
+Methods beginning with `try` do not throw validation-failure exceptions; they provide the result through their return value. `tryValidate*` methods return a list of error messages, while `tryFastValidate*` methods return the first error message. On success, they return an empty list or `null`, respectively.
 
 | Method | Validation Mode | On Failure | Return |
 |------|----------|----------|------|
@@ -93,7 +110,7 @@ When validating with `CPostDef`, **both the constraints of the CPost group and t
 | `tryValidateProperty(obj, property, ...groups)` | Full validation | No exception thrown | `List<String>` |
 | `tryFastValidateProperty(obj, property, ...groups)` | Fail-fast | No exception thrown | `String` |
 
-### 3.2 Usage Examples
+### 3.2 CValid Usage Example
 
 ```java
 import com.carpcap.hvp.utils.CValid;
@@ -101,30 +118,22 @@ import com.carpcap.hvp.groups.CPost;
 import com.carpcap.hvp.groups.CPostDef;
 
 public class Demo {
-
     public static void main(String[] args) {
         User user = new User();
-        user.setName("张三");
+        user.setName("Zhang San");
 
-        // 1. Validate with the default group: throws ValidationException on failure
+        // 1. Validate the default group: throws ValidationException on failure
         CValid.validate(user);
-
-        // 2. Validate with a specific group: throws ValidationException on failure
+        // 2. Validate a specified group: throws ValidationException on failure
         CValid.validate(user, CPost.class);
-
         // 3. Full validation: returns all error messages without throwing
         List<String> errors = CValid.tryValidate(user, CPostDef.class);
-        if (!errors.isEmpty()) {
-            System.out.println(errors);
-        }
-
+        if (!errors.isEmpty()) System.out.println(errors);
         // 4. Fail-fast validation: returns only the first error message
         String error = CValid.tryFastValidate(user, CPost.class);
-
         // 5. Validate a single property
         CValid.validateProperty(user, "name", CPost.class);
-
-        // 6. Validate a single property: returns a list of error messages
+        // 6. Validate a property and return all error messages
         List<String> propertyErrors = CValid.tryValidateProperty(user, "phone", CPost.class);
     }
 }
@@ -132,78 +141,9 @@ public class Demo {
 
 ---
 
-## 4. Spring MVC Automatic Validation
+## 4. Spring Validator Configuration (Recommended/Optional)
 
-### 4.1 Controller Example
-
-Use `@Validated(Group.class)` + `@RequestBody` to automatically validate the request body:
-
-```java
-import com.carpcap.hvp.groups.CGetDef;
-import com.carpcap.hvp.groups.CPostDef;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
-
-@RestController
-@RequestMapping("/user")
-public class UserController {
-
-    // Create user: only validates constraints of the CPostDef group
-    @PostMapping("/create")
-    public String create(@Validated(CPostDef.class) @RequestBody User user) {
-        return "ok";
-    }
-
-    // Get user: only validates constraints of the CGetDef group
-    @GetMapping("/get")
-    public String get(@Validated(CGetDef.class) @RequestBody User user, HttpServletRequest request) {
-        return "ok";
-    }
-}
-```
-
-### 4.2 Global Exception Handling
-
-Automatic validation failures throw `MethodArgumentNotValidException`. It is recommended to configure a global exception handler to return error messages uniformly:
-
-```java
-import org.springframework.validation.BindException;
-import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RestControllerAdvice;
-
-import jakarta.validation.ConstraintViolationException;
-import java.util.stream.Collectors;
-
-@RestControllerAdvice
-public class GlobalExceptionHandler {
-
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public String handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
-        StringBuilder message = new StringBuilder();
-        for (FieldError fieldError : ex.getBindingResult().getFieldErrors()) {
-            message.append(fieldError.getField())
-                    .append("--")
-                    .append(fieldError.getDefaultMessage())
-                    .append("\n");
-        }
-        return message.toString();
-    }
-
-
-
-    @ExceptionHandler(ValidationException.class)
-    public String handleValidationException(ValidationException ex) {
-        return ex.getMessage();
-    }
-}
-```
-
----
-
-### 4.3 Custom Validator Configuration
-
-In Spring Boot, you can inject Spring-managed `Validator` instances into `CValid` through a configuration class:
+`@Primary` marks the default bean and changes Spring's default validator to fail-fast mode. Setting CValid's `fastValidator` and `validator` to Spring validators also enables Spring MVC i18n messages when validating through CValid.
 
 ```java
 import com.carpcap.hvp.utils.CValid;
@@ -214,13 +154,7 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
 @Configuration
 public class ValidatorConfig {
-
-    /**
-     * Registers a fail-fast validator as a default bean
-     * and replaces the fail-fast validator used by CValid.
-     *
-     * @author CarpCap
-     */
+    /** Registers a fail-fast validator as the default bean and for CValid. */
     @Bean
     @Primary
     public LocalValidatorFactoryBean defaultValidator() {
@@ -230,11 +164,7 @@ public class ValidatorConfig {
         return validator;
     }
 
-    /**
-     * Replaces the default validator used by CValid.
-     *
-     * @author CarpCap
-     */
+    /** Replaces the normal validator used by CValid. */
     @Bean
     public LocalValidatorFactoryBean normalValidator() {
         LocalValidatorFactoryBean validator = new LocalValidatorFactoryBean();
@@ -246,10 +176,53 @@ public class ValidatorConfig {
 
 ---
 
-## 5. Quick Start Summary
+## 5. Spring MVC Automatic Validation
 
-1. Add the dependency `hibernate-validator-plus`
-2. Add Custom Validator Configuration `ValidatorConfig`
-3. Annotate entity fields with `@CAccount`, `@CPhone`, etc., and specify groups via `groups`
-4. Manual validation: call `CValid.validate / tryValidate / tryFastValidate`
-5. Automatic validation: use `@Validated(XXXDef.class) @RequestBody` on Controller method parameters
+### 5.1 Controller Example
+
+Use `@Validated(Group.class)` together with `@RequestBody` to automatically validate a request body:
+
+```java
+import com.carpcap.hvp.groups.CGetDef;
+import com.carpcap.hvp.groups.CPostDef;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/user")
+public class UserController {
+    // Create a user: validate only constraints in the CPostDef group
+    @PostMapping("/create")
+    public String create(@Validated(CPostDef.class) @RequestBody User user) { return "ok"; }
+
+    // Query a user: validate only constraints in the CGetDef group
+    @GetMapping("/get")
+    public String get(@Validated(CGetDef.class) @RequestBody User user, HttpServletRequest request) { return "ok"; }
+}
+```
+
+### 5.2 Global Exception Handling
+
+Automatic validation failures throw `MethodArgumentNotValidException`. Configure a global exception handler to return error messages consistently. This example returns a `String`; adapt it to your response format as needed:
+
+```java
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+@RestControllerAdvice
+public class GlobalExceptionHandler {
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public String handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
+        StringBuilder message = new StringBuilder();
+        for (FieldError fieldError : ex.getBindingResult().getFieldErrors()) {
+            message.append(fieldError.getField()).append("--")
+                    .append(fieldError.getDefaultMessage()).append("\n");
+        }
+        return message.toString();
+    }
+
+    @ExceptionHandler(ValidationException.class)
+    public String handleValidationException(ValidationException ex) { return ex.getMessage(); }
+}
+```

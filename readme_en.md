@@ -36,8 +36,7 @@ Hibernate Validator Plus extends **Hibernate Validator** with practical annotati
 
 ## Documentation
 
-- [2.x Usage Guide (JDK 11+ / jakarta.validation)](docs/usage_en.md)
-- [1.x Usage Guide (JDK 8 / javax.validation)](https://github.com/CarpCap/hibernate-validator-plus/blob/1.x/docs/usage_en.md)
+- [Usage Guide](docs/usage_en.md)
 - [2.x Change Log](docs/versions_v2_en.md)
 - [1.x Change Log](docs/versions_v1_en.md)
 
@@ -56,17 +55,17 @@ Location: [`annotation`](src/main/java/com/carpcap/hvp/annotation)
 | `@CPassport`    | Passport validation | Default: CN passport format; supports region parameter switching CN/US/JP/UK/KR                                            |
 | `@CPostCode`    | Postcode validation | Default: CN postcode format; supports region parameter switching CN/US/JP/UK/KR                                            |
 | `@CEmail`       | Email validation    | Supports domain blacklists, whitelists, and maximum subdomain level                                                       |
-| `@CFile`        | File validation     | Default max size 1 MB, file suffix supported                                                                               |
 | `@CPlateNumber` | Plate number check  | Supports both new & old CN vehicle plates                                                                                  |
-| `@CIpv4`        | Ipv4 validation     | Standard IPv4 address format                                                                                               |
-| `@CIpv6`         | IPv6 Validation        | Standard IPv6 address format                                                                                               |
-| `@CDateRange`   | Date range check    | `min` start date, `max` end date ，recommend format：yyyy-MM-dd HH:mm:ss                                                     |
+| `@CFile`        | File validation     | Default max size 1 MB, file suffix supported                                                                               |
 | `@CBankCard`     | BankCard Validation    | Bank card number verification uses the Luhn algorithm by default, and you can specify the interception card number prefix. |
-| `@CUrl`          | URL      Validation    | URL format verification                                                                                                    |
 | `@CMoney`        | Money     Validation   | Amount format verification<br/> Supports verification of amount formats of numbers, strings or BigDecimal types            |
+| `@CDateRange`   | Date range check    | `min` start date, `max` end date ，recommend format：yyyy-MM-dd HH:mm:ss                                                     |
 | `@CStrAllow`     | String whitelist      | String value must be in the configured allowed list                                                                      |
 | `@CStrDeny`      | String blacklist      | String value must not be in the configured forbidden list                                                                |
 | `@CJson`         | JSON validation       | Validates JSON strings; accepts objects or arrays by default and can restrict the root to an object, array, or primitive |
+| `@CIpv4`        | Ipv4 validation     | Standard IPv4 address format                                                                                               |
+| `@CIpv6`         | IPv6 Validation        | Standard IPv6 address format                                                                                               |
+| `@CUrl`          | URL      Validation    | URL format verification                                                                                                    |
 | `@CMacAddress`   | Mac Address Validation | Mac Address Validation                                                                                                     |
 
 

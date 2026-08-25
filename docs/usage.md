@@ -2,17 +2,19 @@
 
 [返回项目首页](../readme.md) · [English](usage_en.md) · [版本日志](versions_v2.md)
 
-> 本文档仅适用于 2.x：要求 JDK 11+，基于 Hibernate Validator 8.x，并使用 `jakarta.validation` API。
+> 本文档以 `jakarta.validation.*`为案例，如果使用的是1.x版本请使用`javax.validation.*`。
 
 ## 文档导航
 
-- [1. 引入 2.x 依赖](#1-引入-2x-依赖)
-- [2. 分组校验](#2-分组校验groups)
-- [3. CValid 工具类](#3-cvalid-工具类)
-- [4. Spring MVC 自动校验](#4-spring-mvc-自动校验)
-- [5. 快速上手总结](#5-快速上手总结)
+- [1. 引入依赖](#1-引入依赖)
+- [2. Group分组](#2-group-分组)
+- [3. CVaild手动校验](#3-cvalid-手动校验)
+- [4. Spring 配置校验器](#4-spring-配置校验器推荐可选)
+- [5. Spring MVC 自动校验](#5-spring-mvc-自动校验)
 
-## 1. 引入 2.x 依赖
+## 1. 引入依赖
+
+### JDK 11+
 
 ```xml
 <dependency>
@@ -22,14 +24,27 @@
 </dependency>
 ```
 
+2.x 使用 `jakarta.validation.*`，适用于 Spring Boot 3、Jakarta EE 10 等项目。
+
+### JDK 8+
+
+```xml
+<dependency>
+    <groupId>com.carpcap</groupId>
+    <artifactId>hibernate-validator-plus</artifactId>
+    <version>1.4.0</version>
+</dependency>
+```
+
+1.x 使用 `javax.validation.*`，适用于 Spring Boot 2,jdk8+ 项目。
 
 ---
 
-## 2. 分组校验（Groups）
+## 2. Group 分组
 
-### 2.1 内置分组
+### 2.1 Group 说明
 
-框架在 `com.carpcap.hvp.groups` 包中预置了 8 组业务分组，每组包含基础接口和 `*Def` 接口：
+框架在 `com.carpcap.hvp.groups` 包中预置了 8 组业务分组，每组包含基础接口和 `*Def` 接口，主要用于业务区分：
 
 | 基础分组 | Def 分组 | 场景 |
 |----------|----------|------|
@@ -42,7 +57,7 @@
 | `CPut` | `CPutDef` | PUT 请求 |
 | `CPatch` | `CPatchDef` | PATCH 请求 |
 
-### 2.2 在实体属性上标注分组
+### 2.2 Group 使用
 
 通过 `groups` 属性指定约束生效的分组，未指定分组（默认 `Default`）的约束在所有场景都会生效：
 
@@ -63,7 +78,7 @@ public class User {
 }
 ```
 
-### 2.3 使用 Def 分组
+### 2.3 Group Def
 
 `*Def` 接口继承了对应的业务分组和 `jakarta.validation.groups.Default`，例如：
 
@@ -76,14 +91,16 @@ public interface CPostDef extends CPost, Default {
 
 ---
 
-## 3. CValid 工具类
+## 3. CValid 手动校验
 
 `com.carpcap.hvp.utils.CValid` 提供手动校验方法，内部持有两个 Validator：
 
 - `validator`：全量校验器，收集所有违规信息
 - `fastValidator`：快速失败校验器（遇到第一个错误立即返回）
 
-### 3.1 方法总览
+### 3.1 CValid 方法总览
+
+以 `try` 开头的方法不会抛出校验失败异常，而是通过返回值提供校验结果；其中 `tryValidate*` 返回错误信息列表，`tryFastValidate*` 返回首条错误信息，校验通过时返回空列表或 `null`。
 
 | 方法 | 校验模式 | 失败行为 | 返回 |
 |------|----------|----------|------|
@@ -94,7 +111,7 @@ public interface CPostDef extends CPost, Default {
 | `tryValidateProperty(obj, property, ...groups)` | 全量校验 | 不抛异常 | `List<String>` |
 | `tryFastValidateProperty(obj, property, ...groups)` | 快速失败 | 不抛异常 | `String` |
 
-### 3.2 使用示例
+### 3.2 CValid 使用示例
 
 ```java
 import com.carpcap.hvp.utils.CValid;
@@ -133,10 +150,58 @@ public class Demo {
 
 ---
 
-## 4. Spring MVC 自动校验
+## 4. Spring 配置校验器（推荐/可选）
+
+`@Primary`指定默认使用的`Bean`，将`spring`默认的校验器改为了`fail_fast`模式
+
+将`CValid`中的`FastValidator`与`Validator`设置为`Spring`的`Validator`，这样使用`CValid`校验时让`spring mvc i18n`生效.
+
+```java
+import com.carpcap.hvp.utils.CValid;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
+
+@Configuration
+public class ValidatorConfig {
+
+    /**
+     * Registers a fail-fast validator as a default bean
+     * and replaces the fail-fast validator used by CValid.
+     *
+     * @author CarpCap
+     */
+    @Bean
+    @Primary
+    public LocalValidatorFactoryBean defaultValidator() {
+        LocalValidatorFactoryBean validator = new LocalValidatorFactoryBean();
+        validator.getValidationPropertyMap().put("hibernate.validator.fail_fast", "true");
+        CValid.setFastValidator(validator);
+        return validator;
+    }
+
+    /**
+     * Replaces the default validator used by CValid.
+     *
+     * @author CarpCap
+     */
+    @Bean
+    public LocalValidatorFactoryBean normalValidator() {
+        LocalValidatorFactoryBean validator = new LocalValidatorFactoryBean();
+        CValid.setValidator(validator);
+        return validator;
+    }
+}
+```
 
 
-### 4.1 Controller 示例
+---
+
+## 5. Spring MVC 自动校验
+
+
+### 5.1 Controller 示例
 
 使用 `@Validated(分组.class)` + `@RequestBody` 自动校验请求体：
 
@@ -164,7 +229,7 @@ public class UserController {
 }
 ```
 
-### 4.2 全局异常处理
+### 5.2 全局异常处理
 
 自动校验失败会抛出 `MethodArgumentNotValidException`，建议配置全局异常处理器统一返回错误信息，这里返回String 可以根据需求返回统一格式：
 
@@ -201,57 +266,3 @@ public class GlobalExceptionHandler {
 }
 ```
 
----
-
-### 4.3 自定义校验器配置
-
-在 Spring Boot 中，可以通过配置类将 Spring 管理的 `Validator` 注入 `CValid`，推荐，可以让手动校验直接使用spring bean的实例：
-
-```java
-import com.carpcap.hvp.utils.CValid;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
-import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
-
-@Configuration
-public class ValidatorConfig {
-
-    /**
-     * 将 fail-fast 校验器设置为默认 Bean，
-     * 并替换 CValid 的快速校验器。
-     *
-     * @author CarpCap
-     */
-    @Bean
-    @Primary
-    public LocalValidatorFactoryBean defaultValidator() {
-        LocalValidatorFactoryBean validator = new LocalValidatorFactoryBean();
-        validator.getValidationPropertyMap().put("hibernate.validator.fail_fast", "true");
-        CValid.setFastValidator(validator);
-        return validator;
-    }
-
-    /**
-     * 替换 CValid 的默认校验器。
-     *
-     * @author CarpCap
-     */
-    @Bean
-    public LocalValidatorFactoryBean normalValidator() {
-        LocalValidatorFactoryBean validator = new LocalValidatorFactoryBean();
-        CValid.setValidator(validator);
-        return validator;
-    }
-}
-```
-
----
-
-## 5. 快速上手总结
-
-1. 引入依赖 `hibernate-validator-plus`
-2. 自定义校验器配置`ValidatorConfig`
-3. 在实体字段上使用 `@CAccount`、`@CPhone` 等注解，并通过 `groups` 指定分组
-4. 手动校验：调用 `CValid.validate / tryValidate / tryFastValidate`
-5. 自动校验：Controller 方法参数上使用 `@Validated(XXXDef.class) @RequestBody`
